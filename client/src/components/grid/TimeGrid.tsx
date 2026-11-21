@@ -1,7 +1,7 @@
 // TimeGrid — spreadsheet-style entry grid with smart time cell + task autocomplete
 import React from 'react';
 import TT from '../../i18n';
-import { Chip } from '../../ds';
+import { Chip } from '@terjeballestad/bob';
 import styles from './TimeGrid.module.css';
 import { EntryRow } from './EntryRow';
 import { NewRow } from './NewRow';

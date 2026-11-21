@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import { Chip, Button, Select } from '../../ds';
+import { Chip, Button, Select } from '@terjeballestad/bob';
 import vs from './views.module.css';
 import sh from '../shared.module.css';
 import iv from './InvoiceView.module.css';

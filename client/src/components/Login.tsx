@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../i18n';
-import { Button, FormRow, Input } from '../ds';
+import { Button, FormRow, Input } from '@terjeballestad/bob';
 import styles from './Login.module.css';
 import { api } from '../api';
 import type { FirstRunResponse } from '../../../shared/types';

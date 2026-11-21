@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../i18n';
-import { NavRow, SectionLabel, StatusDot, Chip } from '../ds';
+import { NavRow, SectionLabel, StatusDot, Chip } from '@terjeballestad/bob';
 import styles from './Sidebar.module.css';
 import sh from './shared.module.css';
 import type { AppState, Entry } from '../../../shared/types';

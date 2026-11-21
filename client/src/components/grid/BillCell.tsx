@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chip } from '../../ds';
+import { Chip } from '@terjeballestad/bob';
 import styles from './BillCell.module.css';
 import type { Entry } from '../../../../shared/types';
 import type { UiActions, RegisterCell, NavigateCell } from '../../types';

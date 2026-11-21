@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import { Chip, StatusDot } from '../../ds';
+import { Chip, StatusDot } from '@terjeballestad/bob';
 import { isAdmin } from '../../roles';
 import { sumMin } from './viewUtils';
 import vs from './views.module.css';

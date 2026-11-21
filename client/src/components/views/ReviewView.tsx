@@ -5,7 +5,7 @@
 // PASSED in SB-025; this builds it. Admin-only (App gates the route).
 import React from 'react';
 import TT from '../../i18n';
-import { StatusDot, Chip, Button } from '../../ds';
+import { StatusDot, Chip, Button } from '@terjeballestad/bob';
 import { api } from '../../api';
 import type { UserTimesheet, ApiError } from '../../api';
 import vs from './views.module.css';

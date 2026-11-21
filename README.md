@@ -8,7 +8,7 @@ Frontend design by Claude Design.
 ## Architecture
 
 ```
-client/   Vite + React + TypeScript SPA (dark PM-board design system)
+client/   Vite + React + TypeScript SPA, styled with Bob (@terjeballestad/bob, the shared design system)
 server/   Express + SQLite (node:sqlite, zero native deps) — auth, roles, REST API
 shared/   core.js — the data model + markdown (de)serialization, used by both sides
 ```

@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../i18n';
-import { Button, Modal, FormRow, Input, Select } from '../ds';
+import { Button, Modal, FormRow, Input, Select } from '@terjeballestad/bob';
 import type { AppState } from '../../../shared/types';
 import type { UiActions, TaskModalInit } from '../types';
 

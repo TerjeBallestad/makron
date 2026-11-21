@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import { SectionLabel, Select, Input } from '../../ds';
+import { SectionLabel, Select, Input } from '@terjeballestad/bob';
 import st from './settings.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';

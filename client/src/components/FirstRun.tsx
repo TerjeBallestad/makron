@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../i18n';
-import { Button } from '../ds';
+import { Button } from '@terjeballestad/bob';
 import styles from './onboarding.module.css';
 import { OnboardingCard } from './OnboardingCard';
 import { api } from '../api';
