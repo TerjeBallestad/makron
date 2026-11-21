@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import { SegToggle, ProgressBar } from '../../ds';
+import { SegToggle, ProgressBar } from '@terjeballestad/bob';
 import { api } from '../../api';
 import { isAdmin } from '../../roles';
 import vs from './views.module.css';

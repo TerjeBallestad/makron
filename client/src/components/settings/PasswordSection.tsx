@@ -1,7 +1,7 @@
 // Self-service password change — every role gets this (SB-010).
 import React from 'react';
 import TT from '../../i18n';
-import { SectionLabel, Button, Input } from '../../ds';
+import { SectionLabel, Button, Input } from '@terjeballestad/bob';
 import st from './settings.module.css';
 import type { UiActions } from '../../types';
 

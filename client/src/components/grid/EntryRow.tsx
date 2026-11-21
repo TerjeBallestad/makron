@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import { StatusDot } from '../../ds';
+import { StatusDot } from '@terjeballestad/bob';
 import styles from './EntryRow.module.css';
 import { TimeCell } from './TimeCell';
 import { TaskCell } from './TaskCell';

@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import { Kbd } from '../../ds';
+import { Kbd } from '@terjeballestad/bob';
 import styles from './SyntaxHint.module.css';
 
 export function SyntaxHint() {

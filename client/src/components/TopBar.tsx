@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../i18n';
-import { StatusDot } from '../ds';
+import { StatusDot } from '@terjeballestad/bob';
 import styles from './TopBar.module.css';
 import type { Entry } from '../../../shared/types';
 import type { UiActions } from '../types';

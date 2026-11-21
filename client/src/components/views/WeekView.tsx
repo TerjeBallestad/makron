@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import { StatusDot, SectionLabel, Button, Chip } from '../../ds';
+import { StatusDot, SectionLabel, Button, Chip } from '@terjeballestad/bob';
 import { TimeGrid } from '../grid/TimeGrid';
 import { GridFooter } from '../grid/GridFooter';
 import { SyntaxHint } from '../grid/SyntaxHint';

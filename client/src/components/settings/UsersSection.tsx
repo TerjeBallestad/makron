@@ -1,6 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import { Chip, SectionLabel, Button, Select, Input } from '../../ds';
+import { Chip, SectionLabel, Button, Select, Input } from '@terjeballestad/bob';
 import st from './settings.module.css';
 import type { AppState, User, Role } from '../../../../shared/types';
 import type { UiActions } from '../../types';

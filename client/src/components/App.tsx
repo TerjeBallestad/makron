@@ -1,7 +1,7 @@
 // App shell: login, sidebar, topbar, routing, server sync
 import React from 'react';
 import TT, { preSessionLang } from '../i18n';
-import { Toast, ToastStack } from '../ds';
+import { Toast, ToastStack } from '@terjeballestad/bob';
 import styles from './App.module.css';
 import { api } from '../api';
 import { isAdmin } from '../roles';
