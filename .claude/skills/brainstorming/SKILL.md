@@ -5,7 +5,7 @@ description: Explore ideas and turn them into SDDs filed in the PM dashboard. Us
 
 # Brainstorming Into SDDs
 
-Turn ideas into validated designs filed as SDDs in the PM dashboard (localhost:3335). Designs live as SDDs in the dashboard, not as markdown files in `docs/` — this skill ensures brainstorming flows into that system instead of creating orphaned documents.
+Turn ideas into validated designs filed as SDDs on the PM board (https://pm.godstemning.dev/time-turtle). Designs live as SDDs in the dashboard, not as markdown files in `docs/` — this skill ensures brainstorming flows into that system instead of creating orphaned documents.
 
 ## Project Context
 
@@ -31,7 +31,7 @@ The goal is **genuine shared understanding** — the agent's mental model of the
 Most questions you're tempted to ask are **already answered somewhere**. Before the first question, mine all three sources:
 
 1. **The code** — read the files this idea touches and recent commits (`git log`). Key seams: `shared/core.js` (data model + markdown format), `server/src/index.js` (roles/API), `client/src/app.js` (sync). If a question can be answered by reading code, read the code instead.
-2. **The PM dashboard** — `pm list project`, `pm list`, `pm get <ID>`. The source of truth for what's already decided and in-flight; avoid duplicating it.
+2. **The PM dashboard** — `pm project`, `pm list`, `pm get <ID>`. The source of truth for what's already decided and in-flight; avoid duplicating it.
 3. **Claude memories** — recalled memories already in context (stack decisions, company-pitch intent, past feedback). Check before asking about design intent or prior choices.
 
 After mining, **answer every question you CAN yourself** — surface it out loud when it challenges an assumption. What remains — a genuine preference, a judgment call, a decision only the user can make — is what you ask.
@@ -78,7 +78,7 @@ Note in the SDD which parts are Track V vs Track F (load `two-track` if unsure) 
 ### Phase 4: File the SDD
 
 ```bash
-pm design create "<descriptive title>" \
+pm sdd create "<descriptive title>" \
   --body "<the full design in markdown>" \
   --items SB-NNN \
   --sprint SPRINT-NNN
@@ -95,6 +95,6 @@ If yes, invoke `/plan` with the SDD ID (it runs the two-track gate and picks the
 ## Principles
 
 - One question at a time · depth before breadth · the code is evidence · contradictions are gifts · YAGNI
-- **Dashboard is truth** — everything through localhost:3335, not markdown files
+- **Dashboard is truth** — everything through the PM board, not markdown files
 - Check before creating (duplicates) · design decisions are law · open questions by default
 - Rejection = reframe, not rephrase

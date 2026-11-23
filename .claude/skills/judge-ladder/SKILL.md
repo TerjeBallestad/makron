@@ -50,7 +50,7 @@ Playwright lives in `tests-browser/`, **never** in `npm test` — that gate stay
 - **Verifier honesty:** never promise evidence the tooling can't produce. A green unit test cannot prove the user sees a thing; a screenshot cannot prove it feels right. Name the **fake evidence** per requirement — what would look like proof but isn't (a 200 response for a UI beat, a console.log for a user-facing change, a screenshot of the admin view for an employee-role claim).
 - **Role claims need role evidence:** anything asserting "employees can't see/do X" is proven by an *employee-session* api or browser check, never by reading the code.
 - **Feature reality:** a feature that exists only in code/tests is unfinished. User-facing work needs a rung above `api`.
-- **Red-green:** every new test is verified red-green (break production, watch it fail, restore) and stamped (`## Verified red-green: YYYY-MM-DD`). Never weaken an assertion to pass — skip + file `pm issue`, leave the body intact.
+- **Red-green:** every new test is verified red-green (break production, watch it fail, restore) and stamped (`## Verified red-green: YYYY-MM-DD`). Never weaken an assertion to pass — skip + file `pm create issue`, leave the body intact.
 - **Tests are instruments.** A test exists so the agent can get hands-on with the behavior; making it green is a means, never the goal.
 
 ## Screenshot conventions

@@ -2,7 +2,7 @@
 
 ## PM is the store
 
-All work state lives on the PM board (`pm` CLI, dashboard on localhost:3335) — issues, designs, plans, decisions, and the glossary. Never edit `.pm/data/` directly, and never keep a shadow markdown copy of something PM already holds.
+All work state lives on the PM board (`pm` CLI, dashboard at https://pm.godstemning.dev/time-turtle) — issues, designs, plans, decisions, and the glossary. Never keep a shadow markdown copy of something PM already holds.
 
 ## Run `pm glossary` before using domain language
 

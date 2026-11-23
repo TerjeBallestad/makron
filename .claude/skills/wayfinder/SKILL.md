@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Wayfinder
 
-Foggy work too big for one session becomes a **map**: a destination, a set of typed investigation tickets with blocking edges, and a fog-of-war frontier that graduates into new tickets as you learn. The map lives on the PM dashboard (localhost:3335); sessions resolve one ticket at a time.
+Foggy work too big for one session becomes a **map**: a destination, a set of typed investigation tickets with blocking edges, and a fog-of-war frontier that graduates into new tickets as you learn. The map lives on the PM board (https://pm.godstemning.dev/time-turtle); sessions resolve one ticket at a time.
 
 Two modes — never both in one session.
 
@@ -33,7 +33,7 @@ Two modes — never both in one session.
 3. **Route by type — load the resolver from the Mode 1 table before starting:**
    - `[research]` → fan out Explore agents (or web research); write findings comment.
    - `[probe]` → load `two-track` + `judge-ladder`; least build (HTML mock, flag-gated variant), Terje uses it.
-   - `[grill]` → load `grill-with-docs`, with the **PM adaptation**: one question at a time with a recommended answer (never a bulk list); codebase-answerable questions get explored, not asked; decisions/ADRs go to PM (`pm decision`, DD comments) — NOT to `CONTEXT.md`/`docs/adr/` as that skill's own text says. Keep its ADR test (hard to reverse / surprising later / real trade-off) as the bar for filing a DD vs a ticket comment.
+   - `[grill]` → load `grill-with-docs`, with the **PM adaptation**: one question at a time with a recommended answer (never a bulk list); codebase-answerable questions get explored, not asked; decisions/ADRs go to PM (`pm create decision`, DD comments) — NOT to `CONTEXT.md`/`docs/adr/` as that skill's own text says. Keep its ADR test (hard to reverse / surprising later / real trade-off) as the bar for filing a DD vs a ticket comment.
    - `[task]` → route to `/plan` (D0/D1) or `/fix`.
 4. **Record:** resolution comment on the ticket → close it → append the one-line decision to the project body's `## Decisions so far` and log the session as a project comment.
 5. **Graduate the fog:** what the resolution revealed becomes new tickets (+ edges) or goes to `## Out of scope`. Ruling out is progress.

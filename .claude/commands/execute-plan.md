@@ -13,13 +13,13 @@ allowed-tools:
 
 # Execute Plan
 
-`$ARGUMENTS` — PLAN-NNN (required). If empty, list plans with pending tasks (`pm plans`) and ask.
+`$ARGUMENTS` — PLAN-NNN (required). If empty, list plans with pending tasks (`pm plan list`) and ask.
 
 **SERIAL only.** YOU implement every task yourself, in dependency order, in this one session. One mind = accumulated taste: the decision you make in task 3 carries to task 15. (Parallel-wave execution is deliberately not ported from Lifelines; if a plan is mechanical bulk that begs for it, say so and ask.)
 
 ## Stage
 
-1. `pm health` — unreachable → tell user to run `pm serve`, stop.
+1. `pm health` — unreachable → tell user the pm server does not answer, stop.
 2. `pm get PLAN-NNN` — read title, context/setupNotes IN FULL (they carry load-bearing constraints), and all tasks with `status`/`blockedBy`/`progressNotes`.
 3. `git status` — require a clean tree. Dirty → stop and ask.
 4. **Compute the serial order** from `blockedBy` (topological; done tasks are satisfied dependencies — naturally resumable mid-plan).

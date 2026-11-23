@@ -12,7 +12,7 @@ allowed-tools:
 
 # Fix
 
-Implement one backlog issue or one plan task. The PM dashboard is the source of truth — if `pm health` fails, tell the user to run `pm serve` and stop.
+Implement one backlog issue or one plan task. The PM dashboard is the source of truth — if `pm health` fails, tell the user the pm server does not answer and stop.
 
 `$ARGUMENTS` — optional issue/plan/task ID. Default: highest-priority open issue.
 
@@ -22,8 +22,8 @@ Implement one backlog issue or one plan task. The PM dashboard is the source of 
 |-------|----------|
 | (empty) | `pm list issue --stage inbox` — pick highest priority (critical > robustness > feature > polish). None → print "Backlog clear" and stop. |
 | `SB-NNN` | `pm get SB-NNN` |
-| `PLAN-NNN` | `pm next-task PLAN-NNN` — pick a `pending` + `unblocked` task. Read completed tasks' progress notes first. |
-| `TASK-NNN` | Find the owning plan via `pm plans`, then use that task's spec. |
+| `PLAN-NNN` | `pm next-task PLAN-NNN` — pick a `pending` + `unblocked` task. Read completed tasks' progress notes first (`tasks[].lastNote`; `pm get TASK-NNN` reads one task in full). |
+| `TASK-NNN` | `pm get TASK-NNN` — the task's spec, with its `planId`. |
 
 Print which item you're working on before proceeding.
 
@@ -40,7 +40,7 @@ Surgical edits, minimal scope. No refactoring of surrounding code, no improvemen
 Load the `judge-ladder` skill and run the cheapest rung that actually validates the change:
 
 1. **build**: `npm run build` + `node --check` on touched server/shared files.
-2. **unit**: `npm test` once the vitest suite exists; until then targeted `node -e` scripts over `shared/core.js`. New tests get red-green verification (break production, watch it fail, restore, stamp `## Verified red-green: YYYY-MM-DD`). Never weaken an assertion — skip + `pm issue` instead.
+2. **unit**: `npm test` once the vitest suite exists; until then targeted `node -e` scripts over `shared/core.js`. New tests get red-green verification (break production, watch it fail, restore, stamp `## Verified red-green: YYYY-MM-DD`). Never weaken an assertion — skip + `pm create issue` instead.
 3. **api**: both dev servers up (`npm run dev`), curl with a cookie jar. Role-touching changes REQUIRE an employee-session check (403s, null rates), not just an admin one.
 4. **browser**: user-visible changes get clicked through on localhost:5173 and screenshotted (crop to the region).
 
