@@ -35,7 +35,7 @@ Two modes — never both in one session.
    - `[probe]` → load `two-track` + `judge-ladder`; least build (HTML mock, flag-gated variant), Terje uses it.
    - `[grill]` → load `grill-with-docs`, with the **PM adaptation**: one question at a time with a recommended answer (never a bulk list); codebase-answerable questions get explored, not asked; decisions/ADRs go to PM (`pm create decision`, DD comments) — NOT to `CONTEXT.md`/`docs/adr/` as that skill's own text says. Keep its ADR test (hard to reverse / surprising later / real trade-off) as the bar for filing a DD vs a ticket comment.
    - `[task]` → route to `/plan` (D0/D1) or `/fix`.
-4. **Record:** resolution comment on the ticket → close it → append the one-line decision to the project body's `## Decisions so far` and log the session as a project comment.
+4. **Record:** resolution comment on the ticket → close it → append the one-line decision to the project body's `## Decisions so far` (`pm get SPRINT-NNN` prints the body and its `bodyHash`; write the new body with `pm project SPRINT-NNN --body @updated.md --base <bodyHash>`, and on exit 3 read it again and redo the edit) and log the session as a project comment.
 5. **Graduate the fog:** what the resolution revealed becomes new tickets (+ edges) or goes to `## Out of scope`. Ruling out is progress.
 6. **Session pacing:**
    - Judgment tickets (`[grill]`, `[probe]`): **one per session, hard rule.** Decisions compound between sessions.
