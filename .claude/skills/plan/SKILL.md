@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Plan Time Turtle work from SDDs, PM items, concerns, gaps, or task descriptions into a PM-native plan. Single planning entry point. Classifies work per two-track, then picks a scaffold dial — D0 inline, D1 requirements+gates (default) — sized to blast radius.
+description: Plan Makron work from SDDs, PM items, concerns, gaps, or task descriptions into a PM-native plan. Single planning entry point. Classifies work per two-track, then picks a scaffold dial — D0 inline, D1 requirements+gates (default) — sized to blast radius.
 disable-model-invocation: true
 ---
 

@@ -1,5 +1,5 @@
 {
-  "name": "time-turtle",
+  "name": "makron",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -8,7 +8,7 @@
     "server"
   ],
   "bin": {
-    "tt": "bin/tt.mjs"
+    "mk": "bin/mk.mjs"
   },
   "scripts": {
     "dev": "concurrently -n api,web -c blue,green \"npm run dev -w server\" \"npm run dev -w client\"",

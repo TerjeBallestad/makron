@@ -6,7 +6,7 @@
 // the row exists.
 //
 // THE ONLY TEST HERE THAT CAN SEE THE DEFAULT FLIP IS THE FIRST ONE. Every other server-spawning
-// site in `tests/` and `tests-browser/` sets `TT_SEED_DEMO` explicitly, and so does
+// site in `tests/` and `tests-browser/` sets `MK_SEED_DEMO` explicitly, and so does
 // `startServer`'s own default — so a green suite proves nothing about the unset case. That test
 // passes `undefined`, which `child_process` drops from the child's environment entirely.
 //
@@ -21,7 +21,7 @@ import { startServer, stopServer, stopAllServers, session } from './util.js';
 afterAll(stopAllServers);
 
 function dataDir(label) {
-  return { TT_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-' + label + '-')) };
+  return { MK_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-' + label + '-')) };
 }
 
 /** A bare cookieless fetch — the first run takes no credential and neither does this. */
@@ -48,7 +48,7 @@ const answerFirstRun = (port, body) =>
 //     FAIL  a stock fresh install holds no fabricated hours at all
 //           AssertionError: a stock install seeded 4 projects: expected 4 to be +0
 //
-//   RESTORING THE OPT-OUT DEFAULT (`process.env.TT_SEED_DEMO !== '0'`) — the demo step fails too,
+//   RESTORING THE OPT-OUT DEFAULT (`process.env.MK_SEED_DEMO !== '0'`) — the demo step fails too,
 //   and its red is informative rather than incidental: with the boot already seeding,
 //   `seedDemoContent()` finds projects and returns false, so the route reports `demo: false` and
 //   the person who ASKED for demo content is told it did not happen.
@@ -57,9 +57,9 @@ const answerFirstRun = (port, body) =>
 describe('DD-024 clause 3: a fresh install is empty', () => {
   it('a stock fresh install holds no fabricated hours at all', async () => {
     // `undefined` REMOVES the variable from the child's environment (child_process drops undefined
-    // values), so this is the genuinely-unset case and not `TT_SEED_DEMO=''`. It is the one
+    // values), so this is the genuinely-unset case and not `MK_SEED_DEMO=''`. It is the one
     // assertion in the repo that can see the default flip — every other site passes the value.
-    const server = await startServer({ ...dataDir('seed-unset'), TT_SEED_DEMO: undefined });
+    const server = await startServer({ ...dataDir('seed-unset'), MK_SEED_DEMO: undefined });
 
     const admin = session(server.port);
     const login = await admin('POST', '/api/auth/login', { email: 'admin@timeturtle.local', password: 'testpw' });
@@ -74,8 +74,8 @@ describe('DD-024 clause 3: a fresh install is empty', () => {
     await stopServer(server.child);
   }, 60000);
 
-  it('TT_SEED_DEMO=1 still seeds at boot, unregressed for every test and script that passes it', async () => {
-    const server = await startServer({ ...dataDir('seed-optin'), TT_SEED_DEMO: '1' });
+  it('MK_SEED_DEMO=1 still seeds at boot, unregressed for every test and script that passes it', async () => {
+    const server = await startServer({ ...dataDir('seed-optin'), MK_SEED_DEMO: '1' });
 
     const admin = session(server.port);
     await admin('POST', '/api/auth/login', { email: 'admin@timeturtle.local', password: 'testpw' });
@@ -89,7 +89,7 @@ describe('DD-024 clause 3: a fresh install is empty', () => {
 
 describe('DD-024 clause 3: demo content is a step you ask for', () => {
   it('the demo step seeds, and what it seeds is editable', async () => {
-    const server = await startServer({ ...dataDir('seed-team-demo'), TT_SEED_DEMO: undefined });
+    const server = await startServer({ ...dataDir('seed-team-demo'), MK_SEED_DEMO: undefined });
 
     const answered = await answerFirstRun(server.port, { demo: true });
     expect(answered.status).toBe(200);

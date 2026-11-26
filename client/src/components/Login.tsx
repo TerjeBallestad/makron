@@ -10,7 +10,7 @@ interface LoginProps {
   /**
    * DD-024 clause 2 — the seeded admin still carries the password this repo publishes, so say it.
    * `null` for every other caller, and that covers three different ones at once: the password has
-   * been changed, an operator set their own `TT_ADMIN_PASSWORD`, or the probe 404'd because this
+   * been changed, an operator set their own `MK_ADMIN_PASSWORD`, or the probe 404'd because this
    * browser is not on the machine the server runs on.
    */
   defaultLogin: FirstRunResponse['defaultLogin'];
@@ -19,13 +19,13 @@ interface LoginProps {
 /**
  * THE WALL, AND WHY THIS HINT IS HERE (DD-024 clause 2). The first run sits in FRONT of the login,
  * so a person who finishes it lands here holding a credential nobody ever showed them —
- * `seedIfEmpty` announces it once on stdout, which `tt serve` redirects into a detached log file.
+ * `seedIfEmpty` announces it once on stdout, which `mk serve` redirects into a detached log file.
  *
  * WHAT IS ACTUALLY DISCLOSED, and the reason this is not a hole: the literal in `server/src/config.js`
  * of a public MIT repo (DD-004), stated back only to a caller the server has already established is
  * on a loopback SOCKET with a loopback Host header — the same predicate the first-run surface and
  * the first-run caller gate uses, never the Host header alone. The bind is every interface unless
- * `TT_HOST` narrows it, so a header-only gate would read this out to any machine on the wifi:
+ * `MK_HOST` narrows it, so a header-only gate would read this out to any machine on the wifi:
  * SB-162 with a password in it.
  * It retires itself the moment the password changes, because the server recomputes the answer from
  * the stored hash on every probe.
@@ -56,7 +56,7 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
         }}
       >
         <div className={styles.brand}>
-          <span className={styles.brandName}>Time Turtle</span>
+          <span className={styles.brandName}>Makron</span>
         </div>
         <FormRow label={TT.t('Email')}>
           <Input autoFocus={true} value={email} onChange={(e) => setEmail(e.target.value)} spellCheck={false} />

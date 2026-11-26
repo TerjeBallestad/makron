@@ -8,7 +8,7 @@ afterAll(stopAllServers);
 
 describe('GET /api/health', () => {
   it('answers without a login when the database works', async () => {
-    const { port } = await startServer({ TT_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-health-')) });
+    const { port } = await startServer({ MK_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-health-')) });
     const res = await fetch(`http://localhost:${port}/api/health`);
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true });

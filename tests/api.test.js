@@ -76,9 +76,9 @@ beforeAll(async () => {
     env: {
       ...process.env,
       PORT: String(PORT),
-      TT_DATA_DIR: DATA_DIR,
-      TT_SEED_DEMO: '1',
-      TT_ADMIN_PASSWORD: 'testpw',
+      MK_DATA_DIR: DATA_DIR,
+      MK_SEED_DEMO: '1',
+      MK_ADMIN_PASSWORD: 'testpw',
     },
     stdio: ['ignore', 'pipe', 'pipe'],
   });

@@ -22,7 +22,7 @@ export function OnboardingCard({
     <div className={styles.screen} data-tt={tag}>
       <div className={styles.card}>
         <div className={styles.brand}>
-          <span className={styles.brandName}>Time Turtle</span>
+          <span className={styles.brandName}>Makron</span>
         </div>
         <p className={styles.question}>{question}</p>
         {children}

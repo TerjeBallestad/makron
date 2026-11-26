@@ -36,7 +36,7 @@ export function Sidebar({
     <aside className={styles.sidebar}>
       <div className={styles.brand}>
         <span className={styles.logo}></span>
-        <span className={styles.brandName}>Time Turtle</span>
+        <span className={styles.brandName}>Makron</span>
       </div>
       <nav className={styles.nav}>
         <NavRow

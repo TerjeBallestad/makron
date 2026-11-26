@@ -8,7 +8,7 @@
 //
 //   1. THE OPEN STATE. One user, and no stored answer (`firstRunAt`, or a legacy `shape` row). An
 //      install that answered has answered, and re-asking would overwrite what its person chose.
-//   2. THE PEER SOCKET, and this is the half that actually holds. With no `TT_HOST` the server is on
+//   2. THE PEER SOCKET, and this is the half that actually holds. With no `MK_HOST` the server is on
 //      EVERY INTERFACE. Loopback is not implied by anything here — it has to be checked.
 //   3. THE HOST HEADER, unchanged from SB-136. It stops DNS rebinding in the user's own browser,
 //      which arrives OVER LOOPBACK and is therefore invisible to condition 2.
@@ -36,11 +36,11 @@ import { startServer, stopServer, stopAllServers, session } from './util.js';
 afterAll(stopAllServers);
 
 function dataDir(label) {
-  return { TT_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-' + label + '-')) };
+  return { MK_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-' + label + '-')) };
 }
 
 /** A fresh install in the OPEN STATE — nothing answered, and no demo hours. */
-const open = (label) => ({ ...dataDir(label), TT_SEED_DEMO: '0' });
+const open = (label) => ({ ...dataDir(label), MK_SEED_DEMO: '0' });
 
 /**
  * THIS MACHINE'S ROUTABLE IPv4 — the address a colleague on the same wifi would type.
@@ -263,9 +263,9 @@ describe('DD-024 clause 1: the gate is the peer socket, not the Host header', ()
   //   clause 1 prices this route class on being "narrow and SELF-CLOSING". SB-181 narrowed the
   //   payload to exactly `{ open, defaultLogin }`; a field added to it reddens this test.
   it('what it still says once the question is over is only what the login screen needs', async () => {
-    // `TT_ADMIN_PASSWORD: ''` so the seeded admin carries the published default — the hint is the
+    // `MK_ADMIN_PASSWORD: ''` so the seeded admin carries the published default — the hint is the
     // one field that must SURVIVE the answer, and a server with its own password cannot show that.
-    const server = await startServer({ ...open('first-run-narrow'), TT_ADMIN_PASSWORD: '' });
+    const server = await startServer({ ...open('first-run-narrow'), MK_ADMIN_PASSWORD: '' });
 
     const before = await bare(server.port, '/api/first-run');
     expect(before.json.open).toBe(true);
@@ -313,9 +313,9 @@ describe('DD-024 clause 1: the gate is the peer socket, not the Host header', ()
 //
 // WHY IT RIDES ON THIS SURFACE AT ALL. The first run sits in front of the login, so a person who
 // finishes it lands on `<Login>` holding a password nobody ever showed them — `seedIfEmpty`
-// announces it once on stdout, which `tt serve` redirects into a detached log file.
+// announces it once on stdout, which `mk serve` redirects into a detached log file.
 //
-// AND WHY THE GATE IS THE SAME ONE. With no `TT_HOST` the bind is EVERY INTERFACE — an install
+// AND WHY THE GATE IS THE SAME ONE. With no `MK_HOST` the bind is EVERY INTERFACE — an install
 // serving the network is what a team install is FOR. So the only thing standing between this credential
 // and the wifi is `firstRunCaller`, the peer-socket + Host predicate. A Host-header-only gate here
 // would be SB-162 with a password in it, and the browser rung structurally cannot see that: every
@@ -323,12 +323,12 @@ describe('DD-024 clause 1: the gate is the peer socket, not the Host header', ()
 describe('DD-024 clause 2: the starting-password hint, and who is allowed to read it', () => {
   /** An install whose admin still carries the password `server/src/config.js` publishes.
    *
-   *  `TT_ADMIN_PASSWORD: ''` rather than omitting the key: `startServer` defaults it to `testpw`,
+   *  `MK_ADMIN_PASSWORD: ''` rather than omitting the key: `startServer` defaults it to `testpw`,
    *  and an empty string is falsy, so the server falls back to the published default exactly as an
    *  install with the variable unset does. An empty string also SURVIVES `child_process`, which
    *  drops `undefined` values.
    */
-  const stock = (label) => ({ ...dataDir(label), TT_SEED_DEMO: '0', TT_ADMIN_PASSWORD: '' });
+  const stock = (label) => ({ ...dataDir(label), MK_SEED_DEMO: '0', MK_ADMIN_PASSWORD: '' });
 
   // ## Verified red-green: 2026-07-31, TRANSCRIBED. THE GATE WEAKENED — the GET handler's
   //   `firstRunCaller(req)` replaced by `isLoopbackHostHeader(req.headers.host)`, i.e. the hint
@@ -366,14 +366,14 @@ describe('DD-024 clause 2: the starting-password hint, and who is allowed to rea
   //   version that looks more helpful and hands an operator's own secret to a screen:
   //   1 of 14 fails, and nothing else moves — the published-default cases cannot see this.
   //     FAIL  an operator who set their own password is told nothing — that one is a real secret
-  //           AssertionError: an operator's own TT_ADMIN_PASSWORD was offered to the login screen:
+  //           AssertionError: an operator's own MK_ADMIN_PASSWORD was offered to the login screen:
   //           expected { …(2) } to be null
   it('an operator who set their own password is told nothing — that one is a real secret', async () => {
-    const server = await startServer({ ...dataDir('first-run-hint-operator'), TT_ADMIN_PASSWORD: 'operatorpw' });
+    const server = await startServer({ ...dataDir('first-run-hint-operator'), MK_ADMIN_PASSWORD: 'operatorpw' });
 
     const probe = await bare(server.port, '/api/first-run');
     expect(probe.status).toBe(200);
-    expect(probe.json.defaultLogin, "an operator's own TT_ADMIN_PASSWORD was offered to the login screen").toBeNull();
+    expect(probe.json.defaultLogin, "an operator's own MK_ADMIN_PASSWORD was offered to the login screen").toBeNull();
 
     await stopServer(server.child);
   }, 60000);

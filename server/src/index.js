@@ -596,7 +596,7 @@ function firstRunOpen() {
 /**
  * Is this caller allowed to see the first-run surface at all?
  *
- * BOTH ADDRESS CHECKS, and the socket one is the load-bearing half. With no `TT_HOST` the server
+ * BOTH ADDRESS CHECKS, and the socket one is the load-bearing half. With no `MK_HOST` the server
  * answers on EVERY INTERFACE, so loopback is not implied by anything here. The Host check alone does
  * not survive that: `curl -H 'Host: localhost' http://<lan-ip>:<port>/…` from any machine on the
  * same wifi passes it, which is SB-162, measured. The Host check stays anyway, because it stops a
@@ -627,15 +627,15 @@ const notFound = (res) => res.status(404).json({ error: 'not found' });
  *
  * The first run sits in FRONT of the login, so a person who finishes it lands on `<Login>` holding
  * a credential nobody ever showed them — `seedIfEmpty` announces it once, on stdout, which
- * `tt serve` redirects into a detached log file.
+ * `mk serve` redirects into a detached log file.
  *
  * IT VERIFIES AGAINST THE PUBLISHED CONSTANT, never against `ADMIN_PASSWORD`. An operator who set
- * `TT_ADMIN_PASSWORD` supplied a real secret and gets no hint — they already know it. What is
+ * `MK_ADMIN_PASSWORD` supplied a real secret and gets no hint — they already know it. What is
  * stated back is a literal from a public MIT repo, and it stops being stated the moment the
  * password changes, because the answer is recomputed per request from the stored hash.
  *
  * The CALLER gate is not here: this rides on `GET /api/first-run`, behind `firstRunCaller`. The bind
- * is every interface unless `TT_HOST` narrows it, so a Host-header-only gate would read this
+ * is every interface unless `MK_HOST` narrows it, so a Host-header-only gate would read this
  * credential out to any machine on the wifi. That is SB-162 with a password in it.
  * @returns {{ email: string, password: string } | null}
  */
@@ -985,12 +985,12 @@ if (existsSync(clientDist)) {
   app.get(/^\/(?!api\/).*/, (req, res) => res.sendFile(join(clientDist, 'index.html')));
 }
 
-// `host: undefined` is the every-interface bind. `TT_HOST` narrows it.
+// `host: undefined` is the every-interface bind. `MK_HOST` narrows it.
 app.listen({ port: PORT, host: HOST || undefined }, () => {
-  console.log(`[time-turtle] api on http://localhost:${PORT}`);
+  console.log(`[makron] api on http://localhost:${PORT}`);
   console.log(
     HOST
-      ? `[time-turtle] bound to ${HOST} only — this instance is not reachable from other machines`
-      : '[time-turtle] bound to every interface — reachable from other machines on this network',
+      ? `[makron] bound to ${HOST} only — this instance is not reachable from other machines`
+      : '[makron] bound to every interface — reachable from other machines on this network',
   );
 });

@@ -1,4 +1,4 @@
-// Time Turtle — shared type source of truth.
+// Makron — shared type source of truth.
 // Imported by the client (full TS) and referenced from server/shared JS via
 // JSDoc `@typedef {import('../../shared/types.ts').Entry} Entry`.
 // FROZEN (SB-003): field names, JSON shapes and method names below are the data
@@ -316,7 +316,7 @@ export interface FirstRunResponse {
   /**
    * DD-024 clause 2: the seeded admin still carries the password this repo publishes, so `<Login>`
    * may state it. `null` the moment that password changes, and never an operator's own
-   * `TT_ADMIN_PASSWORD` — that is a real secret and never reaches a screen.
+   * `MK_ADMIN_PASSWORD` — that is a real secret and never reaches a screen.
    */
   defaultLogin: { email: string; password: string } | null;
 }

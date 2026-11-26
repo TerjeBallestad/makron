@@ -16,11 +16,11 @@ import { join } from 'node:path';
 // auth.js -> config.js mkdirs DATA_DIR and writes a .secret on load. Point both at a
 // throwaway dir and pin the secret so token signing is deterministic across reloads.
 const DATA = mkdtempSync(join(tmpdir(), 'tt-cookie-'));
-const ORIG = { PORT: process.env.PORT, DATA: process.env.TT_DATA_DIR, SECRET: process.env.TT_SECRET };
+const ORIG = { PORT: process.env.PORT, DATA: process.env.MK_DATA_DIR, SECRET: process.env.MK_SECRET };
 
 async function loadAuth(port) {
-  process.env.TT_DATA_DIR = DATA;
-  process.env.TT_SECRET = 'test-secret';
+  process.env.MK_DATA_DIR = DATA;
+  process.env.MK_SECRET = 'test-secret';
   if (port === undefined) delete process.env.PORT;
   else process.env.PORT = String(port);
   vi.resetModules();
@@ -32,8 +32,8 @@ const header = (name, token) => ({ headers: { cookie: `${name}=${encodeURICompon
 afterAll(() => {
   for (const [k, v] of [
     ['PORT', ORIG.PORT],
-    ['TT_DATA_DIR', ORIG.DATA],
-    ['TT_SECRET', ORIG.SECRET],
+    ['MK_DATA_DIR', ORIG.DATA],
+    ['MK_SECRET', ORIG.SECRET],
   ]) {
     if (v === undefined) delete process.env[k];
     else process.env[k] = v;

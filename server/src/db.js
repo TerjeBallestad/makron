@@ -151,7 +151,7 @@ function migrateToSdd002() {
 migrateToSdd002();
 
 // ---- settings ----
-// Two keys: `currency` and `language`. A database from an older Time Turtle can also hold `shape`,
+// Two keys: `currency` and `language`. A database from an older Makron can also hold `shape`,
 // `mdDir`, `vaultPaths`, `vaultTimeSeparator` and `vaultCutover` rows. They are left in the table,
 // never read here and never written (SB-181) — `firstRunAnswered` below reads `shape` for its
 // presence and nothing else. `firstRunAt` is server-owned and never comes through `putSettings`.
@@ -590,10 +590,10 @@ export function seedIfEmpty() {
     const admin = createUser({ email: ADMIN_EMAIL, name: 'Admin', role: 'admin', password: ADMIN_PASSWORD });
     if (!admin) throw new Error('failed to create the admin user');
     console.log(
-      `[time-turtle] created admin user ${admin.email} (password from TT_ADMIN_PASSWORD${process.env.TT_ADMIN_PASSWORD ? '' : ", default 'turtle' — change it"})`,
+      `[makron] created admin user ${admin.email} (password from MK_ADMIN_PASSWORD${process.env.MK_ADMIN_PASSWORD ? '' : ", default 'turtle' — change it"})`,
     );
     // DD-024 clause 3: the demo half is opt-in now and lives in its own function, so the first-run
-    // answer can call it after boot. `TT_SEED_DEMO=1` keeps seeding here for tests and scripts.
+    // answer can call it after boot. `MK_SEED_DEMO=1` keeps seeding here for tests and scripts.
     if (SEED_DEMO) seedDemoContent();
   }
 }
@@ -623,6 +623,6 @@ export function seedDemoContent() {
     putTasks(owner.id, seedState.tasks);
     putEntries(owner.id, seedState.entries);
   });
-  console.log('[time-turtle] seeded demo data (opt-in: TT_SEED_DEMO=1, or the first run’s demo step)');
+  console.log('[makron] seeded demo data (opt-in: MK_SEED_DEMO=1, or the first run’s demo step)');
   return true;
 }

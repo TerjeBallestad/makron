@@ -1,5 +1,5 @@
 {
-  "name": "@time-turtle/server",
+  "name": "@makron/server",
   "private": true,
   "type": "module",
   "scripts": {

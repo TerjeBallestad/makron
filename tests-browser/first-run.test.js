@@ -4,7 +4,7 @@
 // repo has live proof that the alternative is indistinguishable from nothing: SB-063 shipped a
 // setting with a green api test and no UI at all. `POST /api/first-run` answering 200
 // (tests/first-run-open.test.js) is NOT the claim below. The claim is that a person who installs
-// Time Turtle fresh meets one question, cannot get past it without answering, and lands on a login
+// Makron fresh meets one question, cannot get past it without answering, and lands on a login
 // screen that states the credential nobody ever showed them.
 //
 // Reduced by SB-181, which removed the shape concept: the question used to be "whose hours is this
@@ -86,7 +86,7 @@ describe('DD-024: a fresh install answers the question before it is asked for a 
   //   before this plan:
   //     FAIL  a Norwegian browser meets the whole flow in Norwegian
   //           AssertionError: the first-run question rendered in English to a Norwegian browser:
-  //           expected 'Time Turtle\n\nStart with something…' to contain 'Starte med noe i den?'
+  //           expected 'Makron\n\nStart with something…' to contain 'Starte med noe i den?'
   it('a Norwegian browser meets the whole flow in Norwegian', async () => {
     // A SECOND CONTEXT, not a second server: the language of a pre-session screen is a property of
     // the BROWSER, because there is no session yet to hold a preference. This is the only signal a
@@ -162,7 +162,7 @@ describe('DD-024: finishing the first run', () => {
 describe('DD-024 clause 2: the wall finishing the first run lands you on', () => {
   let app = null;
   beforeAll(async () => {
-    // No TT_ADMIN_PASSWORD, so the seeded admin carries the password this repo publishes — the
+    // No MK_ADMIN_PASSWORD, so the seeded admin carries the password this repo publishes — the
     // one and only condition under which `<Login>` may state a credential back.
     app = await startApp({ onboarding: true, defaultPassword: true });
   }, 120000);

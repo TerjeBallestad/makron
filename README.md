@@ -1,4 +1,4 @@
-# Time Turtle
+# Makron
 
 Keyboard-first time registration. Spreadsheet-style daily grid, smart time parsing
 (`12:00-13:00`, `12:30→` running timer, `1h30m`), projects → clients → rates → invoicing.
@@ -17,7 +17,7 @@ shared/   core.js — the data model + markdown (de)serialization, used by both 
 one. `shared/core.js` still carries a round-trippable markdown (de)serializer, which the demo
 seed is written in and parsed from, but the app writes no markdown file and reads none.
 
-**One install type.** Time Turtle is a team app: an admin logs in, people log their hours, an
+**One install type.** Makron is a team app: an admin logs in, people log their hours, an
 admin reviews and invoices them. There is nothing to choose at install time and nothing about
 the install to configure.
 
@@ -35,44 +35,44 @@ npm install
 npm run dev        # API on :3001, app on http://localhost:5173 — the EDIT loop (hot reload)
 ```
 
-### Daily driver — `tt`
+### Daily driver — `mk`
 
 `npm run dev` is for hacking on the code. To just _use_ the app, run the built
-version as a background service via the `tt` command (linked once with `npm link`):
+version as a background service via the `mk` command (linked once with `npm link`):
 
 ```sh
-npm link           # once — puts `tt` on your PATH (like the pm CLI)
-tt serve           # build if needed, run the built app in the background on :3001
-tt status          # running · pid … · http://localhost:3001
-tt restart --build # rebuild the client and relaunch
-tt stop            # stop it
-tt logs            # log file path + last lines
+npm link           # once — puts `mk` on your PATH (like the pm CLI)
+mk serve           # build if needed, run the built app in the background on :3001
+mk status          # running · pid … · http://localhost:3001
+mk restart --build # rebuild the client and relaunch
+mk stop            # stop it
+mk logs            # log file path + last lines
 ```
 
-`tt` serves the built client **and** the API on one origin (`:3001`) and shares
+`mk` serves the built client **and** the API on one origin (`:3001`) and shares
 `server/data` with `npm run dev`, so use one at a time. Because the client is served
-off disk, `tt build` refreshes the running app with no restart. Everything (pid, log)
+off disk, `mk build` refreshes the running app with no restart. Everything (pid, log)
 lives under `server/data`, which is gitignored.
 
 ### Two instances, side by side
 
 A data dir plus a port **is** an instance. `--data DIR` picks it on `serve`, `stop`,
-`restart`, `status` and `logs`; `TT_DATA_DIR` is the fallback when the flag is absent.
+`restart`, `status` and `logs`; `MK_DATA_DIR` is the fallback when the flag is absent.
 So one checkout runs two independent installs at once:
 
 ```sh
-tt serve --data ~/.time-turtle/live --port 3002   # your real hours
-tt serve --port 3001                              # the demo — the existing server/data
+mk serve --data ~/.time-turtle/live --port 3002   # your real hours
+mk serve --port 3001                              # the demo — the existing server/data
 ```
 
-Stop, inspect or tail either one by naming it again — `tt stop --data ~/.time-turtle/live`,
-`tt status --data ~/.time-turtle/live`. Everything is per data dir: DB, pid file, log,
+Stop, inspect or tail either one by naming it again — `mk stop --data ~/.time-turtle/live`,
+`mk status --data ~/.time-turtle/live`. Everything is per data dir: DB, pid file, log,
 session secret, users, settings. Nothing is shared between instances but the
-code, and neither one knows the other exists — `tt status` answers only for the data dir you
-named, so a bare `tt status` saying `stopped` means _the default instance_ is stopped. Every
-answer prints the data dir it answered for, `tt stop`'s `not running` included.
+code, and neither one knows the other exists — `mk status` answers only for the data dir you
+named, so a bare `mk status` saying `stopped` means _the default instance_ is stopped. Every
+answer prints the data dir it answered for, `mk stop`'s `not running` included.
 
-`tt status` is a read: it **reports** a leftover pid file (`stale pid file (pid N)`) rather than
+`mk status` is a read: it **reports** a leftover pid file (`stale pid file (pid N)`) rather than
 deleting one, so inspecting an instance never writes to its data dir. The sweep belongs to the
 commands that write anyway — `serve`, `stop`, `restart` — and `stop` says so when it happens.
 
@@ -92,11 +92,11 @@ Settings → Users and delete the default one.
 | var                                    | default                             | purpose                                                                                                                     |
 | -------------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `PORT`                                 | `3001`                              | API port                                                                                                                    |
-| `TT_HOST`                              | every interface                     | bind address — unset means reachable from other machines on this network                                                    |
-| `TT_DATA_DIR`                          | `server/data`                       | DB + secret location — the instance (`tt --data DIR` wins over it)                                                          |
-| `TT_ADMIN_EMAIL` / `TT_ADMIN_PASSWORD` | `admin@timeturtle.local` / `turtle` | first-run admin                                                                                                             |
-| `TT_SEED_DEMO`                         | unset                               | `1` seeds demo clients/projects/entries at boot — for tests and scripts; a person answers the first run's demo step instead |
-| `TT_SECRET`                            | generated → `data/.secret`          | session-signing secret                                                                                                      |
+| `MK_HOST`                              | every interface                     | bind address — unset means reachable from other machines on this network                                                    |
+| `MK_DATA_DIR`                          | `server/data`                       | DB + secret location — the instance (`mk --data DIR` wins over it)                                                          |
+| `MK_ADMIN_EMAIL` / `MK_ADMIN_PASSWORD` | `admin@timeturtle.local` / `turtle` | first-run admin                                                                                                             |
+| `MK_SEED_DEMO`                         | unset                               | `1` seeds demo clients/projects/entries at boot — for tests and scripts; a person answers the first run's demo step instead |
+| `MK_SECRET`                            | generated → `data/.secret`          | session-signing secret                                                                                                      |
 
 ### Production
 

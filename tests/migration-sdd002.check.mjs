@@ -15,8 +15,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const DATA_DIR = mkdtempSync(join(tmpdir(), 'tt-mig-'));
-process.env.TT_DATA_DIR = DATA_DIR;
-process.env.TT_SEED_DEMO = '0';
+process.env.MK_DATA_DIR = DATA_DIR;
+process.env.MK_SEED_DEMO = '0';
 
 let failures = 0;
 function check(name, cond) {

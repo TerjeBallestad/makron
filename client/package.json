@@ -1,5 +1,5 @@
 {
-  "name": "@time-turtle/client",
+  "name": "@makron/client",
   "private": true,
   "type": "module",
   "scripts": {

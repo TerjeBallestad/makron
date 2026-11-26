@@ -33,7 +33,7 @@ import { startServer, stopServer, stopAllServers, adminOn } from './util.js';
 afterAll(stopAllServers);
 
 function dataDir(label) {
-  return { TT_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-' + label + '-')) };
+  return { MK_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-' + label + '-')) };
 }
 
 /** A bare fetch with NO cookie jar. */
@@ -99,7 +99,7 @@ async function loginCookie(port) {
 }
 
 /** A fresh install with its first run still open. */
-const fresh = (label) => ({ ...dataDir(label), TT_SEED_DEMO: '0' });
+const fresh = (label) => ({ ...dataDir(label), MK_SEED_DEMO: '0' });
 
 // ## Verified red-green: 2026-09-17, TRANSCRIBED. The Host half dropped from `firstRunCaller`
 //   (`return isLoopbackPeer(req.socket.remoteAddress);`) — all 3 fail:

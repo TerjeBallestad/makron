@@ -6,7 +6,7 @@
 //
 // The app under test is the REAL built client (`client/dist`) served by the API server itself,
 // so there is one origin and one process: no vite, no proxy, no fixture framework. Every run
-// gets a throwaway TT_DATA_DIR, and the server is killed by its OWN pid — never by pattern,
+// gets a throwaway MK_DATA_DIR, and the server is killed by its OWN pid — never by pattern,
 // because `pkill -f` has previously taken out the user's editor.
 import { spawn } from 'node:child_process';
 import { mkdtempSync } from 'node:fs';
@@ -44,16 +44,16 @@ export async function startApp(opts = {}) {
     env: {
       ...process.env,
       PORT: String(port),
-      TT_DATA_DIR: dataDir,
+      MK_DATA_DIR: dataDir,
       // `onboarding` cases get NOTHING seeded, and that is not tidiness: DD-024 clause 3 makes the
       // demo content a step the first run ASKS for, so an onboarding case that boots with demo
       // hours already in it is not the fresh install it claims to be. Every other case keeps the
       // boot seed it has always had.
-      TT_SEED_DEMO: opts.onboarding ? '0' : '1',
-      // DD-024 clause 2: `defaultPassword: true` leaves TT_ADMIN_PASSWORD UNSET, so the seeded
+      MK_SEED_DEMO: opts.onboarding ? '0' : '1',
+      // DD-024 clause 2: `defaultPassword: true` leaves MK_ADMIN_PASSWORD UNSET, so the seeded
       // admin carries the password this repo publishes and the login hint is in force. Every other
       // case sets its own password, which is also what keeps the hint out of their way.
-      ...(opts.defaultPassword ? {} : { TT_ADMIN_PASSWORD: ADMIN_PASSWORD }),
+      ...(opts.defaultPassword ? {} : { MK_ADMIN_PASSWORD: ADMIN_PASSWORD }),
     },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
@@ -93,7 +93,7 @@ export async function startApp(opts = {}) {
   // `onboarding: true` stops HERE, with the question on screen and unanswered, for the tests whose
   // subject is the first run itself.
   if (opts.onboarding) return { port, child, dataDir, browser, page, pageErrors };
-  // The demo box is left unchecked: these cases build their own data and `TT_SEED_DEMO=1` has
+  // The demo box is left unchecked: these cases build their own data and `MK_SEED_DEMO=1` has
   // already seeded at boot.
   await page.locator('[data-tt="first-run-demo-submit"]').waitFor({ timeout: 15000 });
   await page.locator('[data-tt="first-run-demo-submit"]').click();

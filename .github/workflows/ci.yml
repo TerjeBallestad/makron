@@ -51,6 +51,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/terjeballestad/time-turtle:${{ github.sha }}
+          tags: ghcr.io/terjeballestad/makron:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

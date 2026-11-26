@@ -5,26 +5,26 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
 const serverDir = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-export const DATA_DIR = process.env.TT_DATA_DIR ? resolve(process.env.TT_DATA_DIR) : join(serverDir, 'data');
+export const DATA_DIR = process.env.MK_DATA_DIR ? resolve(process.env.MK_DATA_DIR) : join(serverDir, 'data');
 export const DB_PATH = join(DATA_DIR, 'timeturtle.db');
 
-// SB-181: variables an older Time Turtle read. Setting one is harmless, so the boot says so once
+// SB-181: variables an older Makron read. Setting one is harmless, so the boot says so once
 // per variable and carries on — it never exits for them.
 const REMOVED_ENV = {
-  TT_SHAPE: 'the shape concept was removed',
-  TT_SHAPE_LOCK: 'the shape concept was removed',
-  TT_MD_DIR: 'the markdown mirror was removed',
-  TT_MD_DIR_LOCK: 'the markdown mirror was removed',
-  TT_OBSIDIAN_REGISTRY: 'the Obsidian vault support was removed',
+  MK_SHAPE: 'the shape concept was removed',
+  MK_SHAPE_LOCK: 'the shape concept was removed',
+  MK_MD_DIR: 'the markdown mirror was removed',
+  MK_MD_DIR_LOCK: 'the markdown mirror was removed',
+  MK_OBSIDIAN_REGISTRY: 'the Obsidian vault support was removed',
 };
 for (const [name, why] of Object.entries(REMOVED_ENV)) {
-  if (process.env[name] !== undefined) console.log(`[time-turtle] ${name} is set but no longer read — ${why}`);
+  if (process.env[name] !== undefined) console.log(`[makron] ${name} is set but no longer read — ${why}`);
 }
 
 export const PORT = +(process.env.PORT || 3001);
 // Which interfaces the server answers on. Unset means every interface: a team install is reached
-// from other machines by definition. `TT_HOST=127.0.0.1` keeps it to this machine.
-export const HOST = process.env.TT_HOST || '';
+// from other machines by definition. `MK_HOST=127.0.0.1` keeps it to this machine.
+export const HOST = process.env.MK_HOST || '';
 
 // ---- SB-136: the Host header the first run will answer to ----
 //
@@ -83,7 +83,7 @@ export function isLoopbackHostHeader(raw) {
 // functions — folding them together would make one function answer questions with different
 // answers.
 //
-// WHY IT HAS TO EXIST AT ALL, and it is not defence in depth. With no `TT_HOST` the server listens
+// WHY IT HAS TO EXIST AT ALL, and it is not defence in depth. With no `MK_HOST` the server listens
 // on EVERY INTERFACE while it serves a first run that takes no credential. SB-162 is the measured
 // proof that the Host header cannot stand in for this: `curl -H 'Host: localhost'
 // http://<lan-ip>:<port>/…` passes a Host check from another machine on the wifi.
@@ -112,27 +112,27 @@ export function isLoopbackPeer(raw) {
   return value === '::1' || IPV4_LOOPBACK.test(mapped);
 }
 
-export const ADMIN_EMAIL = process.env.TT_ADMIN_EMAIL || 'admin@timeturtle.local';
+export const ADMIN_EMAIL = process.env.MK_ADMIN_EMAIL || 'admin@timeturtle.local';
 // ---- DD-024 clause 2: the ONE password this repo may ever read out to a screen ----
 //
 // Named, rather than inlined into the line below, because a second surface now reads it: the
 // Login screen states this credential back to a loopback caller while the seeded admin still
 // carries it (`defaultLogin` on `GET /api/first-run`). That is only safe for THIS literal — it is
 // a constant in a public MIT repo (DD-004), so stating it discloses nothing the source does not.
-// An operator's `TT_ADMIN_PASSWORD` is a real secret and must never reach a screen, which is why
+// An operator's `MK_ADMIN_PASSWORD` is a real secret and must never reach a screen, which is why
 // the hint verifies against this constant and never against `ADMIN_PASSWORD`.
 export const DEFAULT_ADMIN_PASSWORD = 'turtle';
-export const ADMIN_PASSWORD = process.env.TT_ADMIN_PASSWORD || DEFAULT_ADMIN_PASSWORD;
+export const ADMIN_PASSWORD = process.env.MK_ADMIN_PASSWORD || DEFAULT_ADMIN_PASSWORD;
 // ---- DD-024 clause 3: demo content is a step you ask for, not one you opt out of ----
 //
 // Terje ruled the direction on SB-159 ("Create demo content — don't spawn it by default"). The
-// first run's demo step asks for it; `TT_SEED_DEMO=1` seeds at boot for tests and scripts.
-export const SEED_DEMO = process.env.TT_SEED_DEMO === '1';
+// first run's demo step asks for it; `MK_SEED_DEMO=1` seeds at boot for tests and scripts.
+export const SEED_DEMO = process.env.MK_SEED_DEMO === '1';
 
 // Session-signing secret: env override, else generated once and stored next to the DB.
 mkdirSync(DATA_DIR, { recursive: true });
 function loadSecret() {
-  if (process.env.TT_SECRET) return process.env.TT_SECRET;
+  if (process.env.MK_SECRET) return process.env.MK_SECRET;
   const p = join(DATA_DIR, '.secret');
   if (existsSync(p)) return readFileSync(p, 'utf8').trim();
   const s = randomBytes(32).toString('hex');

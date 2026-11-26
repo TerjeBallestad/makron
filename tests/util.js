@@ -69,7 +69,7 @@ export function session(port) {
 export async function startServer(env) {
   const port = await freePort();
   const child = spawn('node', [SERVER], {
-    env: { ...process.env, PORT: String(port), TT_SEED_DEMO: '1', TT_ADMIN_PASSWORD: 'testpw', ...env },
+    env: { ...process.env, PORT: String(port), MK_SEED_DEMO: '1', MK_ADMIN_PASSWORD: 'testpw', ...env },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   let out = '';

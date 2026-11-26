@@ -12,7 +12,7 @@ RUN npm prune --omit=dev
 # Stage 2
 FROM node:22-slim AS runtime
 ENV NODE_ENV=production
-ENV TT_DATA_DIR=/var/lib/time-turtle
+ENV MK_DATA_DIR=/var/lib/time-turtle
 ENV PORT=3001
 WORKDIR /app
 COPY --from=build /app/node_modules node_modules

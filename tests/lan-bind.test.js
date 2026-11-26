@@ -1,20 +1,20 @@
-// The LAN bind — a Time Turtle install answers the network, which is what a team install is for.
+// The LAN bind — a Makron install answers the network, which is what a team install is for.
 //
-// With no `TT_HOST` the server binds every interface: a colleague on the same network reaches the
+// With no `MK_HOST` the server binds every interface: a colleague on the same network reaches the
 // app and meets the login. These tests prove it by CONNECTING over this machine's own LAN address.
 // Reading the bind argument would prove nothing — a test that asserted the value would pass against
 // a server that ignored it.
 //
 // Moved here from personal-peer-guard.test.js and personal-no-login.test.js when the shape concept
 // was removed (SB-181). Each test lost only its shape part: the install answers the first run with
-// `{ demo: false }` instead of storing a shape, and nothing sets `TT_SHAPE`.
+// `{ demo: false }` instead of storing a shape, and nothing sets `MK_SHAPE`.
 //
 // ## Verified red-green: 2026-09-17, MEASURED HERE — not transcribed. The source stanza's mutation
 // was `singleUserShape() &&` dropped from the peer-guard middleware, and SB-181 deleted that
 // middleware, so there was nothing left to transcribe. Two new mutations, both run on this branch:
 //   break 1 — `app.listen({ port: PORT, host: HOST || undefined })` → `HOST || '127.0.0.1'`
 //     (server/src/index.js): 2 of 3 fail, the two that connect over this machine's LAN address.
-//     `TT_HOST=0.0.0.0 binds every interface` stays green, as it must — it sets HOST explicitly,
+//     `MK_HOST=0.0.0.0 binds every interface` stays green, as it must — it sets HOST explicitly,
 //     so the default is not what it is testing. That contrast is the point of keeping all three.
 //   break 2 — move `client/dist` aside and run with no built client: only `a team install serves
 //     the client to the network too` fails, because the server registers express.static and the
@@ -29,11 +29,11 @@ import { startServer, stopServer, stopAllServers } from './util.js';
 afterAll(stopAllServers);
 
 function dataDir(label) {
-  return { TT_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-' + label + '-')) };
+  return { MK_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-' + label + '-')) };
 }
 
 /** A fresh install with its first run still open. */
-const open = (label) => ({ ...dataDir(label), TT_SEED_DEMO: '0' });
+const open = (label) => ({ ...dataDir(label), MK_SEED_DEMO: '0' });
 
 /**
  * This machine's own non-loopback IPv4 — the address a colleague on the same wifi would type.
@@ -131,9 +131,9 @@ describe('a LAN bind is what a team install is FOR', () => {
     await stopServer(server.child);
   }, 60000);
 
-  it('TT_HOST=0.0.0.0 binds every interface', async () => {
+  it('MK_HOST=0.0.0.0 binds every interface', async () => {
     const lan = lanAddress();
-    const server = await startServer({ ...dataDir('lan-host'), TT_HOST: '0.0.0.0' });
+    const server = await startServer({ ...dataDir('lan-host'), MK_HOST: '0.0.0.0' });
     expect(await reachableOn(lan, server.port)).toBe(true);
     await stopServer(server.child);
   }, 60000);

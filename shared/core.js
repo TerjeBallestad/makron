@@ -1,5 +1,5 @@
 // @ts-check
-// Time Turtle core: parsing, model, markdown serialization.
+// Makron core: parsing, model, markdown serialization.
 // Shared between client (UI + i18n overrides) and server (demo seed, commit rules).
 /** @typedef {import('./types.ts').Entry} Entry */
 /** @typedef {import('./types.ts').Task} Task */

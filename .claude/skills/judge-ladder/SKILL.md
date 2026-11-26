@@ -1,6 +1,6 @@
 ---
 name: judge-ladder
-description: The Time Turtle quality-gauging toolset — the ladder of judges (build → unit → api → browser → terje) with exact invocations, what each rung proves and cannot prove, and evidence-honesty rules. Load whenever binding work to verification, writing a judge stanza in a plan, choosing how to prove a change, or claiming something is done.
+description: The Makron quality-gauging toolset — the ladder of judges (build → unit → api → browser → terje) with exact invocations, what each rung proves and cannot prove, and evidence-honesty rules. Load whenever binding work to verification, writing a judge stanza in a plan, choosing how to prove a change, or claiming something is done.
 ---
 
 # Judge Ladder

@@ -78,7 +78,7 @@ describe('old days and committed segments take edits under the ordinary commit r
   let child = null;
 
   beforeAll(async () => {
-    const team = await startServer({ TT_DATA_DIR: dataDir('old-day-edits'), TT_SEED_DEMO: '0' });
+    const team = await startServer({ MK_DATA_DIR: dataDir('old-day-edits'), MK_SEED_DEMO: '0' });
     child = team.child;
     ADMIN = await seed(team.port);
     const created = await ADMIN('POST', '/api/users', {

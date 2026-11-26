@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Makron.Api/Makron.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Makron.Api.Tests/Makron.Api.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -183,8 +183,8 @@ const firstRun = async (port) => (await fetch(`http://127.0.0.1:${port}/api/firs
  */
 async function bootAndCheck(dir, expectedEntryIds) {
   const before = settingsRows(dir);
-  // `TT_ADMIN_PASSWORD: ''` so nothing but the stored hash decides the login.
-  const server = await startServer({ TT_DATA_DIR: dir, TT_SEED_DEMO: '0', TT_ADMIN_PASSWORD: '' });
+  // `MK_ADMIN_PASSWORD: ''` so nothing but the stored hash decides the login.
+  const server = await startServer({ MK_DATA_DIR: dir, MK_SEED_DEMO: '0', MK_ADMIN_PASSWORD: '' });
 
   const admin = session(server.port);
   const login = await admin('POST', '/api/auth/login', { email: 'admin@timeturtle.local', password: 'turtle' });

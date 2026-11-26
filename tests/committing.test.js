@@ -1,7 +1,7 @@
 // Committing, approving and releasing a segment, end to end against a real server, as the admin.
 //
 // Moved from shape-committing.test.js when the shape concept was removed (SB-181): this was its
-// `team` contrast case, and it lost only `TT_MD_DIR`.
+// `team` contrast case, and it lost only `MK_MD_DIR`.
 //
 // ## Verified red-green: 2026-09-17, MEASURED HERE — not transcribed. Same reason as
 // old-day-edits.test.js: this was a control arm, and SB-181 deleted the arm it contrasted with.
@@ -36,7 +36,7 @@ async function logAndCommit(port, id, date, key) {
 
 describe('committing', () => {
   it('commits, approves and releases exactly as it always did', async () => {
-    const server = await startServer({ TT_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-commit-')) });
+    const server = await startServer({ MK_DATA_DIR: mkdtempSync(join(tmpdir(), 'tt-commit-')) });
     const { admin, userId, put } = await logAndCommit(server.port, 'e1-team', DATE, KEY);
     expect(put.status).toBe(200);
     const state = await admin('GET', '/api/state');

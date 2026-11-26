@@ -11,3 +11,5 @@ services:
       - postgres-data:/var/lib/postgresql
 volumes:
   postgres-data:
+    # Kept from before the rename to Makron, so the dev database survives.
+    name: time-turtle_postgres-data
