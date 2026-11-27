@@ -37,7 +37,7 @@ export function Sidebar({
     <aside className="flex w-(--sidebar-w) shrink-0 flex-col border-r border-subtle bg-sidebar px-2.5 pt-3.5 pb-3">
       <div className="mb-4 flex items-center gap-2.25 px-2.5">
         <span className="size-5 shrink-0 rounded-chip bg-[url(/turtle-64.png)] bg-cover bg-center bg-no-repeat"></span>
-        <span className="text-prose font-bold tracking-[-0.005em] text-primary">Makron</span>
+        <span className="text-prose font-bold tracking-heading text-primary">Makron</span>
       </div>
       <nav className="flex flex-col gap-px">
         <NavRow
@@ -114,14 +114,14 @@ export function Sidebar({
             file it does not write — which cannot be located by the text it must not contain. */}
         <div className="flex items-center gap-1.75 px-2.5 pt-2 pb-0.5" data-tt="sync-status">
           <span className={clsx('size-1.5 rounded-full', syncDot)}></span>
-          <span className="font-mono text-[10px] text-faint">{syncLabel}</span>
+          <span className="font-mono text-tiny text-faint">{syncLabel}</span>
         </div>
         <div className="flex items-center gap-1.75 px-2.5 pt-1">
-          <span className="flex-1 truncate text-[11px] text-muted">{state.user.name}</span>
+          <span className="flex-1 truncate text-caption text-muted">{state.user.name}</span>
           <Chip mono={true} tone={admin ? 'green' : 'neutral'} className="shrink-0">
             {TT.t(state.user.role)}
           </Chip>
-          <TextButton onClick={ui.logout} className="shrink-0 font-mono text-[10px] text-faint">
+          <TextButton onClick={ui.logout} className="shrink-0 font-mono text-tiny text-faint">
             {TT.t('sign out')}
           </TextButton>
         </div>

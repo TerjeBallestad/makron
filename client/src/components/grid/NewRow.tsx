@@ -59,7 +59,7 @@ export function NewRow({ date, ui, reg, nav, focusLater, empty }: NewRowProps) {
         }}
         className={timeCell(err, 'text-primary')}
       />
-      <span className="col-start-2 -col-end-1 px-2.25 text-[11px] text-faint">
+      <span className="col-start-2 -col-end-1 px-2.25 text-caption text-faint">
         {err ? TT.t('unrecognized — try 12:00-13:00, 12:30→ or 1h30m') : ''}
       </span>
     </div>

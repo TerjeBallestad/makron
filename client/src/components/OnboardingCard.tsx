@@ -30,11 +30,11 @@ export function OnboardingCard({
     >
       <div className="w-[min(520px,92vw)] rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(19,20,26,0.62)] px-6.5 pt-7.5 pb-6 shadow-[0_28px_64px_-22px_rgba(0,0,0,0.75)] backdrop-blur-lg backdrop-saturate-115">
         <div className="mb-4.5 flex items-center justify-center">
-          <span className="text-[22px] font-bold tracking-heading text-primary [text-shadow:0_1px_10px_var(--black-a55)]">
+          <span className="text-doc font-bold tracking-heading text-primary [text-shadow:0_1px_10px_var(--black-a55)]">
             Makron
           </span>
         </div>
-        <p className="mb-5 text-center text-[14px] font-semibold text-primary">{question}</p>
+        <p className="mb-5 text-center text-prose font-semibold text-primary">{question}</p>
         {children}
       </div>
     </div>

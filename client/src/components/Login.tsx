@@ -64,7 +64,7 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
         }}
       >
         <div className="mb-6 flex items-center justify-center">
-          <span className="text-[22px] font-bold tracking-heading text-primary [text-shadow:0_1px_10px_var(--black-a55)]">
+          <span className="text-doc font-bold tracking-heading text-primary [text-shadow:0_1px_10px_var(--black-a55)]">
             Makron
           </span>
         </div>
@@ -83,7 +83,7 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
             exactly. */}
         {defaultLogin && (
           <div
-            className="mt-3.5 border-t border-strong pt-3 text-[11px] leading-[1.6] text-muted"
+            className="mt-3.5 border-t border-strong pt-3 text-caption leading-relaxed text-muted"
             data-tt="login-default-credentials"
           >
             {TT.t('This install still has its starting password. Sign in as')}{' '}
