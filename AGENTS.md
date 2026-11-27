@@ -2,7 +2,7 @@
 
 ## PM is the store
 
-All work state lives on the PM board (`pm` CLI, dashboard at https://pm.godstemning.dev/time-turtle) — issues, designs, plans, decisions, and the glossary. Never keep a shadow markdown copy of something PM already holds.
+All work state lives on the PM board (`pm` CLI, dashboard at https://pm.godstemning.dev/makron) — issues, designs, plans, decisions, and the glossary. Never keep a shadow markdown copy of something PM already holds.
 
 ## Run `pm glossary` before using domain language
 
