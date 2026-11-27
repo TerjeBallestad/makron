@@ -1,8 +1,7 @@
 import React from 'react';
 import TT from '../../i18n';
-import { StatusDot } from '@terjeballestad/bob';
+import { StatusDot, Button } from '@terjeballestad/bob';
 import { clsx } from 'clsx';
-import { TextButton } from '../TextButton';
 import { projectText } from '../../projectColor';
 import { gridRow } from './cells';
 import { TimeCell } from './TimeCell';
@@ -87,13 +86,14 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
         </span>
       </div>
       {/* The delete "×", hidden until the row is hovered. */}
-      <TextButton
+      <Button
+        variant="text"
         className="invisible text-base text-faint group-hover/row:visible"
         onClick={() => ui.remove(entry.id)}
         tabIndex={-1}
       >
         ×
-      </TextButton>
+      </Button>
     </div>
   );
 }
