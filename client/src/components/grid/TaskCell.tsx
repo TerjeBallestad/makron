@@ -1,8 +1,8 @@
 import React from 'react';
 import TT from '../../i18n';
 import { caretAtEnd } from './gridUtils';
-import cells from './cells.module.css';
-import styles from './TaskCell.module.css';
+import { clsx } from 'clsx';
+import { textCell } from './cells';
 import type { AppState, Entry } from '../../../../shared/types';
 import type { UiActions, RegisterCell, NavigateCell } from '../../types';
 
@@ -13,6 +13,9 @@ interface TaskCellProps {
   reg: RegisterCell;
   nav: NavigateCell;
 }
+
+// One row of the task picker. The highlighted row adds bg-card-hover; the others stay transparent.
+const OPTION = 'flex cursor-pointer items-baseline gap-2 rounded-[6px] px-2 py-1.5';
 
 // SDD-002: the cell shows the entry's own label + project (copied at birth). The
 // dropdown searches the user's personal TEMPLATES; picking one STAMPS its label +
@@ -68,7 +71,7 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
   };
   const display = entry.label || '';
   return (
-    <div className={styles.wrap}>
+    <div className="relative min-w-0">
       <input
         ref={reg(entry.id, 1)}
         spellCheck={false}
@@ -109,21 +112,27 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
             nav(entry.id, 1, 'right');
           }
         }}
-        className={[cells.cell, cells.task].join(' ')}
-        style={{ color: entry.label && !editing ? 'transparent' : 'var(--text-secondary)' }}
+        className={textCell('font-medium', entry.label && !editing ? 'text-transparent' : 'text-secondary')}
       />
       {!editing && entry.label && (
-        <span className={styles.overlay}>
+        // The project code and task name, drawn over the input, whose own text is transparent.
+        <span className="pointer-events-none absolute top-1/2 left-2 flex max-w-[calc(100%-16px)] -translate-y-1/2 items-baseline gap-1.75 bg-transparent">
           {proj && (
-            <span className={styles.code} style={{ color: TT.projColor(state, proj.code) }}>
+            <span
+              className="font-mono text-(length:--fs-tiny) font-semibold"
+              style={{ color: TT.projColor(state, proj.code) }}
+            >
               {proj.code}
             </span>
           )}
-          <span className={styles.name}>{entry.label}</span>
+          <span className="truncate text-[12px] text-primary">{entry.label}</span>
         </span>
       )}
       {editing && total > 0 && (
-        <div className={styles.menu}>
+        // BOB GAP (PLAN-002 rule): Bob has no combobox. Its Select popup differs (bg-modal,
+        // --shadow-toast, 5px item radius), so the task picker keeps its own look. Black at 45% in
+        // the shadow and the 6px option radius have no Bob token.
+        <div className="absolute top-full left-0 z-50 mt-1 max-h-60 w-80 overflow-y-auto rounded-(--radius) border border-strong bg-overlay p-1 shadow-[0_12px_32px_rgba(0,0,0,0.45)]">
           {options.map((option, i) => {
             const project = TT.projectOf(state, option.project),
               client = TT.clientOf(state, project);
@@ -136,15 +145,18 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
                   nav(entry.id, 1, 'right');
                 }}
                 onMouseEnter={() => setHighlight(i)}
-                className={[styles.option, i === highlight && styles.active].filter(Boolean).join(' ')}
+                className={clsx(OPTION, i === highlight && 'bg-card-hover')}
               >
                 {project && (
-                  <span className={styles.optCode} style={{ color: TT.projColor(state, project.code) }}>
+                  <span
+                    className="shrink-0 font-mono text-(length:--fs-tiny) font-semibold"
+                    style={{ color: TT.projColor(state, project.code) }}
+                  >
                     {project.code}
                   </span>
                 )}
-                <span className={styles.optName}>{option.label}</span>
-                {client && <span className={styles.optClient}>{client.name}</span>}
+                <span className="min-w-0 truncate text-[12px] text-primary">{option.label}</span>
+                {client && <span className="ml-auto shrink-0 text-(length:--fs-tiny) text-muted">{client.name}</span>}
               </div>
             );
           })}
@@ -155,16 +167,14 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
                 pick(options.length);
               }}
               onMouseEnter={() => setHighlight(options.length)}
-              className={[
-                styles.option,
-                highlight === options.length && styles.active,
-                options.length && styles.createTop,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={clsx(
+                OPTION,
+                highlight === options.length && 'bg-card-hover',
+                options.length > 0 && 'border-t border-subtle',
+              )}
             >
-              <span className={styles.createPlus}>+</span>
-              <span className={styles.createText}>{TT.t('create task') + ' “' + query.trim() + '”'}</span>
+              <span className="font-mono text-[11px] text-accent">+</span>
+              <span className="text-[12px] text-accent">{TT.t('create task') + ' “' + query.trim() + '”'}</span>
             </div>
           )}
         </div>

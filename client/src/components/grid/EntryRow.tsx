@@ -1,13 +1,22 @@
 import React from 'react';
 import TT from '../../i18n';
 import { StatusDot } from '@terjeballestad/bob';
-import styles from './EntryRow.module.css';
+import { clsx } from 'clsx';
+import { TextButton } from '../TextButton';
+import { gridRow } from './cells';
 import { TimeCell } from './TimeCell';
 import { TaskCell } from './TaskCell';
 import { NoteCell } from './NoteCell';
 import { BillCell } from './BillCell';
 import type { AppState, Entry } from '../../../../shared/types';
 import type { UiActions, RegisterCell, NavigateCell } from '../../types';
+
+const HOURS_CELL = 'flex items-center justify-end gap-1.5 px-2.25';
+const HOURS = 'font-mono text-(length:--fs-caption)';
+const LOCKED_CELL = 'truncate px-2.25 py-1.5';
+// BOB GAP: white at 1.4% has no Bob step, so the locked row's stripes keep their value.
+const LOCKED_STRIPES =
+  'bg-[repeating-linear-gradient(-45deg,transparent,transparent_6px,rgba(255,255,255,0.014)_6px,rgba(255,255,255,0.014)_12px)]';
 
 interface EntryRowProps {
   entry: Entry;
@@ -30,54 +39,66 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
     const code = TT.entryProjectCode(state, entry);
     const proj = TT.projectOf(state, code);
     return (
-      <div className={[styles.row, styles.locked].join(' ')}>
-        <span className={styles.lockedCell}>{TT.fmtTimeCell(entry) || '—'}</span>
-        <span className={[styles.lockedCell, styles.lockedTask].join(' ')}>
+      // Dimmed and striped, with no hover: nothing here can be edited.
+      <div className={clsx(gridRow, 'opacity-72', LOCKED_STRIPES)}>
+        <span className={clsx(LOCKED_CELL, 'font-mono text-(length:--fs-caption) text-muted')}>
+          {TT.fmtTimeCell(entry) || '—'}
+        </span>
+        <span className={clsx(LOCKED_CELL, 'flex items-baseline gap-1.5 text-(length:--fs-body) text-muted')}>
           {proj && (
-            <span className={styles.lockedCode} style={{ color: TT.projColor(state, code) }}>
+            <span className="flex-none font-mono text-(length:--fs-tiny)" style={{ color: TT.projColor(state, code) }}>
               {proj.code}
             </span>
           )}
-          <span className={styles.lockedLabel}>{entry.label || ''}</span>
+          <span className="truncate font-medium text-secondary">{entry.label || ''}</span>
+          {/* SDD-002 ruling 6 (SB-025): the 'edited by admin' marker on a corrected line. */}
           {entry.editedByAdmin && (
-            <span className={styles.editedMark} title={TT.t('edited by admin')}>
+            <span className="flex-none font-mono text-[10px] text-accent" title={TT.t('edited by admin')}>
               ✎ {TT.t('edited')}
             </span>
           )}
         </span>
-        <span className={[styles.lockedCell, styles.lockedNote].join(' ')}>{entry.note || ''}</span>
-        <div className={styles.hoursCell}>
-          <span className={styles.hours} style={{ color: 'var(--text-faint)' }}>
-            {TT.fmtHours(min)}
-          </span>
+        <span className={clsx(LOCKED_CELL, 'text-(length:--fs-body) text-muted')}>{entry.note || ''}</span>
+        <div className={HOURS_CELL}>
+          <span className={clsx(HOURS, 'text-faint')}>{TT.fmtHours(min)}</span>
         </div>
         <span></span>
       </div>
     );
   }
   // Row hover, the running-entry stop/hours swap and the delete-button reveal are all
-  // driven by CSS (:hover + the .running data class) — no hover state, so the row no
-  // longer re-renders on every mouse move over the hot path.
+  // driven by CSS (the row is a Tailwind group; its children use group-hover) — no hover
+  // state, so the row does not re-render on every mouse move over the hot path.
   return (
-    <div className={[styles.row, running && styles.running].filter(Boolean).join(' ')}>
+    <div className={clsx(gridRow, 'group hover:bg-gray-10')}>
       <TimeCell entry={entry} ui={ui} reg={reg} nav={nav} />
       <TaskCell entry={entry} state={state} ui={ui} reg={reg} nav={nav} />
       <NoteCell entry={entry} ui={ui} reg={reg} nav={nav} />
       {admin && <BillCell entry={entry} ui={ui} reg={reg} nav={nav} />}
-      <div className={styles.hoursCell}>
+      <div className={HOURS_CELL}>
         {running && <StatusDot state="live" color="var(--bg-green)" size={7} />}
         {running && (
-          <button className={styles.stop} onClick={() => ui.stop(entry.id)}>
+          // The stop button takes the hours' place while a running row is hovered.
+          // BOB GAP: Bob's Button has no small danger-tint size; btn-sm's padding and border differ.
+          <button
+            className="hidden cursor-pointer rounded-kbd border-none bg-danger-tint px-1.5 py-px font-mono text-[10px] text-danger group-hover:inline"
+            onClick={() => ui.stop(entry.id)}
+          >
             {TT.t('stop')}
           </button>
         )}
-        <span className={styles.hours} style={{ color: running ? 'var(--text-green)' : 'var(--text-secondary)' }}>
+        <span className={clsx(HOURS, running ? 'text-green group-hover:hidden' : 'text-secondary')}>
           {TT.fmtHours(min)}
         </span>
       </div>
-      <button className={styles.del} onClick={() => ui.remove(entry.id)} tabIndex={-1}>
+      {/* The delete "×", hidden until the row is hovered. */}
+      <TextButton
+        className="invisible text-(length:--fs-base) text-faint group-hover:visible"
+        onClick={() => ui.remove(entry.id)}
+        tabIndex={-1}
+      >
         ×
-      </button>
+      </TextButton>
     </div>
   );
 }
