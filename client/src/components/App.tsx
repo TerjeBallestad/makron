@@ -1,7 +1,6 @@
 // App shell: login, sidebar, topbar, routing, server sync
 import React from 'react';
 import TT, { preSessionLang } from '../i18n';
-import styles from './App.module.css';
 import { api } from '../api';
 import { isAdmin } from '../roles';
 import { nextClientId, derivedClientId, makeClientId } from '../clientIds';
@@ -412,7 +411,7 @@ export function App() {
   const syncColor = sync === 'error' ? 'var(--orange-9)' : 'var(--bg-green)';
 
   return (
-    <div className={styles.app}>
+    <div className="flex h-screen bg-app font-sans">
       <Sidebar
         state={state}
         route={route}
@@ -425,9 +424,9 @@ export function App() {
         syncLabel={syncLabel}
         syncColor={syncColor}
       />
-      <div className={styles.content}>
+      <div className="flex min-w-0 flex-1 flex-col">
         <TopBar title={title} running={running} runningCode={runningCode} todayMin={todayMin} ui={ui} />
-        <main className={styles.main}>{view}</main>
+        <main className="min-h-0 flex-1 overflow-y-auto">{view}</main>
       </div>
       {taskModal && <TaskModal state={state} ui={ui} init={taskModal} onClose={() => setTaskModal(null)} />}
     </div>

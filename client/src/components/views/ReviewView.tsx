@@ -9,7 +9,6 @@ import { StatusDot, Chip, Button } from '@terjeballestad/bob';
 import { api } from '../../api';
 import type { UserTimesheet, ApiError } from '../../api';
 import vs from './views.module.css';
-import sh from '../shared.module.css';
 import rv from './ReviewView.module.css';
 import type { AppState, User, Entry, Catalog } from '../../../../shared/types';
 import type { UiActions } from '../../types';
@@ -165,7 +164,7 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
               onClick={() => setSelId(u.id)}
             >
               <StatusDot state={u.id === selId ? 'solid' : 'outline'} color="var(--bg-accent)" size={7} />
-              <span className={[sh.ellipsis, rv.railName].join(' ')}>{u.name}</span>
+              <span className={['truncate', rv.railName].join(' ')}>{u.name}</span>
               <Chip mono={true} tone={u.role === 'admin' ? 'green' : 'neutral'}>
                 {TT.t(u.role)}
               </Chip>

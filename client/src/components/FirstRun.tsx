@@ -1,7 +1,6 @@
 import React from 'react';
 import TT from '../i18n';
 import { Button } from '@terjeballestad/bob';
-import styles from './onboarding.module.css';
 import { OnboardingCard } from './OnboardingCard';
 import { api } from '../api';
 import type { ApiError } from '../api';
@@ -45,8 +44,19 @@ export function FirstRun({ onDone }: { onDone: () => void }) {
 
   return (
     <OnboardingCard tag="first-run" question={TT.t('Start with something in it?')}>
-      <label className={styles.check} data-tt="first-run-demo-toggle">
-        <input type="checkbox" checked={demo} disabled={busy} onChange={(e) => setDemo(e.target.checked)} />
+      {/* BOB GAP (PLAN-002 rule): Bob has no checkbox. White at 4% has no Bob step, so the fill
+          keeps its value. */}
+      <label
+        className="flex cursor-pointer items-start gap-2.25 rounded-lg border border-strong bg-[rgba(255,255,255,0.04)] px-3.5 py-3 text-(length:--fs-caption) leading-[1.5] text-secondary hover:border-indigo-9"
+        data-tt="first-run-demo-toggle"
+      >
+        <input
+          type="checkbox"
+          className="mt-px flex-none accent-(--bg-accent)"
+          checked={demo}
+          disabled={busy}
+          onChange={(e) => setDemo(e.target.checked)}
+        />
         <span>
           {TT.t(
             'Add a few example clients, projects and a week of logged hours, so the app has something in it while you look around. You can delete them.',
@@ -54,7 +64,7 @@ export function FirstRun({ onDone }: { onDone: () => void }) {
         </span>
       </label>
       {err && (
-        <div className={styles.err} data-tt="first-run-error">
+        <div className="mt-2.5 text-(length:--fs-caption) leading-[1.5] text-danger" data-tt="first-run-error">
           {err}
         </div>
       )}
@@ -62,7 +72,7 @@ export function FirstRun({ onDone }: { onDone: () => void }) {
           checkbox makes the person re-read the checkbox to find out what they just agreed to. */}
       <Button
         variant="primary"
-        className={styles.submit}
+        className="mt-3.5 w-full"
         data-tt="first-run-demo-submit"
         disabled={busy}
         onClick={submit}

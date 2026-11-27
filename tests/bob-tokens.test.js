@@ -6,6 +6,9 @@
 // transparent. Nothing errors and the build passes, so this test is the only gate. It also
 // catches a name Bob never had (Makron read `--text-1` and `--panel-2` for months).
 //
+// Tailwind classes read a variable without `var(`: `h-(--topbar-h)`, `text-(length:--fs-body)`.
+// The test reads those too, because a misspelt name there fails the same silent way.
+//
 // ## Verified red-green: 2026-11-27 — `var(--text-muted)` in SyntaxHint.module.css put back to
 //   `var(--text-3)` fails this test with that file and name in the message.
 import { describe, it, expect } from 'vitest';
@@ -37,7 +40,7 @@ describe('Bob 1.0 tokens', () => {
     const known = new Set([...declared(files(BOB_TOKENS, ['.css'])), ...declared(sources)]);
     expect(known.has('--text-primary'), 'Bob 1.0 tokens not found: is @terjeballestad/bob 1.x installed?').toBe(true);
     const unknown = sources.flatMap((path) =>
-      [...readFileSync(path, 'utf8').matchAll(/var\((--[a-z0-9-]+)/g)]
+      [...readFileSync(path, 'utf8').matchAll(/(?:var\(|-\((?:[a-z-]+:)?)(--[a-z0-9-]+)/g)]
         .filter((m) => !known.has(m[1]))
         .map((m) => `${relative(ROOT, path)}: ${m[1]}`),
     );

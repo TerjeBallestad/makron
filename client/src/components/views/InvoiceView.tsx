@@ -3,7 +3,6 @@ import TT from '../../i18n';
 import { Chip, Button } from '@terjeballestad/bob';
 import { OptionSelect } from '../OptionSelect';
 import vs from './views.module.css';
-import sh from '../shared.module.css';
 import iv from './InvoiceView.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
@@ -125,9 +124,9 @@ export function InvoiceView({ state, ui }: ViewProps) {
                 <span className={vs.code} style={{ color: TT.projColor(state, code) }}>
                   {code}
                 </span>
-                <span className={[sh.ellipsis, vs.fs12].join(' ')}>{entry.label || ''}</span>
+                <span className={[vs.fs12, 'truncate'].join(' ')}>{entry.label || ''}</span>
               </span>
-              <span className={[vs.td, vs.cSecondary, sh.ellipsis].join(' ')}>{entry.note || ''}</span>
+              <span className={[vs.td, vs.cSecondary, 'truncate'].join(' ')}>{entry.note || ''}</span>
               <span className={[vs.td, vs.mono, vs.right].join(' ')}>
                 {TT.fmtHours(TT.effectiveBillMinutes(state, entry))}
               </span>
