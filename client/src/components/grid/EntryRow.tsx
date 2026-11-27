@@ -67,10 +67,10 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
     );
   }
   // Row hover, the running-entry stop/hours swap and the delete-button reveal are all
-  // driven by CSS (the row is a Tailwind group; its children use group-hover) — no hover
+  // driven by CSS (the row is the Tailwind group "row"; its children use group-hover/row) — no hover
   // state, so the row does not re-render on every mouse move over the hot path.
   return (
-    <div className={clsx(gridRow, 'group hover:bg-gray-10')}>
+    <div className={clsx(gridRow, 'group/row hover:bg-gray-10')} data-tt="entry-row">
       <TimeCell entry={entry} ui={ui} reg={reg} nav={nav} />
       <TaskCell entry={entry} state={state} ui={ui} reg={reg} nav={nav} />
       <NoteCell entry={entry} ui={ui} reg={reg} nav={nav} />
@@ -81,19 +81,19 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
           // The stop button takes the hours' place while a running row is hovered.
           // BOB GAP: Bob's Button has no small danger-tint size; btn-sm's padding and border differ.
           <button
-            className="hidden cursor-pointer rounded-kbd border-none bg-danger-tint px-1.5 py-px font-mono text-[10px] text-danger group-hover:inline"
+            className="hidden cursor-pointer rounded-kbd border-none bg-danger-tint px-1.5 py-px font-mono text-[10px] text-danger group-hover/row:inline"
             onClick={() => ui.stop(entry.id)}
           >
             {TT.t('stop')}
           </button>
         )}
-        <span className={clsx(HOURS, running ? 'text-green group-hover:hidden' : 'text-secondary')}>
+        <span className={clsx(HOURS, running ? 'text-green group-hover/row:hidden' : 'text-secondary')}>
           {TT.fmtHours(min)}
         </span>
       </div>
       {/* The delete "×", hidden until the row is hovered. */}
       <TextButton
-        className="invisible text-(length:--fs-base) text-faint group-hover:visible"
+        className="invisible text-(length:--fs-base) text-faint group-hover/row:visible"
         onClick={() => ui.remove(entry.id)}
         tabIndex={-1}
       >
