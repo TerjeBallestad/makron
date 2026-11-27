@@ -123,7 +123,7 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
               {proj.code}
             </span>
           )}
-          <span className="truncate text-[12px] text-primary">{entry.label}</span>
+          <span className="truncate text-body text-primary">{entry.label}</span>
         </span>
       )}
       {editing && total > 0 && (
@@ -153,7 +153,7 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
                     {project.code}
                   </span>
                 )}
-                <span className="min-w-0 truncate text-[12px] text-primary">{option.label}</span>
+                <span className="min-w-0 truncate text-body text-primary">{option.label}</span>
                 {client && <span className="ml-auto shrink-0 text-tiny text-muted">{client.name}</span>}
               </div>
             );
@@ -171,8 +171,8 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
                 options.length > 0 && 'border-t border-subtle',
               )}
             >
-              <span className="font-mono text-[11px] text-accent">+</span>
-              <span className="text-[12px] text-accent">{TT.t('create task') + ' “' + query.trim() + '”'}</span>
+              <span className="font-mono text-caption text-accent">+</span>
+              <span className="text-body text-accent">{TT.t('create task') + ' “' + query.trim() + '”'}</span>
             </div>
           )}
         </div>

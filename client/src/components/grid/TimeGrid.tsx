@@ -15,7 +15,7 @@ import type { UiActions, GridCell, RegisterCell, NavigateCell } from '../../type
 // set is one column shorter.
 const COLS_ADMIN = '[--mk-cols:148px_224px_1fr_58px_76px_26px]';
 const COLS_EMPLOYEE = '[--mk-cols:148px_224px_1fr_76px_26px]';
-const HEADER_CELL = 'px-2.25 text-[10px] font-semibold tracking-[0.07em] text-muted uppercase';
+const HEADER_CELL = 'px-2.25 text-tiny font-semibold tracking-label text-muted uppercase';
 
 interface TimeGridProps {
   date: string;

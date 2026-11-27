@@ -48,7 +48,7 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
           <span className="truncate font-medium text-secondary">{entry.label || ''}</span>
           {/* SDD-002 ruling 6 (SB-025): the 'edited by admin' marker on a corrected line. */}
           {entry.editedByAdmin && (
-            <span className="flex-none font-mono text-[10px] text-accent" title={TT.t('edited by admin')}>
+            <span className="flex-none font-mono text-tiny text-accent" title={TT.t('edited by admin')}>
               ✎ {TT.t('edited')}
             </span>
           )}
@@ -76,7 +76,7 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
           // The stop button takes the hours' place while a running row is hovered.
           // BOB GAP: Bob's Button has no small danger-tint size; btn-sm's padding and border differ.
           <button
-            className="hidden cursor-pointer rounded-kbd border-none bg-danger-tint px-1.5 py-px font-mono text-[10px] text-danger group-hover/row:inline"
+            className="hidden cursor-pointer rounded-kbd border-none bg-danger-tint px-1.5 py-px font-mono text-tiny text-danger group-hover/row:inline"
             onClick={() => ui.stop(entry.id)}
           >
             {TT.t('stop')}

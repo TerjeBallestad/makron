@@ -26,7 +26,7 @@ export function TopBar({ title, running, runningCode, todayMin, ui }: TopBarProp
             <span className="font-mono text-tiny text-green">
               {(runningCode || TT.t('timer')) + ' ' + TT.fmtDur(TT.entryMinutes(running))}
             </span>
-            <TextButton className="font-mono text-[10px] text-muted" onClick={() => ui.stop(running.id)}>
+            <TextButton className="font-mono text-tiny text-muted" onClick={() => ui.stop(running.id)}>
               {TT.t('stop')}
             </TextButton>
           </span>
