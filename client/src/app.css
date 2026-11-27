@@ -1,0 +1,24 @@
+/* Makron's global CSS: Tailwind v4 and Bob (DD-031).
+
+   Tailwind without its preflight: Makron's CSS Modules were written against Bob's reset alone
+   (Bob's base.css), as pm-board's are. Bob's component classes come from the last import. */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import '@terjeballestad/bob/tailwind.css';
+
+/* Element rules sit in the base layer, under Bob's component classes and the utilities. Bob's
+   base.css sets the body's font, background and colour, links, box-sizing and the scrollbars. */
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+  a:hover {
+    color: #9aa1f0;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-faint);
+  }
+}

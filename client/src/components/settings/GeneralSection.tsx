@@ -1,6 +1,7 @@
 import React from 'react';
 import TT from '../../i18n';
-import { SectionLabel, Select, Input } from '@terjeballestad/bob';
+import { SectionLabel, Input } from '@terjeballestad/bob';
+import { OptionSelect } from '../OptionSelect';
 import st from './settings.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
@@ -27,9 +28,9 @@ export function GeneralSection({ state, ui, admin }: GeneralSectionProps) {
         <span className={st.label} style={{ marginLeft: admin ? 16 : 0 }}>
           {TT.t('Language')}
         </span>
-        <Select
+        <OptionSelect
           value={TT.lang}
-          onChange={(e) => ui.setLanguage(e.target.value)}
+          onChange={(value) => ui.setLanguage(value)}
           options={[
             { value: 'en', label: 'English' },
             { value: 'no', label: 'Norsk' },

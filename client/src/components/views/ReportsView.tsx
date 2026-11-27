@@ -205,7 +205,7 @@ export function ReportsView({ state, ui }: ViewProps) {
                   value={row.min}
                   max={maxMin}
                   width={96}
-                  color={by === 'project' && row.key !== '—' ? TT.projColor(state, row.key) : 'var(--accent)'}
+                  color={by === 'project' && row.key !== '—' ? TT.projColor(state, row.key) : 'var(--bg-accent)'}
                 />
               </span>
               <span className={[vs.td, vs.mono, vs.right, vs.cBody].join(' ')}>{TT.fmtHours(row.min)}</span>

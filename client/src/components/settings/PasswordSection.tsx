@@ -66,7 +66,7 @@ export function PasswordSection({ ui }: PasswordSectionProps) {
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
           className={st.small}
-          style={mismatch ? { border: '1px solid var(--danger)' } : undefined}
+          style={mismatch ? { border: '1px solid var(--border-invalid)' } : undefined}
         />
         <Button variant="primary" size="sm" disabled={!ready} onClick={submit}>
           {TT.t('Change password')}

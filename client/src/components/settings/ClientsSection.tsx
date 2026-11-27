@@ -1,6 +1,7 @@
 import React from 'react';
 import TT from '../../i18n';
-import { SectionLabel, Button, Select, Input } from '@terjeballestad/bob';
+import { SectionLabel, Button, Input } from '@terjeballestad/bob';
+import { OptionSelect } from '../OptionSelect';
 import { makeClientId } from '../../clientIds';
 import st from './settings.module.css';
 import type { AppState } from '../../../../shared/types';
@@ -94,11 +95,9 @@ export function ClientsSection({ state, ui }: SettingsProps) {
             }}
             className={st.small}
           />
-          <Select
+          <OptionSelect
             value={String(client.rounding || 'exact')}
-            onChange={(e) =>
-              ui.updateClient(client.id, { rounding: e.target.value === 'exact' ? 'exact' : +e.target.value })
-            }
+            onChange={(value) => ui.updateClient(client.id, { rounding: value === 'exact' ? 'exact' : +value })}
             options={[
               { value: 'exact', label: TT.t('exact') },
               { value: '15', label: '15 min ↑' },

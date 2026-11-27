@@ -412,18 +412,20 @@ TT.monthGood = function (state, month) {
   return TT.monthSegments(state, month).every((seg) => seg.committed);
 };
 
+// Bob 1.0 scale steps, not roles: a project colour paints both text (codes) and fills (dots, bars),
+// and a Bob 1.0 role is for one property only (DD-033).
 const PALETTE = [
-  'var(--accent)',
-  'var(--blue)',
-  'var(--green)',
-  'var(--orange)',
-  'var(--purple)',
-  'var(--yellow)',
-  'var(--gold)',
+  'var(--indigo-9)',
+  'var(--blue-9)',
+  'var(--green-9)',
+  'var(--orange-9)',
+  'var(--purple-9)',
+  'var(--yellow-9)',
+  'var(--gold-9)',
 ];
 TT.projColor = function (state, code) {
   const i = state.projects.findIndex((project) => project.code === code);
-  return i < 0 ? 'var(--text-3)' : PALETTE[i % PALETTE.length];
+  return i < 0 ? 'var(--gray-23)' : PALETTE[i % PALETTE.length];
 };
 
 // ---- markdown format (v2 — SDD-002) ----

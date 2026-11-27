@@ -20,7 +20,7 @@ export function TopBar({ title, running, runningCode, todayMin, ui }: TopBarProp
       <span className={styles.right}>
         {running && (
           <span className={styles.pill}>
-            <StatusDot state="live" color="var(--green)" size={7} />
+            <StatusDot state="live" color="var(--bg-green)" size={7} />
             <span className={styles.pillText}>
               {(runningCode || TT.t('timer')) + ' ' + TT.fmtDur(TT.entryMinutes(running))}
             </span>

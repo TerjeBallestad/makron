@@ -1,6 +1,7 @@
 import React from 'react';
 import TT from '../../i18n';
-import { Chip, SectionLabel, Button, Select, Input } from '@terjeballestad/bob';
+import { Chip, SectionLabel, Button, Input } from '@terjeballestad/bob';
+import { OptionSelect } from '../OptionSelect';
 import st from './settings.module.css';
 import type { AppState, User, Role } from '../../../../shared/types';
 import type { UiActions } from '../../types';
@@ -137,9 +138,9 @@ export function UsersSection({ state, ui }: UsersSectionProps) {
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             className={st.small}
           />
-          <Select
+          <OptionSelect
             value={form.role}
-            onChange={(e) => setForm({ ...form, role: e.target.value as Role })}
+            onChange={(value) => setForm({ ...form, role: value as Role })}
             options={[
               { value: 'employee', label: TT.t('employee') },
               { value: 'admin', label: TT.t('admin') },

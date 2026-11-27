@@ -1,6 +1,7 @@
 import React from 'react';
 import TT from '../i18n';
-import { Button, Modal, FormRow, Input, Select } from '@terjeballestad/bob';
+import { Button, Modal, FormRow, Input } from '@terjeballestad/bob';
+import { OptionSelect } from './OptionSelect';
 import type { AppState } from '../../../shared/types';
 import type { UiActions, TaskModalInit } from '../types';
 
@@ -50,9 +51,9 @@ export function TaskModal({ state, ui, init, onClose }: TaskModalProps) {
           />
         </FormRow>
         <FormRow label={TT.t('Project')}>
-          <Select
+          <OptionSelect
             value={project}
-            onChange={(e) => setProject(e.target.value)}
+            onChange={(value) => setProject(value)}
             options={[{ value: '', label: '— ' + TT.t('no project') }].concat(
               // SDD-002 ruling 7: an archived project is hidden from this creation picker —
               // you cannot stamp a NEW template onto it (history still resolves elsewhere).

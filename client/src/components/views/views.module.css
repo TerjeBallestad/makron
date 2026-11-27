@@ -14,7 +14,7 @@
   font-size: 21px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--text);
+  color: var(--text-primary);
   margin: 0;
 }
 .headerRow {
@@ -27,17 +27,17 @@
   align-items: baseline;
 }
 .table {
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
   overflow: hidden;
-  background: var(--panel-dim);
+  background: var(--bg-card-dim);
 }
 .th {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-muted);
   padding: 8px 12px;
 }
 .right {
@@ -45,7 +45,7 @@
 }
 .td {
   font-size: 12.5px;
-  color: var(--text);
+  color: var(--text-primary);
   padding: 8px 12px;
 }
 .mono {
@@ -54,7 +54,7 @@
 }
 .empty {
   font-size: 12.5px;
-  color: var(--text-3);
+  color: var(--text-muted);
   padding: 14px 12px;
 }
 .code {
@@ -66,21 +66,21 @@
 /* table grid rows — the column tracks are supplied inline (role-dependent / per-view). */
 .headRow {
   display: grid;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .bodyRow {
   display: grid;
   align-items: center;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .totalRow {
   display: grid;
-  background: var(--panel);
+  background: var(--bg-card);
 }
 /* a flex label cell (project code + name + sub) inside a table body row. */
 .tdFlex {
   font-size: 12.5px;
-  color: var(--text);
+  color: var(--text-primary);
   padding: 8px 12px;
   display: flex;
   align-items: baseline;
@@ -89,13 +89,13 @@
 }
 /* colour + weight helpers (tokens only) for per-cell overrides. */
 .cBody {
-  color: var(--text);
+  color: var(--text-primary);
 }
 .cSecondary {
-  color: var(--text-2);
+  color: var(--text-secondary);
 }
 .cMuted {
-  color: var(--text-3);
+  color: var(--text-muted);
 }
 .bold {
   font-weight: 600;
@@ -105,11 +105,11 @@
 }
 .subtle {
   font-size: 12.5px;
-  color: var(--text-3);
+  color: var(--text-muted);
 }
 .sub {
   font-size: 10.5px;
-  color: var(--text-3);
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 .barCell {
@@ -118,17 +118,17 @@
 .note {
   margin-top: 10px;
   font-size: 11px;
-  color: var(--text-3);
+  color: var(--text-muted);
 }
 .noteTight {
   margin-top: 4px;
   font-size: 11px;
-  color: var(--text-3);
+  color: var(--text-muted);
 }
 .errLine {
   margin-bottom: 12px;
   font-size: 12px;
-  color: var(--danger);
+  color: var(--text-danger);
 }
 /* header control clusters */
 .controls {
@@ -196,27 +196,27 @@
   align-items: center;
   gap: 8px;
   padding: 3px 5px 3px 10px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-chip);
-  background: var(--panel, transparent);
+  background: var(--bg-card);
 }
 .segChip[data-committed='true'] {
-  border-color: color-mix(in srgb, var(--green) 40%, var(--border));
+  border-color: color-mix(in srgb, var(--green-9) 40%, var(--border-subtle));
 }
 .segChip[data-locked='true'] {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  border-color: color-mix(in srgb, var(--indigo-9) 45%, var(--border-subtle));
 }
 .segRange {
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--text-2);
+  color: var(--text-secondary);
 }
 .segLockedNote {
   font-size: 10.5px;
-  color: var(--text-3);
+  color: var(--text-muted);
   padding-right: 5px;
 }
 .notFound {
-  color: var(--text-3);
+  color: var(--text-muted);
   font-size: 12.5px;
 }

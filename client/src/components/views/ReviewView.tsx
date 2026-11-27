@@ -164,7 +164,7 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
               className={[rv.railRow, u.id === selId && rv.railActive].filter(Boolean).join(' ')}
               onClick={() => setSelId(u.id)}
             >
-              <StatusDot state={u.id === selId ? 'solid' : 'outline'} color="var(--accent)" size={7} />
+              <StatusDot state={u.id === selId ? 'solid' : 'outline'} color="var(--bg-accent)" size={7} />
               <span className={[sh.ellipsis, rv.railName].join(' ')}>{u.name}</span>
               <Chip mono={true} tone={u.role === 'admin' ? 'green' : 'neutral'}>
                 {TT.t(u.role)}
@@ -210,7 +210,9 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
                           >
                             <StatusDot
                               state={seg.committed ? 'solid' : 'outline'}
-                              color={seg.approved ? 'var(--accent)' : seg.committed ? 'var(--green)' : 'var(--text-4)'}
+                              color={
+                                seg.approved ? 'var(--bg-accent)' : seg.committed ? 'var(--bg-green)' : 'var(--gray-22)'
+                              }
                               size={7}
                             />
                             <span className={rv.pillRange}>{segLabel(dates)}</span>

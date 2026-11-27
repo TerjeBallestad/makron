@@ -19,7 +19,7 @@
       rgba(15, 16, 20, 0.96) 100%
     ),
     url(/turtle-bg.jpg) center / cover no-repeat;
-  background-color: var(--bg);
+  background-color: var(--bg-app);
 }
 .card {
   width: min(520px, 92vw);
@@ -41,13 +41,13 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--text);
+  color: var(--text-primary);
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
 }
 .question {
   font-size: 14px;
   font-weight: 600;
-  color: var(--text);
+  color: var(--text-primary);
   text-align: center;
   margin: 0 0 20px;
 }
@@ -60,24 +60,24 @@
   cursor: pointer;
   font-size: 11.5px;
   line-height: 1.5;
-  color: var(--text-2);
+  color: var(--text-secondary);
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-2);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
   padding: 12px 14px;
 }
 .check:hover {
-  border-color: var(--accent);
+  border-color: var(--indigo-9);
 }
 .check input {
   margin-top: 1px;
   flex: none;
-  accent-color: var(--accent);
+  accent-color: var(--bg-accent);
 }
 .err {
   font-size: 11.5px;
   line-height: 1.5;
-  color: var(--danger);
+  color: var(--text-danger);
   margin: 10px 0 0;
 }
 .submit {

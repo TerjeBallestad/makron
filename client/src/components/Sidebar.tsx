@@ -46,9 +46,9 @@ export function Sidebar({
           onClick={() => setRoute({ view: 'today' })}
           dot={
             running ? (
-              <StatusDot state="live" color="var(--green)" size={7} />
+              <StatusDot state="live" color="var(--bg-green)" size={7} />
             ) : (
-              <StatusDot state="outline" color="var(--accent)" size={7} />
+              <StatusDot state="outline" color="var(--bg-accent)" size={7} />
             )
           }
         />
