@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Wayfinder
 
-Foggy work too big for one session becomes a **map**: a destination, a set of typed investigation tickets with blocking edges, and a fog-of-war frontier that graduates into new tickets as you learn. The map lives on the PM board (https://pm.godstemning.dev/time-turtle); sessions resolve one ticket at a time.
+Foggy work too big for one session becomes a **map**: a destination, a set of typed investigation tickets with blocking edges, and a fog-of-war frontier that graduates into new tickets as you learn. The map lives on the PM board (https://pm.godstemning.dev/makron); sessions resolve one ticket at a time.
 
 Two modes — never both in one session.
 

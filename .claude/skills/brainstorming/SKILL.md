@@ -5,7 +5,7 @@ description: Explore ideas and turn them into SDDs filed in the PM dashboard. Us
 
 # Brainstorming Into SDDs
 
-Turn ideas into validated designs filed as SDDs on the PM board (https://pm.godstemning.dev/time-turtle). Designs live as SDDs in the dashboard, not as markdown files in `docs/` — this skill ensures brainstorming flows into that system instead of creating orphaned documents.
+Turn ideas into validated designs filed as SDDs on the PM board (https://pm.godstemning.dev/makron). Designs live as SDDs in the dashboard, not as markdown files in `docs/` — this skill ensures brainstorming flows into that system instead of creating orphaned documents.
 
 ## Project Context
 

@@ -10,7 +10,7 @@ allowed-tools:
 
 # File Issue
 
-Create a new item on the PM board (https://pm.godstemning.dev/time-turtle) outside the normal project cycle. Use when you spot a bug, design concern, or gap while working on something else.
+Create a new item on the PM board (https://pm.godstemning.dev/makron) outside the normal project cycle. Use when you spot a bug, design concern, or gap while working on something else.
 
 ## Arguments
 
