@@ -14,13 +14,12 @@ interface TopBarProps {
 
 export function TopBar({ title, running, runningCode, todayMin, ui }: TopBarProps) {
   return (
+    // BOB GAP: Bob's --topbar-h token has no Tailwind class, so the height reads the token.
     <header className="flex h-(--topbar-h) shrink-0 items-center gap-3 border-b border-subtle px-5">
       <span className="text-body font-semibold text-primary">{title}</span>
       <span className="ml-auto flex items-center gap-2.5">
         {running && (
-          // BOB GAP: green-9 at 25% has no alpha step (Bob has green-9-a10, -a18, -a70), so the
-          // border keeps its value.
-          <span className="flex items-center gap-1.75 rounded-btn border border-[rgba(70,194,136,0.25)] bg-green-tint px-2.25 py-0.75">
+          <span className="flex items-center gap-1.75 rounded-btn border border-green-9/25 bg-green-tint px-2.25 py-0.75">
             <StatusDot state="live" color="var(--bg-green)" size={7} />
             <span className="font-mono text-tiny text-green">
               {(runningCode || TT.t('timer')) + ' ' + TT.fmtDur(TT.entryMinutes(running))}

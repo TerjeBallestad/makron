@@ -33,6 +33,7 @@ export function Sidebar({
   syncDot,
 }: SidebarProps) {
   return (
+    // BOB GAP: Bob's --sidebar-w token has no Tailwind class, so the width reads the token.
     <aside className="flex w-(--sidebar-w) shrink-0 flex-col border-r border-subtle bg-sidebar px-2.5 pt-3.5 pb-3">
       <div className="mb-4 flex items-center gap-2.25 px-2.5">
         <span className="size-5 shrink-0 rounded-chip bg-[url(/turtle-64.png)] bg-cover bg-center bg-no-repeat"></span>

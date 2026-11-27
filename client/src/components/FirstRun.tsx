@@ -44,10 +44,9 @@ export function FirstRun({ onDone }: { onDone: () => void }) {
 
   return (
     <OnboardingCard tag="first-run" question={TT.t('Start with something in it?')}>
-      {/* BOB GAP (PLAN-002 rule): Bob has no checkbox. White at 4% has no Bob step, so the fill
-          keeps its value. */}
+      {/* BOB GAP (PLAN-002 rule): Bob has no checkbox. */}
       <label
-        className="flex cursor-pointer items-start gap-2.25 rounded-lg border border-strong bg-[rgba(255,255,255,0.04)] px-3.5 py-3 text-caption leading-normal text-secondary hover:border-indigo-9"
+        className="flex cursor-pointer items-start gap-2.25 rounded-lg border border-strong bg-white/4 px-3.5 py-3 text-caption leading-normal text-secondary hover:border-indigo-9"
         data-tt="first-run-demo-toggle"
       >
         <input
