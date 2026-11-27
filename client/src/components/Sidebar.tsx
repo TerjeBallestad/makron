@@ -1,8 +1,7 @@
 import React from 'react';
 import TT from '../i18n';
-import { NavRow, SectionLabel, StatusDot, Chip } from '@terjeballestad/bob';
+import { NavRow, SectionLabel, StatusDot, Chip, Button } from '@terjeballestad/bob';
 import { clsx } from 'clsx';
-import { TextButton } from './TextButton';
 import type { AppState, Entry } from '../../../shared/types';
 import type { UiActions, Route, SetRoute } from '../types';
 
@@ -121,9 +120,9 @@ export function Sidebar({
           <Chip mono={true} tone={admin ? 'green' : 'neutral'} className="shrink-0">
             {TT.t(state.user.role)}
           </Chip>
-          <TextButton onClick={ui.logout} className="shrink-0 font-mono text-tiny text-faint">
+          <Button variant="text" onClick={ui.logout} className="shrink-0 font-mono text-tiny text-faint">
             {TT.t('sign out')}
-          </TextButton>
+          </Button>
         </div>
       </div>
     </aside>

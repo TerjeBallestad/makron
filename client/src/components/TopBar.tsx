@@ -1,7 +1,6 @@
 import React from 'react';
 import TT from '../i18n';
-import { StatusDot } from '@terjeballestad/bob';
-import { TextButton } from './TextButton';
+import { StatusDot, Button } from '@terjeballestad/bob';
 import type { Entry } from '../../../shared/types';
 import type { UiActions } from '../types';
 
@@ -26,9 +25,9 @@ export function TopBar({ title, running, runningCode, todayMin, ui }: TopBarProp
             <span className="font-mono text-tiny text-green">
               {(runningCode || TT.t('timer')) + ' ' + TT.fmtDur(TT.entryMinutes(running))}
             </span>
-            <TextButton className="font-mono text-tiny text-muted" onClick={() => ui.stop(running.id)}>
+            <Button variant="text" className="font-mono text-tiny text-muted" onClick={() => ui.stop(running.id)}>
               {TT.t('stop')}
-            </TextButton>
+            </Button>
           </span>
         )}
         <span className="font-mono text-tiny text-muted">
