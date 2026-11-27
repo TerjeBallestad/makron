@@ -36,6 +36,10 @@ export function TaskModal({ state, ui, init, onClose }: TaskModalProps) {
     >
       <div
         onKeyDown={(ev) => {
+          // Bob 1.0's Select list is a portal, and React keyboard events bubble along the React
+          // tree, so an Enter that picks a project reaches this div too. Only an Enter from a
+          // field inside the div saves.
+          if (!ev.currentTarget.contains(ev.target as Node)) return;
           if (ev.key === 'Enter') {
             ev.preventDefault();
             save();
