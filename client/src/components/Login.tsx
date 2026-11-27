@@ -77,6 +77,9 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
         <Button variant="primary" onClick={submit} disabled={!email || !password || busy} className="mt-1.5 w-full">
           {busy ? TT.t('Signing in…') : TT.t('Sign in')}
         </Button>
+        {/* DD-024 clause 2: the starting-password note. Quiet, because it is a fact about this
+            install, not an instruction. The credential is mono, because it is a string to be typed
+            exactly. */}
         {defaultLogin && (
           <div
             className="mt-3.5 border-t border-strong pt-3 text-[11px] leading-[1.6] text-muted"
