@@ -26,11 +26,7 @@ interface BillCellProps {
 //
 export function BillCell({ entry, ui, reg, nav }: BillCellProps) {
   const chip = (
-    <Chip
-      mono={true}
-      tone={entry.billable ? 'green' : 'neutral'}
-      style={entry.billable ? {} : { color: 'var(--text-faint)' }}
-    >
+    <Chip mono={true} tone={entry.billable ? 'green' : 'neutral'} className={entry.billable ? undefined : 'text-faint'}>
       {'$'}
     </Chip>
   );

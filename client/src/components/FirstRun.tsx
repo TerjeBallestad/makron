@@ -47,12 +47,12 @@ export function FirstRun({ onDone }: { onDone: () => void }) {
       {/* BOB GAP (PLAN-002 rule): Bob has no checkbox. White at 4% has no Bob step, so the fill
           keeps its value. */}
       <label
-        className="flex cursor-pointer items-start gap-2.25 rounded-lg border border-strong bg-[rgba(255,255,255,0.04)] px-3.5 py-3 text-(length:--fs-caption) leading-[1.5] text-secondary hover:border-indigo-9"
+        className="flex cursor-pointer items-start gap-2.25 rounded-lg border border-strong bg-[rgba(255,255,255,0.04)] px-3.5 py-3 text-caption leading-normal text-secondary hover:border-indigo-9"
         data-tt="first-run-demo-toggle"
       >
         <input
           type="checkbox"
-          className="mt-px flex-none accent-(--bg-accent)"
+          className="mt-px flex-none accent-indigo-9"
           checked={demo}
           disabled={busy}
           onChange={(e) => setDemo(e.target.checked)}
@@ -64,7 +64,7 @@ export function FirstRun({ onDone }: { onDone: () => void }) {
         </span>
       </label>
       {err && (
-        <div className="mt-2.5 text-(length:--fs-caption) leading-[1.5] text-danger" data-tt="first-run-error">
+        <div className="mt-2.5 text-caption leading-normal text-danger" data-tt="first-run-error">
           {err}
         </div>
       )}

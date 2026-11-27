@@ -16,7 +16,7 @@ export function GridFooter({ entries, state }: GridFooterProps) {
   const billed = entries.reduce((sum, entry) => sum + TT.effectiveBillMinutes(state, entry), 0);
   const amount = entries.reduce((sum, entry) => sum + TT.effectiveAmount(state, entry), 0);
   return (
-    <div className="flex gap-4.5 px-2.25 pt-2 font-mono text-(length:--fs-tiny) text-muted">
+    <div className="flex gap-4.5 px-2.25 pt-2 font-mono text-tiny text-muted">
       <span>
         {TT.t('count') + ' '}
         <span className="text-secondary">{entries.length}</span>

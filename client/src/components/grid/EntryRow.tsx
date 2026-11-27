@@ -3,6 +3,7 @@ import TT from '../../i18n';
 import { StatusDot } from '@terjeballestad/bob';
 import { clsx } from 'clsx';
 import { TextButton } from '../TextButton';
+import { projectText } from '../../projectColor';
 import { gridRow } from './cells';
 import { TimeCell } from './TimeCell';
 import { TaskCell } from './TaskCell';
@@ -12,7 +13,7 @@ import type { AppState, Entry } from '../../../../shared/types';
 import type { UiActions, RegisterCell, NavigateCell } from '../../types';
 
 const HOURS_CELL = 'flex items-center justify-end gap-1.5 px-2.25';
-const HOURS = 'font-mono text-(length:--fs-caption)';
+const HOURS = 'font-mono text-caption';
 const LOCKED_CELL = 'truncate px-2.25 py-1.5';
 // BOB GAP: white at 1.4% has no Bob step, so the locked row's stripes keep their value.
 const LOCKED_STRIPES =
@@ -41,15 +42,9 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
     return (
       // Dimmed and striped, with no hover: nothing here can be edited.
       <div className={clsx(gridRow, 'opacity-72', LOCKED_STRIPES)}>
-        <span className={clsx(LOCKED_CELL, 'font-mono text-(length:--fs-caption) text-muted')}>
-          {TT.fmtTimeCell(entry) || '—'}
-        </span>
-        <span className={clsx(LOCKED_CELL, 'flex items-baseline gap-1.5 text-(length:--fs-body) text-muted')}>
-          {proj && (
-            <span className="flex-none font-mono text-(length:--fs-tiny)" style={{ color: TT.projColor(state, code) }}>
-              {proj.code}
-            </span>
-          )}
+        <span className={clsx(LOCKED_CELL, 'font-mono text-caption text-muted')}>{TT.fmtTimeCell(entry) || '—'}</span>
+        <span className={clsx(LOCKED_CELL, 'flex items-baseline gap-1.5 text-body text-muted')}>
+          {proj && <span className={clsx('flex-none font-mono text-tiny', projectText(state, code))}>{proj.code}</span>}
           <span className="truncate font-medium text-secondary">{entry.label || ''}</span>
           {/* SDD-002 ruling 6 (SB-025): the 'edited by admin' marker on a corrected line. */}
           {entry.editedByAdmin && (
@@ -58,7 +53,7 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
             </span>
           )}
         </span>
-        <span className={clsx(LOCKED_CELL, 'text-(length:--fs-body) text-muted')}>{entry.note || ''}</span>
+        <span className={clsx(LOCKED_CELL, 'text-body text-muted')}>{entry.note || ''}</span>
         <div className={HOURS_CELL}>
           <span className={clsx(HOURS, 'text-faint')}>{TT.fmtHours(min)}</span>
         </div>
@@ -93,7 +88,7 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
       </div>
       {/* The delete "×", hidden until the row is hovered. */}
       <TextButton
-        className="invisible text-(length:--fs-base) text-faint group-hover/row:visible"
+        className="invisible text-base text-faint group-hover/row:visible"
         onClick={() => ui.remove(entry.id)}
         tabIndex={-1}
       >

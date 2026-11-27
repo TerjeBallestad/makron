@@ -36,6 +36,7 @@ interface LoginProps {
  * BOB GAP (PLAN-002 rule): Bob has no alpha step for these, so they keep their values:
  * gray-3 (#0f1014) at 28/72/94% in the scrim, gray-7 (#13141a) at 55% in the card, white at
  * 10% in the border, black at 75% in the shadow. The brand's text shadow is --black-a55.
+ * The card's width, min(360px, 92vw), and the turtle picture are this screen's own layout and art.
  */
 export function Login({ onLogin, defaultLogin }: LoginProps) {
   const [email, setEmail] = React.useState('');
@@ -57,13 +58,13 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-app bg-[image:radial-gradient(130%_100%_at_50%_38%,rgba(15,16,20,0.28),rgba(15,16,20,0.72)_62%,rgba(15,16,20,0.94)_100%),url(/turtle-bg.jpg)] bg-cover bg-center bg-no-repeat font-sans">
       <div
-        className="w-[min(360px,92vw)] rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(19,20,26,0.55)] px-6.5 py-7.5 shadow-[0_28px_64px_-22px_rgba(0,0,0,0.75)] backdrop-blur-[16px] backdrop-saturate-[1.15]"
+        className="w-[min(360px,92vw)] rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(19,20,26,0.55)] px-6.5 py-7.5 shadow-[0_28px_64px_-22px_rgba(0,0,0,0.75)] backdrop-blur-lg backdrop-saturate-115"
         onKeyDown={(ev) => {
           if (ev.key === 'Enter') submit();
         }}
       >
         <div className="mb-6 flex items-center justify-center">
-          <span className="text-[22px] font-bold tracking-(--ls-heading) text-primary [text-shadow:0_1px_10px_var(--black-a55)]">
+          <span className="text-[22px] font-bold tracking-heading text-primary [text-shadow:0_1px_10px_var(--black-a55)]">
             Makron
           </span>
         </div>
@@ -73,7 +74,7 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
         <FormRow label={TT.t('Password')}>
           <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </FormRow>
-        {err && <div className="mt-0.5 mb-2 text-(length:--fs-caption) text-danger">{err}</div>}
+        {err && <div className="mt-0.5 mb-2 text-caption text-danger">{err}</div>}
         <Button variant="primary" onClick={submit} disabled={!email || !password || busy} className="mt-1.5 w-full">
           {busy ? TT.t('Signing in…') : TT.t('Sign in')}
         </Button>

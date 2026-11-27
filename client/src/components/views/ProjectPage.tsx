@@ -7,6 +7,8 @@ import vs from './views.module.css';
 import pp from './ProjectPage.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+import { clsx } from 'clsx';
+import { projectText } from '../../projectColor';
 
 interface ProjectPageProps {
   state: AppState;
@@ -34,9 +36,7 @@ export function ProjectPage({ state, ui, code }: ProjectPageProps) {
     <div className={vs.page}>
       <div className={vs.projHead}>
         <StatusDot state="solid" color={TT.projColor(state, code)} size={9} style={{ alignSelf: 'center' }} />
-        <span className={vs.projCode} style={{ color: TT.projColor(state, code) }}>
-          {code}
-        </span>
+        <span className={clsx(vs.projCode, projectText(state, code))}>{code}</span>
         <h1 className={vs.h1}>{project.name}</h1>
       </div>
       <div className={vs.chipRow}>

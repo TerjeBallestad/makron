@@ -12,6 +12,8 @@ import vs from './views.module.css';
 import rv from './ReviewView.module.css';
 import type { AppState, User, Entry, Catalog } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+import { clsx } from 'clsx';
+import { projectText } from '../../projectColor';
 
 interface ViewProps {
   state: AppState;
@@ -267,9 +269,7 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
                             onBlur={(e) => applyTime(entry.id, e.target.value)}
                           />
                           <span className={rv.taskCell}>
-                            <span className={vs.code} style={{ color: TT.projColor(catalog, code) }}>
-                              {code || '—'}
-                            </span>
+                            <span className={clsx(vs.code, projectText(catalog, code))}>{code || '—'}</span>
                             <input
                               className={[rv.cell, rv.cellGrow].join(' ')}
                               defaultValue={entry.label || ''}
