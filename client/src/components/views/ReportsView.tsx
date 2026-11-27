@@ -6,6 +6,8 @@ import { isAdmin } from '../../roles';
 import vs from './views.module.css';
 import type { AppState, Entry, TeamReportRow } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+import { clsx } from 'clsx';
+import { projectText } from '../../projectColor';
 
 function periodFilter(state: AppState, period: string): (entry: Entry) => boolean {
   const today = TT.todayStr();
@@ -192,9 +194,7 @@ export function ReportsView({ state, ui }: ViewProps) {
             <div key={row.key} className={vs.bodyRow} style={{ gridTemplateColumns: cols }}>
               <span className={vs.tdFlex}>
                 {by === 'project' && row.key !== '—' && (
-                  <span className={vs.code} style={{ color: TT.projColor(state, row.key) }}>
-                    {row.key}
-                  </span>
+                  <span className={clsx(vs.code, projectText(state, row.key))}>{row.key}</span>
                 )}
                 <span className="truncate">{row.label}</span>
                 {row.sub && <span className={vs.sub}>{row.sub}</span>}

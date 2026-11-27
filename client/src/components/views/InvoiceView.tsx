@@ -6,6 +6,8 @@ import vs from './views.module.css';
 import iv from './InvoiceView.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+import { clsx } from 'clsx';
+import { projectText } from '../../projectColor';
 
 interface ViewProps {
   state: AppState;
@@ -121,9 +123,7 @@ export function InvoiceView({ state, ui }: ViewProps) {
             <div key={entry.id} className={[vs.bodyRow, iv.cols].join(' ')}>
               <span className={[vs.td, vs.mono, vs.cSecondary].join(' ')}>{entry.date.slice(5)}</span>
               <span className={iv.taskCell}>
-                <span className={vs.code} style={{ color: TT.projColor(state, code) }}>
-                  {code}
-                </span>
+                <span className={clsx(vs.code, projectText(state, code))}>{code}</span>
                 <span className={[vs.fs12, 'truncate'].join(' ')}>{entry.label || ''}</span>
               </span>
               <span className={[vs.td, vs.cSecondary, 'truncate'].join(' ')}>{entry.note || ''}</span>

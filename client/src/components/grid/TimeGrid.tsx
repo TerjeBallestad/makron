@@ -10,11 +10,11 @@ import { isApproved } from '../views/viewUtils';
 import type { AppState, Entry } from '../../../../shared/types';
 import type { UiActions, GridCell, RegisterCell, NavigateCell } from '../../types';
 
-// The grid defines the shared column tracks as --tt-cols, which the header row, EntryRow and
-// NewRow all read (grid-cols-(--tt-cols)). Employees have no bill column (SB-022), so their track
+// The grid defines the shared column tracks as --mk-cols, which the header row, EntryRow and
+// NewRow all read (grid-cols-(--mk-cols)). Employees have no bill column (SB-022), so their track
 // set is one column shorter.
-const COLS_ADMIN = '[--tt-cols:148px_224px_1fr_58px_76px_26px]';
-const COLS_EMPLOYEE = '[--tt-cols:148px_224px_1fr_76px_26px]';
+const COLS_ADMIN = '[--mk-cols:148px_224px_1fr_58px_76px_26px]';
+const COLS_EMPLOYEE = '[--mk-cols:148px_224px_1fr_76px_26px]';
 const HEADER_CELL = 'px-2.25 text-[10px] font-semibold tracking-[0.07em] text-muted uppercase';
 
 interface TimeGridProps {
@@ -81,7 +81,7 @@ export function TimeGrid({ date, entries, state, ui, compact }: TimeGridProps) {
   return (
     <div className={clsx('font-sans', admin ? COLS_ADMIN : COLS_EMPLOYEE)}>
       {!compact && (
-        <div className="grid grid-cols-(--tt-cols) gap-0 border-b border-subtle pb-1.25">
+        <div className="grid grid-cols-(--mk-cols) gap-0 border-b border-subtle pb-1.25">
           {/* SDD-004: the admin column's heading is the `$` symbol, matching the chip below it.
               `TT.t` falls back to the key when there is no translation, and `$` deliberately has
               none — a symbol is not a word, so it reads the same in both languages. The employee
@@ -102,7 +102,7 @@ export function TimeGrid({ date, entries, state, ui, compact }: TimeGridProps) {
           <Chip tone={lockedByAdmin ? 'accent' : 'green'} mono={true}>
             {lockedByAdmin ? TT.t('locked') : TT.t('committed')}
           </Chip>
-          <span className="text-(length:--fs-tiny) text-faint">
+          <span className="text-tiny text-faint">
             {lockedByAdmin ? TT.t('approved by admin — locked') : TT.t('read-only — reopen from the week header')}
           </span>
         </div>

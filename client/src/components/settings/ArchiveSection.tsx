@@ -4,6 +4,8 @@ import { SectionLabel, Button } from '@terjeballestad/bob';
 import st from './settings.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+import { clsx } from 'clsx';
+import { projectText } from '../../projectColor';
 
 interface SettingsProps {
   state: AppState;
@@ -24,9 +26,7 @@ export function ArchiveSection({ state, ui }: SettingsProps) {
       <SectionLabel style={{ marginBottom: 10 }}>{TT.t('Archive')}</SectionLabel>
       {archivedProjects.map((project) => (
         <div key={'p:' + project.code} className={[st.row, st.colsArchive].join(' ')}>
-          <span className={st.codeInput} style={{ color: TT.projColor(state, project.code) }}>
-            {project.code}
-          </span>
+          <span className={clsx(st.codeInput, projectText(state, project.code))}>{project.code}</span>
           <span className={st.label}>{project.name}</span>
           <span className={st.th}>{TT.t('project')}</span>
           <Button variant="ghost" size="sm" onClick={() => ui.restoreProject(project.code)}>

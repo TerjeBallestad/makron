@@ -6,7 +6,7 @@
 // transparent. Nothing errors and the build passes, so this test is the only gate. It also
 // catches a name Bob never had (Makron read `--text-1` and `--panel-2` for months).
 //
-// Tailwind classes read a variable without `var(`: `h-(--topbar-h)`, `text-(length:--fs-body)`.
+// Tailwind classes read a variable without `var(`: `h-(--topbar-h)`, `w-(--sidebar-w)`.
 // The test reads those too, because a misspelt name there fails the same silent way.
 //
 // ## Verified red-green: 2026-11-27 — `var(--text-muted)` in SyntaxHint.module.css put back to

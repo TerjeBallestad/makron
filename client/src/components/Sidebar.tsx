@@ -1,6 +1,7 @@
 import React from 'react';
 import TT from '../i18n';
 import { NavRow, SectionLabel, StatusDot, Chip } from '@terjeballestad/bob';
+import { clsx } from 'clsx';
 import { TextButton } from './TextButton';
 import type { AppState, Entry } from '../../../shared/types';
 import type { UiActions, Route, SetRoute } from '../types';
@@ -16,7 +17,8 @@ interface SidebarProps {
   /** SB-025: count of segments awaiting approval, badged on the Review nav item (null = unknown) */
   reviewPending: number | null;
   syncLabel: string;
-  syncColor: string;
+  /** The sync dot's fill class: bg-green, or bg-orange-9 while offline. */
+  syncDot: string;
 }
 
 export function Sidebar({
@@ -29,13 +31,13 @@ export function Sidebar({
   admin,
   reviewPending,
   syncLabel,
-  syncColor,
+  syncDot,
 }: SidebarProps) {
   return (
     <aside className="flex w-(--sidebar-w) shrink-0 flex-col border-r border-subtle bg-sidebar px-2.5 pt-3.5 pb-3">
       <div className="mb-4 flex items-center gap-2.25 px-2.5">
         <span className="size-5 shrink-0 rounded-chip bg-[url(/turtle-64.png)] bg-cover bg-center bg-no-repeat"></span>
-        <span className="text-(length:--fs-prose) font-bold tracking-[-0.005em] text-primary">Makron</span>
+        <span className="text-prose font-bold tracking-[-0.005em] text-primary">Makron</span>
       </div>
       <nav className="flex flex-col gap-px">
         <NavRow
@@ -81,7 +83,11 @@ export function Sidebar({
           />
         )}
       </nav>
-      <SectionLabel style={{ margin: '18px 10px 8px' }}>{TT.t('Projects')}</SectionLabel>
+      {/* SectionLabel takes no className (Bob 1.1), so its margin sits on a wrapper. The sidebar is
+          a flex column, where margins do not collapse, so the wrapper places it as its own margin did. */}
+      <div className="mx-2.5 mt-4.5 mb-2">
+        <SectionLabel>{TT.t('Projects')}</SectionLabel>
+      </div>
       <nav className="flex min-h-0 flex-col gap-px overflow-y-auto">
         {state.projects.map((project) => (
           <NavRow
@@ -107,7 +113,7 @@ export function Sidebar({
             element, and the claim under test here is a NEGATIVE one — that this line claims no
             file it does not write — which cannot be located by the text it must not contain. */}
         <div className="flex items-center gap-1.75 px-2.5 pt-2 pb-0.5" data-tt="sync-status">
-          <span className="size-1.5 rounded-full" style={{ background: syncColor }}></span>
+          <span className={clsx('size-1.5 rounded-full', syncDot)}></span>
           <span className="font-mono text-[10px] text-faint">{syncLabel}</span>
         </div>
         <div className="flex items-center gap-1.75 px-2.5 pt-1">

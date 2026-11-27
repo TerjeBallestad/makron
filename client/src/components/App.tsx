@@ -408,7 +408,7 @@ export function App() {
   // server owns, and nothing else is written anywhere (SB-181).
   const settled = TT.t('synced');
   const syncLabel = sync === 'saving' ? TT.t('saving…') : sync === 'error' ? TT.t('offline — retrying') : settled;
-  const syncColor = sync === 'error' ? 'var(--orange-9)' : 'var(--bg-green)';
+  const syncDot = sync === 'error' ? 'bg-orange-9' : 'bg-green';
 
   return (
     <div className="flex h-screen bg-app font-sans">
@@ -422,7 +422,7 @@ export function App() {
         admin={admin}
         reviewPending={reviewPending}
         syncLabel={syncLabel}
-        syncColor={syncColor}
+        syncDot={syncDot}
       />
       <div className="flex min-w-0 flex-1 flex-col">
         <TopBar title={title} running={running} runningCode={runningCode} todayMin={todayMin} ui={ui} />
