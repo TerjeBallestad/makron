@@ -1,8 +1,7 @@
 import React from 'react';
 import TT from '../i18n';
 import { NavRow, SectionLabel, StatusDot, Chip } from '@terjeballestad/bob';
-import styles from './Sidebar.module.css';
-import sh from './shared.module.css';
+import { TextButton } from './TextButton';
 import type { AppState, Entry } from '../../../shared/types';
 import type { UiActions, Route, SetRoute } from '../types';
 
@@ -33,12 +32,12 @@ export function Sidebar({
   syncColor,
 }: SidebarProps) {
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.brand}>
-        <span className={styles.logo}></span>
-        <span className={styles.brandName}>Makron</span>
+    <aside className="flex w-(--sidebar-w) shrink-0 flex-col border-r border-subtle bg-sidebar px-2.5 pt-3.5 pb-3">
+      <div className="mb-4 flex items-center gap-2.25 px-2.5">
+        <span className="size-5 shrink-0 rounded-chip bg-[url(/turtle-64.png)] bg-cover bg-center bg-no-repeat"></span>
+        <span className="text-(length:--fs-prose) font-bold tracking-[-0.005em] text-primary">Makron</span>
       </div>
-      <nav className={styles.nav}>
+      <nav className="flex flex-col gap-px">
         <NavRow
           label={TT.t('Today')}
           count={todayEntries.length || null}
@@ -83,7 +82,7 @@ export function Sidebar({
         )}
       </nav>
       <SectionLabel style={{ margin: '18px 10px 8px' }}>{TT.t('Projects')}</SectionLabel>
-      <nav className={styles.projects}>
+      <nav className="flex min-h-0 flex-col gap-px overflow-y-auto">
         {state.projects.map((project) => (
           <NavRow
             key={project.code}
@@ -98,27 +97,27 @@ export function Sidebar({
           />
         ))}
       </nav>
-      <div className={styles.bottom}>
+      <div className="mt-auto flex flex-col gap-px">
         <NavRow
           label={TT.t('Settings')}
           active={route.view === 'settings'}
           onClick={() => setRoute({ view: 'settings' })}
         />
-        {/* SB-134: a stable anchor for the browser rung. CSS-module class names are hashed in the
-            built bundle, and the claim under test here is a NEGATIVE one — that this line claims no
+        {/* SB-134: a stable anchor for the browser rung. Utility class names do not name the
+            element, and the claim under test here is a NEGATIVE one — that this line claims no
             file it does not write — which cannot be located by the text it must not contain. */}
-        <div className={styles.syncRow} data-tt="sync-status">
-          <span className={styles.syncDot} style={{ background: syncColor }}></span>
-          <span className={styles.syncLabel}>{syncLabel}</span>
+        <div className="flex items-center gap-1.75 px-2.5 pt-2 pb-0.5" data-tt="sync-status">
+          <span className="size-1.5 rounded-full" style={{ background: syncColor }}></span>
+          <span className="font-mono text-[10px] text-faint">{syncLabel}</span>
         </div>
-        <div className={styles.userRow}>
-          <span className={[sh.ellipsis, styles.userName].join(' ')}>{state.user.name}</span>
-          <Chip mono={true} tone={admin ? 'green' : 'neutral'} className={styles.chip}>
+        <div className="flex items-center gap-1.75 px-2.5 pt-1">
+          <span className="flex-1 truncate text-[11px] text-muted">{state.user.name}</span>
+          <Chip mono={true} tone={admin ? 'green' : 'neutral'} className="shrink-0">
             {TT.t(state.user.role)}
           </Chip>
-          <button onClick={ui.logout} className={[sh.ghostBtn, styles.signOut].join(' ')}>
+          <TextButton onClick={ui.logout} className="shrink-0 font-mono text-[10px] text-faint">
             {TT.t('sign out')}
-          </button>
+          </TextButton>
         </div>
       </div>
     </aside>

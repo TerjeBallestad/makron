@@ -4,7 +4,6 @@ import { Chip, StatusDot } from '@terjeballestad/bob';
 import { isAdmin } from '../../roles';
 import { sumMin } from './viewUtils';
 import vs from './views.module.css';
-import sh from '../shared.module.css';
 import pp from './ProjectPage.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
@@ -64,8 +63,8 @@ export function ProjectPage({ state, ui, code }: ProjectPageProps) {
               >
                 {TT.fmtTimeCell(entry)}
               </span>
-              <span className={[vs.td, vs.fs12, sh.ellipsis].join(' ')}>{entry.label || ''}</span>
-              <span className={[vs.td, vs.cSecondary, sh.ellipsis].join(' ')}>{entry.note || ''}</span>
+              <span className={[vs.td, vs.fs12, 'truncate'].join(' ')}>{entry.label || ''}</span>
+              <span className={[vs.td, vs.cSecondary, 'truncate'].join(' ')}>{entry.note || ''}</span>
               <span className={pp.billCell}>
                 {/* SDD-004: the same chip the day grid renders (BillCell), over the same
                     `entry.billable` field — so it has to read the same way. One entry's

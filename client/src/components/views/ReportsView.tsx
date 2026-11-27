@@ -4,7 +4,6 @@ import { SegToggle, ProgressBar } from '@terjeballestad/bob';
 import { api } from '../../api';
 import { isAdmin } from '../../roles';
 import vs from './views.module.css';
-import sh from '../shared.module.css';
 import type { AppState, Entry, TeamReportRow } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 
@@ -197,7 +196,7 @@ export function ReportsView({ state, ui }: ViewProps) {
                     {row.key}
                   </span>
                 )}
-                <span className={sh.ellipsis}>{row.label}</span>
+                <span className="truncate">{row.label}</span>
                 {row.sub && <span className={vs.sub}>{row.sub}</span>}
               </span>
               <span className={vs.barCell}>
