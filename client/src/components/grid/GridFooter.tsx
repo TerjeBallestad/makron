@@ -1,7 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
 import { isAdmin } from '../../roles';
-import styles from './GridFooter.module.css';
 import type { AppState, Entry } from '../../../../shared/types';
 
 interface GridFooterProps {
@@ -17,14 +16,14 @@ export function GridFooter({ entries, state }: GridFooterProps) {
   const billed = entries.reduce((sum, entry) => sum + TT.effectiveBillMinutes(state, entry), 0);
   const amount = entries.reduce((sum, entry) => sum + TT.effectiveAmount(state, entry), 0);
   return (
-    <div className={styles.footer}>
+    <div className="flex gap-4.5 px-2.25 pt-2 font-mono text-(length:--fs-tiny) text-muted">
       <span>
         {TT.t('count') + ' '}
-        <span className={styles.value2}>{entries.length}</span>
+        <span className="text-secondary">{entries.length}</span>
       </span>
-      <span className={styles.right}>
+      <span className="ml-auto">
         {TT.t('billable') + ' '}
-        <span className={styles.value2}>
+        <span className="text-secondary">
           {TT.fmtHours(billed)}
           {TT.t('h')}
         </span>
@@ -32,7 +31,7 @@ export function GridFooter({ entries, state }: GridFooterProps) {
       </span>
       <span>
         {TT.t('sum') + ' '}
-        <span className={styles.value}>
+        <span className="font-semibold text-primary">
           {TT.fmtHours(total)}
           {TT.t('h')}
         </span>

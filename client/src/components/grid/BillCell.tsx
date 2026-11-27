@@ -1,6 +1,5 @@
 import React from 'react';
 import { Chip } from '@terjeballestad/bob';
-import styles from './BillCell.module.css';
 import type { Entry } from '../../../../shared/types';
 import type { UiActions, RegisterCell, NavigateCell } from '../../types';
 
@@ -51,7 +50,8 @@ export function BillCell({ entry, ui, reg, nav }: BillCellProps) {
           nav(entry.id, 3, 'left');
         }
       }}
-      className={styles.btn}
+      // A bare button around the chip; it keeps Bob's :focus-visible ring.
+      className="cursor-pointer border-none bg-transparent px-1.5 py-1 text-left"
     >
       {chip}
     </button>

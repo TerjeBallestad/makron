@@ -1,7 +1,6 @@
 import React from 'react';
 import TT from '../../i18n';
-import styles from './NewRow.module.css';
-import cells from './cells.module.css';
+import { gridRow, timeCell } from './cells';
 import type { UiActions, RegisterCell, NavigateCell } from '../../types';
 
 interface NewRowProps {
@@ -31,7 +30,7 @@ export function NewRow({ date, ui, reg, nav, focusLater, empty }: NewRowProps) {
     return true;
   };
   return (
-    <div className={styles.row}>
+    <div className={gridRow}>
       <input
         ref={reg('new', 0)}
         value={draft}
@@ -58,10 +57,11 @@ export function NewRow({ date, ui, reg, nav, focusLater, empty }: NewRowProps) {
         onBlur={() => {
           if (draft.trim()) commit();
         }}
-        className={[cells.cell, cells.time].join(' ')}
-        style={{ borderColor: err ? 'rgba(229,72,77,.5)' : 'transparent' }}
+        className={timeCell(err, 'text-primary')}
       />
-      <span className={styles.err}>{err ? TT.t('unrecognized — try 12:00-13:00, 12:30→ or 1h30m') : ''}</span>
+      <span className="col-[2/-1] px-2.25 text-[11px] text-faint">
+        {err ? TT.t('unrecognized — try 12:00-13:00, 12:30→ or 1h30m') : ''}
+      </span>
     </div>
   );
 }

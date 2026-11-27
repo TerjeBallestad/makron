@@ -1,18 +1,17 @@
 import React from 'react';
 import TT from '../../i18n';
 import { Kbd } from '@terjeballestad/bob';
-import styles from './SyntaxHint.module.css';
 
 export function SyntaxHint() {
   // Kbd's public API is style-only (frozen), so the 2px inline-key spacing lives on a
   // wrapping span class rather than a Kbd prop — the bare Enter/⌫ keys stay marginless.
   const k = (s: string) => (
-    <span className={styles.k}>
+    <span className="mx-0.5">
       <Kbd>{s}</Kbd>
     </span>
   );
   return (
-    <div className={styles.hint}>
+    <div className="mt-3.5 text-[11px] leading-[2] text-muted">
       {TT.t('time formats — ')}
       {k('12:00-13:00')}
       {' ' + TT.t('range') + ' · '}

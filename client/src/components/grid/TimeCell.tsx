@@ -1,7 +1,7 @@
 import React from 'react';
 import TT from '../../i18n';
 import { caretAtEnd } from './gridUtils';
-import cells from './cells.module.css';
+import { timeCell } from './cells';
 import type { Entry } from '../../../../shared/types';
 import type { UiActions, RegisterCell, NavigateCell } from '../../types';
 
@@ -75,11 +75,7 @@ export function TimeCell({ entry, ui, reg, nav }: TimeCellProps) {
           if (commit()) nav(entry.id, 0, 'right');
         }
       }}
-      className={[cells.cell, cells.time].join(' ')}
-      style={{
-        borderColor: err ? 'rgba(229,72,77,.5)' : 'transparent',
-        color: TT.isRunning(entry) ? 'var(--text-green)' : 'var(--text-primary)',
-      }}
+      className={timeCell(err, TT.isRunning(entry) ? 'text-green' : 'text-primary')}
     />
   );
 }

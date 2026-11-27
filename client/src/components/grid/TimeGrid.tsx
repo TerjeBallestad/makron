@@ -2,13 +2,20 @@
 import React from 'react';
 import TT from '../../i18n';
 import { Chip } from '@terjeballestad/bob';
-import styles from './TimeGrid.module.css';
+import { clsx } from 'clsx';
 import { EntryRow } from './EntryRow';
 import { NewRow } from './NewRow';
 import { isAdmin } from '../../roles';
 import { isApproved } from '../views/viewUtils';
 import type { AppState, Entry } from '../../../../shared/types';
 import type { UiActions, GridCell, RegisterCell, NavigateCell } from '../../types';
+
+// The grid defines the shared column tracks as --tt-cols, which the header row, EntryRow and
+// NewRow all read (grid-cols-(--tt-cols)). Employees have no bill column (SB-022), so their track
+// set is one column shorter.
+const COLS_ADMIN = '[--tt-cols:148px_224px_1fr_58px_76px_26px]';
+const COLS_EMPLOYEE = '[--tt-cols:148px_224px_1fr_76px_26px]';
+const HEADER_CELL = 'px-2.25 text-[10px] font-semibold tracking-[0.07em] text-muted uppercase';
 
 interface TimeGridProps {
   date: string;
@@ -72,29 +79,30 @@ export function TimeGrid({ date, entries, state, ui, compact }: TimeGridProps) {
   };
 
   return (
-    <div className={[styles.grid, !admin && styles.employee].filter(Boolean).join(' ')}>
+    <div className={clsx('font-sans', admin ? COLS_ADMIN : COLS_EMPLOYEE)}>
       {!compact && (
-        <div className={styles.header}>
+        <div className="grid grid-cols-(--tt-cols) gap-0 border-b border-subtle pb-1.25">
           {/* SDD-004: the admin column's heading is the `$` symbol, matching the chip below it.
               `TT.t` falls back to the key when there is no translation, and `$` deliberately has
               none — a symbol is not a word, so it reads the same in both languages. The employee
               list is unchanged and still ends at `note`: employees have no bill column at all
               (SB-011/SB-022), and EntryRow renders the cell behind the same admin check. */}
           {(admin ? ['time', 'task', 'note', '$'] : ['time', 'task', 'note']).map((header) => (
-            <span key={header} className={styles.headerCell}>
+            <span key={header} className={HEADER_CELL}>
               {TT.t(header)}
             </span>
           ))}
-          <span className={styles.headerHours}>{'Σ ' + TT.t('hours')}</span>
+          <span className={clsx(HEADER_CELL, 'text-right font-mono')}>{'Σ ' + TT.t('hours')}</span>
           <span></span>
         </div>
       )}
       {locked && (
-        <div className={styles.lockedBanner}>
+        // SDD-002 ruling 4/5: the committed-and-read-only banner above a locked day's rows.
+        <div className="flex items-center gap-2 px-2.25 pt-0.75 pb-1">
           <Chip tone={lockedByAdmin ? 'accent' : 'green'} mono={true}>
             {lockedByAdmin ? TT.t('locked') : TT.t('committed')}
           </Chip>
-          <span className={styles.lockedHint}>
+          <span className="text-(length:--fs-tiny) text-faint">
             {lockedByAdmin ? TT.t('approved by admin — locked') : TT.t('read-only — reopen from the week header')}
           </span>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { clsx } from 'clsx';
 
 /**
  * A chrome-less text button: no border, no fill, no padding. The top bar's "stop" and the
@@ -9,11 +10,5 @@ import React from 'react';
  * fill, and btn-sm/btn-md set padding). This stays local until Bob has one.
  */
 export function TextButton({ className, type = 'button', ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      type={type}
-      className={['cursor-pointer border-none bg-transparent p-0', className].filter(Boolean).join(' ')}
-      {...rest}
-    />
-  );
+  return <button type={type} className={clsx('cursor-pointer border-none bg-transparent p-0', className)} {...rest} />;
 }

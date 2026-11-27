@@ -1,6 +1,6 @@
 import React from 'react';
 import { caretAtStart, caretAtEnd } from './gridUtils';
-import cells from './cells.module.css';
+import { textCell } from './cells';
 import type { Entry } from '../../../../shared/types';
 import type { UiActions, RegisterCell, NavigateCell } from '../../types';
 
@@ -53,7 +53,7 @@ export function NoteCell({ entry, ui, reg, nav }: NoteCellProps) {
           nav(entry.id, 2, 'right');
         }
       }}
-      className={[cells.cell, cells.note].join(' ')}
+      className={textCell('text-secondary')}
     />
   );
 }
