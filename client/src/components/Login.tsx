@@ -33,9 +33,11 @@ interface LoginProps {
  * The welcome screens' glass card over the turtle picture. OnboardingCard draws the same chrome
  * a little darker and wider.
  *
- * BOB GAP (PLAN-002 rule): Bob has no alpha step for these, so they keep their values:
- * gray-3 (#0f1014) at 28/72/94% in the scrim, gray-7 (#13141a) at 55% in the card, white at
- * 10% in the border, black at 75% in the shadow. The brand's text shadow is --black-a55.
+ * See-through colours are Bob colours with Tailwind's opacity modifier (DD-038): gray-3 at
+ * 28/72/94% in the scrim, gray-7 at 55% in the card, white at 10% in the border. The scrim is a
+ * ::before layer under the card (isolate, -z-10), over the turtle picture.
+ * BOB GAP (PLAN-002 rule): the shadow (black at 75%) and the brand's text shadow have no Bob
+ * class, so they keep their values.
  * The card's width, min(360px, 92vw), and the turtle picture are this screen's own layout and art.
  */
 export function Login({ onLogin, defaultLogin }: LoginProps) {
@@ -56,9 +58,9 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
       });
   };
   return (
-    <div className="flex min-h-screen items-center justify-center bg-app bg-[image:radial-gradient(130%_100%_at_50%_38%,rgba(15,16,20,0.28),rgba(15,16,20,0.72)_62%,rgba(15,16,20,0.94)_100%),url(/turtle-bg.jpg)] bg-cover bg-center bg-no-repeat font-sans">
+    <div className="relative isolate flex min-h-screen items-center justify-center bg-app bg-[url(/turtle-bg.jpg)] bg-cover bg-center bg-no-repeat font-sans before:absolute before:inset-0 before:-z-10 before:bg-radial-[130%_100%_at_50%_38%] before:from-gray-3/28 before:via-gray-3/72 before:via-62% before:to-gray-3/94 before:to-100%">
       <div
-        className="w-[min(360px,92vw)] rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(19,20,26,0.55)] px-6.5 py-7.5 shadow-[0_28px_64px_-22px_rgba(0,0,0,0.75)] backdrop-blur-lg backdrop-saturate-115"
+        className="w-[min(360px,92vw)] rounded-xl border border-white/10 bg-gray-7/55 px-6.5 py-7.5 shadow-[0_28px_64px_-22px_rgba(0,0,0,0.75)] backdrop-blur-lg backdrop-saturate-115"
         onKeyDown={(ev) => {
           if (ev.key === 'Enter') submit();
         }}

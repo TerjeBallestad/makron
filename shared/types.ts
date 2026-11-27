@@ -344,6 +344,18 @@ export interface UserResponse {
 // Method signatures for shared/core.js — the module is populated incrementally
 // there, so core.js casts `{}` to this interface and each assignment is checked
 // against it (contextual typing supplies the parameter types).
+/** A project's colour: a Bob scale step, as TT.projColor returns it (shared/core.js PALETTE, and
+ *  gray-23 for no project). client/src/projectColor.ts maps each one to its class. */
+export type ProjectColorStep =
+  | 'var(--indigo-9)'
+  | 'var(--blue-9)'
+  | 'var(--green-9)'
+  | 'var(--orange-9)'
+  | 'var(--purple-9)'
+  | 'var(--yellow-9)'
+  | 'var(--gold-9)'
+  | 'var(--gray-23)';
+
 export interface TTModule {
   // formatters
   fmtT(min: number): string;
@@ -405,7 +417,7 @@ export interface TTModule {
   segmentApproved(seg: CommitSegment | null | undefined): boolean;
   monthSegments(state: Catalog, month: string): { key: string; committed: boolean; approved: boolean }[];
   monthGood(state: Catalog, month: string): boolean;
-  projColor(state: Catalog, code: string | null): string;
+  projColor(state: Catalog, code: string | null): ProjectColorStep;
   // markdown — cell escaping (SB-041).
   // encodeCell handles `\` and `|`; encodeNoteCell adds the trailing [nb]/[ea] run,
   // which only the note field can collide with. decodeCell reverses all three.

@@ -414,6 +414,7 @@ TT.monthGood = function (state, month) {
 
 // Bob 1.0 scale steps, not roles: a project colour paints both text (codes) and fills (dots, bars),
 // and a Bob 1.0 role is for one property only (DD-033).
+/** @type {import('./types.ts').ProjectColorStep[]} */
 const PALETTE = [
   'var(--indigo-9)',
   'var(--blue-9)',

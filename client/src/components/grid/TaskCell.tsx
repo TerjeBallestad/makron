@@ -119,7 +119,7 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
         // The project code and task name, drawn over the input, whose own text is transparent.
         <span className="pointer-events-none absolute top-1/2 inset-x-2 flex -translate-y-1/2 items-baseline gap-1.75 bg-transparent">
           {proj && (
-            <span className={clsx('font-mono text-tiny font-semibold', projectText(state, proj.code))}>
+            <span className={clsx('shrink-0 font-mono text-tiny font-semibold', projectText(state, proj.code))}>
               {proj.code}
             </span>
           )}
