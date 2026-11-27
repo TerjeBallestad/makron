@@ -1,6 +1,7 @@
 import React from 'react';
 import TT from '../../i18n';
-import { SectionLabel, Button, Select, Input } from '@terjeballestad/bob';
+import { SectionLabel, Button, Input } from '@terjeballestad/bob';
+import { OptionSelect } from '../OptionSelect';
 import st from './settings.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
@@ -40,9 +41,9 @@ export function TasksSection({ state, ui }: SettingsProps) {
             onChange={(e) => ui.updateTask(task.id, { label: e.target.value })}
             className={st.small}
           />
-          <Select
+          <OptionSelect
             value={task.project || ''}
-            onChange={(e) => ui.updateTask(task.id, { project: e.target.value || null })}
+            onChange={(value) => ui.updateTask(task.id, { project: value || null })}
             options={[{ value: '', label: '— ' + TT.t('no project') }].concat(
               // SDD-002 ruling 7: hide archived projects — a template can't target new work at one.
               state.projects

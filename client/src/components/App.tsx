@@ -1,7 +1,6 @@
 // App shell: login, sidebar, topbar, routing, server sync
 import React from 'react';
 import TT, { preSessionLang } from '../i18n';
-import { Toast, ToastStack } from '@terjeballestad/bob';
 import styles from './App.module.css';
 import { api } from '../api';
 import { isAdmin } from '../roles';
@@ -19,14 +18,13 @@ import { TaskModal } from './TaskModal';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 import { useSession } from '../hooks/useSession';
-import { useToasts } from '../hooks/useToasts';
+import { toast } from '../toast';
 import { useServerSync } from '../hooks/useServerSync';
 import type { AppState } from '../../../shared/types';
 import type { UiActions, Route, TaskModalInit } from '../types';
 
 export function App() {
   const { state, setState, firstRun, load } = useSession();
-  const { toasts, toast } = useToasts();
   const sync = useServerSync(state, toast, load);
   const [route, setRoute] = React.useState<Route>({ view: 'today' });
   const [taskModal, setTaskModal] = React.useState<TaskModalInit | null>(null);
@@ -411,7 +409,7 @@ export function App() {
   // server owns, and nothing else is written anywhere (SB-181).
   const settled = TT.t('synced');
   const syncLabel = sync === 'saving' ? TT.t('saving…') : sync === 'error' ? TT.t('offline — retrying') : settled;
-  const syncColor = sync === 'error' ? 'var(--orange)' : 'var(--green)';
+  const syncColor = sync === 'error' ? 'var(--orange-9)' : 'var(--bg-green)';
 
   return (
     <div className={styles.app}>
@@ -431,11 +429,6 @@ export function App() {
         <TopBar title={title} running={running} runningCode={runningCode} todayMin={todayMin} ui={ui} />
         <main className={styles.main}>{view}</main>
       </div>
-      <ToastStack>
-        {toasts.map((item) => (
-          <Toast key={item.id}>{item.msg}</Toast>
-        ))}
-      </ToastStack>
       {taskModal && <TaskModal state={state} ui={ui} init={taskModal} onClose={() => setTaskModal(null)} />}
     </div>
   );

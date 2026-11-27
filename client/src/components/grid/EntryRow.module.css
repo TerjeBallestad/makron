@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: var(--tt-cols);
   align-items: center;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
   background: transparent;
   padding: 2px 0;
 }
@@ -23,8 +23,8 @@
 /* Stop button replaces the hours readout only while a running entry is hovered. */
 .stop {
   border: none;
-  background: var(--tint-danger);
-  color: var(--danger);
+  background: var(--bg-danger-tint);
+  color: var(--text-danger);
   font-family: var(--mono);
   font-size: 10px;
   padding: 1px 6px;
@@ -62,7 +62,7 @@
 .lockedCell {
   padding: 6px 9px;
   font-size: 12.5px;
-  color: var(--text-3);
+  color: var(--text-muted);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -82,7 +82,7 @@
   flex: none;
 }
 .lockedLabel {
-  color: var(--text-2);
+  color: var(--text-secondary);
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -92,18 +92,18 @@
 .editedMark {
   flex: none;
   font-size: 10px;
-  color: var(--accent);
+  color: var(--text-accent);
   font-family: var(--mono);
 }
 .lockedNote {
-  color: var(--text-3);
+  color: var(--text-muted);
 }
 
 /* Chrome-less delete "×" — hidden until the row is hovered. */
 .del {
   border: none;
   background: transparent;
-  color: var(--text-4);
+  color: var(--text-faint);
   cursor: pointer;
   font-size: 13px;
   padding: 0;

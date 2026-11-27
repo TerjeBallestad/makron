@@ -78,7 +78,7 @@ export function TimeCell({ entry, ui, reg, nav }: TimeCellProps) {
       className={[cells.cell, cells.time].join(' ')}
       style={{
         borderColor: err ? 'rgba(229,72,77,.5)' : 'transparent',
-        color: TT.isRunning(entry) ? 'var(--green)' : 'var(--text)',
+        color: TT.isRunning(entry) ? 'var(--text-green)' : 'var(--text-primary)',
       }}
     />
   );

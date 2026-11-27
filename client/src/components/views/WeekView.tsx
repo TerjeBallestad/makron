@@ -71,7 +71,7 @@ export function WeekView({ state, ui }: ViewProps) {
             <div key={segment.key} className={vs.segChip} data-committed={isCommitted} data-locked={isLocked}>
               <StatusDot
                 state={isCommitted ? 'solid' : 'outline'}
-                color={isLocked ? 'var(--accent)' : isCommitted ? 'var(--green)' : 'var(--text-4)'}
+                color={isLocked ? 'var(--bg-accent)' : isCommitted ? 'var(--bg-green)' : 'var(--gray-22)'}
                 size={7}
               />
               <span className={vs.segRange}>{segRange(segment.dates)}</span>
@@ -100,10 +100,15 @@ export function WeekView({ state, ui }: ViewProps) {
         return (
           <div key={day} className={vs.day}>
             <div className={vs.dayHead}>
-              <SectionLabel dot={day === today ? <StatusDot state="outline" color="var(--accent)" size={7} /> : null}>
+              <SectionLabel
+                dot={day === today ? <StatusDot state="outline" color="var(--bg-accent)" size={7} /> : null}
+              >
                 {TT.fmtDayShort(day) + (day === today ? ' · ' + TT.t('today') : '')}
               </SectionLabel>
-              <span className={vs.dayHours} style={{ color: entries.length ? 'var(--text-2)' : 'var(--text-4)' }}>
+              <span
+                className={vs.dayHours}
+                style={{ color: entries.length ? 'var(--text-secondary)' : 'var(--text-faint)' }}
+              >
                 {entries.length ? TT.fmtHours(sumMin(entries)) + TT.t('h') : '—'}
               </span>
             </div>

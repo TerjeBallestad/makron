@@ -13,14 +13,14 @@
   grid-template-columns: var(--tt-cols);
   gap: 0;
   padding: 0 0 5px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .headerCell {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-muted);
   padding: 0 9px;
 }
 .headerHours {
@@ -28,7 +28,7 @@
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-muted);
   padding: 0 9px;
   text-align: right;
   font-family: var(--mono);
@@ -42,5 +42,5 @@
 }
 .lockedHint {
   font-size: 10.5px;
-  color: var(--text-4);
+  color: var(--text-faint);
 }

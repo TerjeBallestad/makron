@@ -1,7 +1,7 @@
 .app {
   display: flex;
   height: 100vh;
-  background: var(--bg);
+  background: var(--bg-app);
   font-family: var(--sans);
 }
 .content {

@@ -30,7 +30,7 @@ export function BillCell({ entry, ui, reg, nav }: BillCellProps) {
     <Chip
       mono={true}
       tone={entry.billable ? 'green' : 'neutral'}
-      style={entry.billable ? {} : { color: 'var(--text-4)' }}
+      style={entry.billable ? {} : { color: 'var(--text-faint)' }}
     >
       {'$'}
     </Chip>

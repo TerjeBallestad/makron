@@ -12,6 +12,6 @@
 .ghostBtn {
   border: none;
   background: transparent;
-  color: var(--text-4);
+  color: var(--text-faint);
   cursor: pointer;
 }

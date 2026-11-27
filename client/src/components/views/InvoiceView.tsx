@@ -1,6 +1,7 @@
 import React from 'react';
 import TT from '../../i18n';
-import { Chip, Button, Select } from '@terjeballestad/bob';
+import { Chip, Button } from '@terjeballestad/bob';
+import { OptionSelect } from '../OptionSelect';
 import vs from './views.module.css';
 import sh from '../shared.module.css';
 import iv from './InvoiceView.module.css';
@@ -72,15 +73,15 @@ export function InvoiceView({ state, ui }: ViewProps) {
       <div className={vs.headerRow}>
         <h1 className={vs.h1}>{TT.t('Invoice')}</h1>
         <span className={vs.controlsCenter}>
-          <Select
+          <OptionSelect
             value={clientId}
-            onChange={(e) => setClientId(e.target.value)}
+            onChange={(value) => setClientId(value)}
             options={state.clients.map((clientOption) => ({ value: clientOption.id, label: clientOption.name }))}
             className={iv.sel170}
           />
-          <Select
+          <OptionSelect
             value={month}
-            onChange={(e) => setMonth(e.target.value)}
+            onChange={(value) => setMonth(value)}
             options={months.map((monthKey) => ({ value: monthKey, label: TT.fmtMonth(monthKey) }))}
             className={iv.sel130}
           />

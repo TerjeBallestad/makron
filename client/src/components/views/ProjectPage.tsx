@@ -60,7 +60,7 @@ export function ProjectPage({ state, ui, code }: ProjectPageProps) {
               <span className={[vs.td, vs.mono, vs.cSecondary].join(' ')}>{entry.date.slice(5)}</span>
               <span
                 className={[vs.td, vs.mono].join(' ')}
-                style={{ color: TT.isRunning(entry) ? 'var(--green)' : 'var(--text)' }}
+                style={{ color: TT.isRunning(entry) ? 'var(--text-green)' : 'var(--text-primary)' }}
               >
                 {TT.fmtTimeCell(entry)}
               </span>
@@ -73,7 +73,7 @@ export function ProjectPage({ state, ui, code }: ProjectPageProps) {
                 <Chip
                   mono={true}
                   tone={entry.billable ? 'green' : 'neutral'}
-                  style={entry.billable ? {} : { color: 'var(--text-4)' }}
+                  style={entry.billable ? {} : { color: 'var(--text-faint)' }}
                 >
                   {'$'}
                 </Chip>

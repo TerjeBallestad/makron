@@ -1,6 +1,7 @@
 import React from 'react';
 import TT from '../../i18n';
-import { SectionLabel, Button, Select, Input, SegToggle } from '@terjeballestad/bob';
+import { SectionLabel, Button, Input, SegToggle } from '@terjeballestad/bob';
+import { OptionSelect } from '../OptionSelect';
 import st from './settings.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
@@ -93,9 +94,9 @@ export function ProjectsSection({ state, ui }: SettingsProps) {
             onChange={(e) => ui.updateProject(project.code, { name: e.target.value })}
             className={st.small}
           />
-          <Select
+          <OptionSelect
             value={project.clientId || ''}
-            onChange={(e) => ui.updateProject(project.code, { clientId: e.target.value || null })}
+            onChange={(value) => ui.updateProject(project.code, { clientId: value || null })}
             options={[{ value: '', label: '— ' + TT.t('no client') }].concat(
               activeClients.map((client) => ({ value: client.id, label: client.name })),
             )}

@@ -110,7 +110,7 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
           }
         }}
         className={[cells.cell, cells.task].join(' ')}
-        style={{ color: entry.label && !editing ? 'transparent' : 'var(--text-2)' }}
+        style={{ color: entry.label && !editing ? 'transparent' : 'var(--text-secondary)' }}
       />
       {!editing && entry.label && (
         <span className={styles.overlay}>

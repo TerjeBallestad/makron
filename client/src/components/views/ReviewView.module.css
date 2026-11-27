@@ -11,11 +11,11 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  border-right: 1px solid var(--border);
+  border-right: 1px solid var(--border-subtle);
   padding-right: 12px;
 }
 .railEmpty {
-  color: var(--text-4);
+  color: var(--text-faint);
   font-size: 12px;
   padding: 8px 6px;
 }
@@ -32,16 +32,16 @@
   width: 100%;
 }
 .railRow:hover {
-  background: var(--panel-2, color-mix(in srgb, var(--accent) 6%, transparent));
+  background: color-mix(in srgb, var(--bg-accent) 6%, transparent);
 }
 .railActive {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border-color: color-mix(in srgb, var(--indigo-9) 45%, var(--border-subtle));
+  background: color-mix(in srgb, var(--bg-accent) 8%, transparent);
 }
 .railName {
   flex: 1;
   font-size: 12.5px;
-  color: var(--text-2);
+  color: var(--text-secondary);
 }
 
 .panel {
@@ -57,7 +57,7 @@
 .panelName {
   font-size: 15px;
   font-weight: 600;
-  color: var(--text-1);
+  color: var(--text-primary);
 }
 
 .monthBlock {
@@ -73,7 +73,7 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-3);
+  color: var(--text-muted);
 }
 .pillRow {
   display: flex;
@@ -85,36 +85,36 @@
   align-items: center;
   gap: 8px;
   padding: 4px 8px 4px 9px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-chip);
   background: transparent;
   cursor: pointer;
 }
 .pill:hover {
-  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-color: color-mix(in srgb, var(--indigo-9) 30%, var(--border-subtle));
 }
 .pill[data-committed='true'] {
-  border-color: color-mix(in srgb, var(--green) 40%, var(--border));
+  border-color: color-mix(in srgb, var(--green-9) 40%, var(--border-subtle));
 }
 .pill[data-locked='true'] {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  border-color: color-mix(in srgb, var(--indigo-9) 45%, var(--border-subtle));
 }
 .pillActive {
-  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--indigo-9) 55%, transparent);
   outline-offset: 1px;
 }
 .pillRange {
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--text-2);
+  color: var(--text-secondary);
 }
 
 .weekPanel {
   margin-top: 18px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
   padding: 12px 14px 14px;
-  background: var(--panel, transparent);
+  background: var(--bg-card);
 }
 .weekHead {
   display: flex;
@@ -126,7 +126,7 @@
 .weekTitle {
   font-family: var(--mono);
   font-size: 12.5px;
-  color: var(--text-1);
+  color: var(--text-primary);
   font-weight: 600;
 }
 .weekActions {
@@ -144,14 +144,14 @@
   gap: 8px;
   align-items: center;
   padding: 3px 0;
-  border-bottom: 1px solid var(--border-2, color-mix(in srgb, var(--border) 55%, transparent));
+  border-bottom: 1px solid var(--border-strong);
 }
 .editHead {
   font-size: 10.5px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-4);
-  border-bottom: 1px solid var(--border);
+  color: var(--text-faint);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 5px;
 }
 .editHead > span {
@@ -163,17 +163,17 @@
   border-radius: 4px;
   padding: 3px 5px;
   font-size: 12px;
-  color: var(--text-1);
+  color: var(--text-primary);
   font-family: inherit;
   min-width: 0;
 }
 .cell:hover {
-  border-color: var(--border);
+  border-color: var(--border-subtle);
 }
 .cell:focus {
-  border-color: var(--accent);
+  border-color: var(--indigo-9);
   outline: none;
-  background: var(--panel-2, color-mix(in srgb, var(--accent) 5%, transparent));
+  background: color-mix(in srgb, var(--bg-accent) 5%, transparent);
 }
 .cellGrow {
   width: 100%;
@@ -187,12 +187,12 @@
 .editedMark {
   flex: none;
   font-size: 10px;
-  color: var(--accent);
+  color: var(--text-accent);
   font-family: var(--mono);
 }
 .weekNote {
   margin-top: 10px;
   font-size: 11px;
-  color: var(--text-4);
+  color: var(--text-faint);
   line-height: 1.5;
 }

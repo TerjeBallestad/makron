@@ -47,7 +47,7 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
         </span>
         <span className={[styles.lockedCell, styles.lockedNote].join(' ')}>{entry.note || ''}</span>
         <div className={styles.hoursCell}>
-          <span className={styles.hours} style={{ color: 'var(--text-4)' }}>
+          <span className={styles.hours} style={{ color: 'var(--text-faint)' }}>
             {TT.fmtHours(min)}
           </span>
         </div>
@@ -65,13 +65,13 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
       <NoteCell entry={entry} ui={ui} reg={reg} nav={nav} />
       {admin && <BillCell entry={entry} ui={ui} reg={reg} nav={nav} />}
       <div className={styles.hoursCell}>
-        {running && <StatusDot state="live" color="var(--green)" size={7} />}
+        {running && <StatusDot state="live" color="var(--bg-green)" size={7} />}
         {running && (
           <button className={styles.stop} onClick={() => ui.stop(entry.id)}>
             {TT.t('stop')}
           </button>
         )}
-        <span className={styles.hours} style={{ color: running ? 'var(--green)' : 'var(--text-2)' }}>
+        <span className={styles.hours} style={{ color: running ? 'var(--text-green)' : 'var(--text-secondary)' }}>
           {TT.fmtHours(min)}
         </span>
       </div>
