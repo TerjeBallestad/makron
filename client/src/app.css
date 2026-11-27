@@ -7,6 +7,11 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import '@terjeballestad/bob/tailwind.css';
 
+/* hover: is a plain :hover, as in Bob ("Hover is a CSS :hover rule") and in the CSS Modules this
+   replaces. Tailwind 4 puts hover: inside @media (hover: hover), so on a touch screen a tap never
+   showed a row's delete or stop button. group-hover: follows this variant. */
+@custom-variant hover (&:hover);
+
 /* Element rules sit in the base layer, under Bob's component classes and the utilities. Bob's
    base.css sets the body's font, background and colour, links, box-sizing and the scrollbars. */
 @layer base {

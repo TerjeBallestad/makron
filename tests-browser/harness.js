@@ -77,7 +77,8 @@ export async function startApp(opts = {}) {
   }
 
   const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage({ viewport: { width: 1400, height: 1000 } });
+  // opts.pageOptions: extra Playwright page options, for example a touch device.
+  const page = await browser.newPage({ viewport: { width: 1400, height: 1000 }, ...opts.pageOptions });
   const pageErrors = [];
   page.on('pageerror', (e) => pageErrors.push(e.message));
 
