@@ -21,6 +21,7 @@ export function TaskModal({ state, ui, init, onClose }: TaskModalProps) {
     if (name.trim()) ui.createTask({ label: name.trim(), project: project || null }, init.entryId);
   };
   return (
+    // BOB GAP: Bob's Modal has one width, min(560px, 92vw). This small form wants 400px.
     <Modal
       title={TT.t('New task')}
       onClose={onClose}
