@@ -113,25 +113,22 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
             nav(entry.id, 1, 'right');
           }
         }}
-        className={textCell('font-medium', entry.label && !editing ? 'text-transparent' : 'text-secondary')}
+        className={textCell(entry.label && !editing ? 'text-transparent' : 'text-secondary')}
       />
       {!editing && entry.label && (
         // The project code and task name, drawn over the input, whose own text is transparent.
         <span className="pointer-events-none absolute top-1/2 inset-x-2 flex -translate-y-1/2 items-baseline gap-1.75 bg-transparent">
           {proj && (
-            <span className={clsx('shrink-0 font-mono text-tiny font-semibold', projectText(state, proj.code))}>
-              {proj.code}
-            </span>
+            <span className={clsx('shrink-0 font-mono text-id', projectText(state, proj.code))}>{proj.code}</span>
           )}
           <span className="truncate text-body text-primary">{entry.label}</span>
         </span>
       )}
       {editing && total > 0 && (
         // BOB GAP (PLAN-002 rule): Bob has no combobox. Its Select popup differs (bg-modal,
-        // --shadow-toast, 5px item radius), so the task picker keeps its own look. Black at 45% in
-        // the shadow has no Bob step. The popup's 8px radius is Bob's --radius, which Bob's theme
-        // has no rounded-* class for. The 6px option radius is Tailwind's rounded-md.
-        <div className="absolute top-full left-0 z-50 mt-1 max-h-60 w-80 overflow-y-auto rounded-(--radius) border border-strong bg-overlay p-1 shadow-[0_12px_32px_rgba(0,0,0,0.45)]">
+        // --shadow-toast, 5px item radius), so the task picker keeps its own look, from Bob's
+        // classes: shadow-popup, and rounded-md (8px) on the popup and on each option.
+        <div className="absolute top-full left-0 z-50 mt-1 max-h-60 w-80 overflow-y-auto rounded-md border border-strong bg-overlay p-1 shadow-popup">
           {options.map((option, i) => {
             const project = TT.projectOf(state, option.project),
               client = TT.clientOf(state, project);
@@ -147,9 +144,7 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
                 className={clsx(OPTION, i === highlight && 'bg-card-hover')}
               >
                 {project && (
-                  <span
-                    className={clsx('shrink-0 font-mono text-tiny font-semibold', projectText(state, project.code))}
-                  >
+                  <span className={clsx('shrink-0 font-mono text-id', projectText(state, project.code))}>
                     {project.code}
                   </span>
                 )}

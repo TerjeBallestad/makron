@@ -46,7 +46,7 @@ export function FirstRun({ onDone }: { onDone: () => void }) {
     <OnboardingCard tag="first-run" question={TT.t('Start with something in it?')}>
       {/* BOB GAP (PLAN-002 rule): Bob has no checkbox. */}
       <label
-        className="flex cursor-pointer items-start gap-2.25 rounded-lg border border-strong bg-white/4 px-3.5 py-3 text-caption leading-normal text-secondary hover:border-indigo-9"
+        className="flex cursor-pointer items-start gap-2.25 rounded-lg border border-strong bg-white/4 px-3.5 py-3 text-note text-secondary hover:border-indigo-9"
         data-tt="first-run-demo-toggle"
       >
         <input
@@ -63,7 +63,7 @@ export function FirstRun({ onDone }: { onDone: () => void }) {
         </span>
       </label>
       {err && (
-        <div className="mt-2.5 text-caption leading-normal text-danger" data-tt="first-run-error">
+        <div className="mt-2.5 text-note text-danger" data-tt="first-run-error">
           {err}
         </div>
       )}

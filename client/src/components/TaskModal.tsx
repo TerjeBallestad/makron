@@ -24,7 +24,7 @@ export function TaskModal({ state, ui, init, onClose }: TaskModalProps) {
     <Modal
       title={TT.t('New task')}
       onClose={onClose}
-      style={{ width: 'min(400px, 92vw)' }}
+      className="w-[min(400px,92vw)]"
       footer={[
         <Button key="c" variant="ghost" size="sm" onClick={onClose}>
           {TT.t('cancel')}

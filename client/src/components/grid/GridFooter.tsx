@@ -31,7 +31,7 @@ export function GridFooter({ entries, state }: GridFooterProps) {
       </span>
       <span>
         {TT.t('sum') + ' '}
-        <span className="font-semibold text-primary">
+        <span className="text-id text-primary">
           {TT.fmtHours(total)}
           {TT.t('h')}
         </span>

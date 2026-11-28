@@ -19,10 +19,8 @@
   body {
     height: 100%;
   }
-  /* BOB GAP: #9aa1f0 is a lighter indigo-9 (#7b83eb) hover, a step Bob has not got (indigo-10
-     in its Radix numbering). It keeps its value until Bob adds it. */
   a:hover {
-    color: #9aa1f0;
+    color: var(--indigo-10);
   }
   input::placeholder,
   textarea::placeholder {
