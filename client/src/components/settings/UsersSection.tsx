@@ -2,7 +2,10 @@ import React from 'react';
 import TT from '../../i18n';
 import { Chip, SectionLabel, Button, Input } from '@terjeballestad/bob';
 import { OptionSelect } from '../OptionSelect';
-import st from './settings.module.css';
+import { clsx } from 'clsx';
+import { glyphButton, headRow, row, section, sectionLabel, small, th } from './section';
+
+const COLS = 'grid-cols-[1fr_1fr_110px_76px_26px]';
 import type { AppState, User, Role } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 
@@ -44,9 +47,9 @@ export function UsersSection({ state, ui }: UsersSectionProps) {
     });
   };
   return (
-    <div className={st.section}>
+    <div className={section}>
       <SectionLabel
-        style={{ marginBottom: 10 }}
+        className={sectionLabel}
         action={
           <Button
             variant="ghost"
@@ -59,9 +62,9 @@ export function UsersSection({ state, ui }: UsersSectionProps) {
       >
         {TT.t('Users')}
       </SectionLabel>
-      <div className={[st.row, st.rowHead, st.colsUsers].join(' ')}>
+      <div className={clsx(headRow, COLS)}>
         {['name', 'Email', 'role'].map((header) => (
-          <span key={header} className={st.th}>
+          <span key={header} className={th}>
             {TT.t(header)}
           </span>
         ))}
@@ -70,9 +73,9 @@ export function UsersSection({ state, ui }: UsersSectionProps) {
       </div>
       {(users || []).map((user) => (
         <React.Fragment key={user.id}>
-          <div className={[st.row, st.colsUsers].join(' ')}>
-            <span className={st.userName}>{user.name}</span>
-            <span className={st.userEmail}>{user.email}</span>
+          <div className={clsx(row, COLS)}>
+            <span className="text-body">{user.name}</span>
+            <span className="font-mono text-body text-secondary">{user.email}</span>
             <Chip mono={true} tone={user.role === 'admin' ? 'green' : 'neutral'}>
               {TT.t(user.role)}
             </Chip>
@@ -84,16 +87,16 @@ export function UsersSection({ state, ui }: UsersSectionProps) {
               {TT.t('password')}
             </Button>
             {user.id !== state.user.id ? (
-              <button onClick={() => ui.users.remove(user.id).then(reload)} className={st.delBtn}>
+              <Button variant="text" onClick={() => ui.users.remove(user.id).then(reload)} className={glyphButton}>
                 ×
-              </button>
+              </Button>
             ) : (
               <span></span>
             )}
           </div>
           {reset?.id === user.id && (
             <div
-              className={st.resetRow}
+              className="grid grid-cols-[1fr_auto_auto] items-center gap-2 pb-2"
               onKeyDown={(ev) => {
                 if (ev.key === 'Enter') submitReset();
               }}
@@ -105,7 +108,7 @@ export function UsersSection({ state, ui }: UsersSectionProps) {
                 placeholder={TT.t('New password for ') + user.email}
                 value={reset.password}
                 onChange={(e) => setReset({ ...reset, password: e.target.value })}
-                className={st.small}
+                className={small}
               />
               <Button variant="primary" size="sm" disabled={!reset.password} onClick={submitReset}>
                 {TT.t('Set password')}
@@ -118,25 +121,25 @@ export function UsersSection({ state, ui }: UsersSectionProps) {
         </React.Fragment>
       ))}
       {form && (
-        <div className={st.userForm}>
+        <div className="mt-2 grid grid-cols-[1fr_1fr_130px_110px_auto] items-center gap-2 rounded-md border border-subtle p-3">
           <Input
             placeholder={TT.t('Name')}
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className={st.small}
+            className={small}
           />
           <Input
             placeholder={TT.t('Email')}
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className={st.small}
+            className={small}
           />
           <Input
             placeholder={TT.t('Password')}
             type="password"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className={st.small}
+            className={small}
           />
           <OptionSelect
             value={form.role}
@@ -145,7 +148,7 @@ export function UsersSection({ state, ui }: UsersSectionProps) {
               { value: 'employee', label: TT.t('employee') },
               { value: 'admin', label: TT.t('admin') },
             ]}
-            className={st.small}
+            className={small}
           />
           <Button variant="primary" size="sm" disabled={!(form.name && form.email && form.password)} onClick={submit}>
             {TT.t('Create user')}

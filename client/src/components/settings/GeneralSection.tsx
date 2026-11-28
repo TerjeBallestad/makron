@@ -2,7 +2,8 @@ import React from 'react';
 import TT from '../../i18n';
 import { SectionLabel, Input } from '@terjeballestad/bob';
 import { OptionSelect } from '../OptionSelect';
-import st from './settings.module.css';
+import { clsx } from 'clsx';
+import { label, section, sectionLabel, small } from './section';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 
@@ -14,20 +15,18 @@ interface GeneralSectionProps {
 
 export function GeneralSection({ state, ui, admin }: GeneralSectionProps) {
   return (
-    <div className={st.section}>
-      <SectionLabel style={{ marginBottom: 10 }}>{TT.t('General')}</SectionLabel>
-      <div className={st.general}>
-        {admin && <span className={st.label}>{TT.t('Currency')}</span>}
+    <div className={section}>
+      <SectionLabel className={sectionLabel}>{TT.t('General')}</SectionLabel>
+      <div className="flex items-center gap-2.5">
+        {admin && <span className={label}>{TT.t('Currency')}</span>}
         {admin && (
           <Input
             value={state.settings.currency}
             onChange={(e) => ui.setCurrency(e.target.value)}
-            className={[st.small, st.currencyInput].join(' ')}
+            className={clsx(small, 'w-17.5 font-mono')}
           />
         )}
-        <span className={st.label} style={{ marginLeft: admin ? 16 : 0 }}>
-          {TT.t('Language')}
-        </span>
+        <span className={clsx(label, admin && 'ml-4')}>{TT.t('Language')}</span>
         <OptionSelect
           value={TT.lang}
           onChange={(value) => ui.setLanguage(value)}
@@ -35,7 +34,7 @@ export function GeneralSection({ state, ui, admin }: GeneralSectionProps) {
             { value: 'en', label: 'English' },
             { value: 'no', label: 'Norsk' },
           ]}
-          className={[st.small, st.langSelect].join(' ')}
+          className={clsx(small, 'w-30')}
         />
       </div>
     </div>
