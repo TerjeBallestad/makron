@@ -18,9 +18,10 @@ import { code as codeClass, empty, errLine, headerRow, page, pageTitle, subtle }
 const RAIL_EMPTY = 'px-1.5 py-2 text-body text-faint';
 // The week panel's edit table: one grid for the head and the rows.
 const EDIT_ROW = 'grid grid-cols-[56px_96px_minmax(140px,1fr)_minmax(140px,1fr)_90px] items-center gap-2 border-b';
-// An edit cell: a bare input that shows a border on hover and an indigo one with focus.
+// An edit cell: a bare input that shows a border on hover and an indigo one with focus. It is sans
+// from the page: Bob's base sets `font-family: inherit` on inputs.
 const EDIT_CELL =
-  'min-w-0 rounded-sm border border-transparent bg-transparent px-1.25 py-0.75 font-sans text-body text-primary ' +
+  'min-w-0 rounded-sm border border-transparent bg-transparent px-1.25 py-0.75 text-body text-primary ' +
   'outline-none hover:border-subtle focus:border-indigo-9 focus:bg-accent/5';
 
 interface ViewProps {
