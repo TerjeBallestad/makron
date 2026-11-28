@@ -19,10 +19,11 @@ import {
   th,
 } from './section';
 
-// SB-087: the id leads the row, the way the project code does: the same 110px track.
-const COLS = 'grid-cols-[110px_1fr_130px_110px_26px]';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+
+// SB-087: the id leads the row, the way the project code does: the same 110px track.
+const COLS = 'grid-cols-[110px_1fr_130px_110px_26px]';
 
 interface SettingsProps {
   state: AppState;

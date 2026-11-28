@@ -5,9 +5,10 @@ import { OptionSelect } from '../OptionSelect';
 import { clsx } from 'clsx';
 import { empty, glyphButton, headRow, hint, row, section, sectionLabel, small, th } from './section';
 
-const COLS = 'grid-cols-[1fr_150px_26px]';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+
+const COLS = 'grid-cols-[1fr_150px_26px]';
 
 interface SettingsProps {
   state: AppState;

@@ -5,9 +5,10 @@ import { OptionSelect } from '../OptionSelect';
 import { clsx } from 'clsx';
 import { glyphButton, headRow, row, section, sectionLabel, small, th } from './section';
 
-const COLS = 'grid-cols-[1fr_1fr_110px_76px_26px]';
 import type { AppState, User, Role } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+
+const COLS = 'grid-cols-[1fr_1fr_110px_76px_26px]';
 
 interface UserForm {
   name: string;
