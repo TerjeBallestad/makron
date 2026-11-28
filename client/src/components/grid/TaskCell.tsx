@@ -113,7 +113,7 @@ export function TaskCell({ entry, state, ui, reg, nav }: TaskCellProps) {
             nav(entry.id, 1, 'right');
           }
         }}
-        className={textCell(entry.label && !editing ? 'text-transparent' : 'text-secondary')}
+        className={textCell('text-item', entry.label && !editing ? 'text-transparent' : 'text-secondary')}
       />
       {!editing && entry.label && (
         // The project code and task name, drawn over the input, whose own text is transparent.

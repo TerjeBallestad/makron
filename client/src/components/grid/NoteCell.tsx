@@ -53,7 +53,7 @@ export function NoteCell({ entry, ui, reg, nav }: NoteCellProps) {
           nav(entry.id, 2, 'right');
         }
       }}
-      className={textCell('text-secondary')}
+      className={textCell('text-body text-secondary')}
     />
   );
 }
