@@ -36,10 +36,7 @@ export function ProjectPage({ state, ui, code }: ProjectPageProps) {
   return (
     <div className={page}>
       <div className="mb-1.5 flex items-baseline gap-2.5">
-        {/* BOB GAP: StatusDot takes no className, so a flex wrapper centres it in the baseline row. */}
-        <span className="flex self-center">
-          <StatusDot state="solid" color={TT.projColor(state, code)} size={9} />
-        </span>
+        <StatusDot state="solid" color={TT.projColor(state, code)} size={9} className="self-center" />
         <span className={clsx('font-mono text-subhead', projectText(state, code))}>{code}</span>
         <h1 className={pageTitle}>{project.name}</h1>
       </div>

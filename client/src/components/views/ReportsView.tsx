@@ -13,6 +13,7 @@ import {
   code as codeClass,
   empty,
   errLine,
+  figure,
   headerRow,
   headRow,
   num,
@@ -230,15 +231,13 @@ export function ReportsView({ state, ui }: ViewProps) {
               )}
             </div>
           ))}
-        {/* BOB GAP: the totals were mono 11.5px at weight 600, and Bob has no 11.5px style with a
-            weight. They keep the size (text-caption) and lose the weight; the label keeps 600. */}
         <div className={clsx(totalRow, cols)}>
           <span className={clsx(cell, 'text-subhead text-primary')}>{TT.t('total')}</span>
           <span></span>
-          <span className={clsx(cell, num, 'text-primary')}>{TT.fmtHours(totMin)}</span>
-          {admin && <span className={clsx(cell, num, 'text-secondary')}>{TT.fmtHours(totBill)}</span>}
+          <span className={clsx(cell, figure, 'text-primary')}>{TT.fmtHours(totMin)}</span>
+          {admin && <span className={clsx(cell, figure, 'text-secondary')}>{TT.fmtHours(totBill)}</span>}
           {admin && (
-            <span className={clsx(cell, num, 'text-primary')}>{TT.fmtMoney(totAmt, state.settings.currency)}</span>
+            <span className={clsx(cell, figure, 'text-primary')}>{TT.fmtMoney(totAmt, state.settings.currency)}</span>
           )}
         </div>
       </div>
