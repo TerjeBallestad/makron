@@ -18,9 +18,10 @@ import {
   th,
 } from './section';
 
-const COLS = 'grid-cols-[110px_1fr_150px_100px_84px_26px]';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
+
+const COLS = 'grid-cols-[110px_1fr_150px_100px_84px_26px]';
 
 interface SettingsProps {
   state: AppState;
