@@ -9,6 +9,9 @@
 //   the element in the message, while tests/bob-text-styles.test.js stays green:
 //   cells.ts textCell with `font-sans` put back (the week grid's task and note inputs);
 //   ReportsView's total hours as `clsx(cell, figure, num)` (text-figure and text-caption).
+// ## Verified red-green: 2026-11-28 (review) — the scan of Invoice and the project page now
+//   checks that each view is there: InvoiceView's totals as `num` fails 'invoice totals', and
+//   ProjectPage's StatusDot without className fails 'project page dot'.
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { request } from 'playwright';
 import { startApp, stopApp } from './harness.js';
@@ -105,6 +108,7 @@ describe('Bob text styles in the rendered views', () => {
     await go('Reports');
     await count('report totals', '.text-figure');
     await go('Invoice');
+    await count('invoice totals', '.text-figure');
     await go('Review');
     // Review with a user and a week open: the week panel and its edit cells.
     await page.locator('main nav button').first().click();
@@ -115,6 +119,7 @@ describe('Bob text styles in the rendered views', () => {
     // The first project's page.
     await page.locator('aside nav').nth(1).locator('> *').first().click();
     await visit('Project page');
+    await count('project page dot', 'main .status-dot.self-center');
 
     for (const [name, n] of Object.entries(seen)) expect(n, name).toBeGreaterThan(0);
     expect(found).toEqual({});
