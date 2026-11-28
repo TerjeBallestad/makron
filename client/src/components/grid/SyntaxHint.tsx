@@ -11,7 +11,7 @@ export function SyntaxHint() {
     </span>
   );
   return (
-    <div className="mt-3.5 text-caption leading-loose text-muted">
+    <div className="mt-3.5 text-note text-muted">
       {TT.t('time formats — ')}
       {k('12:00-13:00')}
       {' ' + TT.t('range') + ' · '}

@@ -36,8 +36,8 @@ interface LoginProps {
  * See-through colours are Bob colours with Tailwind's opacity modifier (DD-038): gray-3 at
  * 28/72/94% in the scrim, gray-7 at 55% in the card, white at 10% in the border. The scrim is a
  * ::before layer under the card (isolate, -z-10), over the turtle picture.
- * BOB GAP (PLAN-002 rule): the shadow (black at 75%) and the brand's text shadow have no Bob
- * class, so they keep their values.
+ * The card's shadow is Bob's shadow-panel. BOB GAP (PLAN-002 rule): the brand's text shadow has
+ * no Bob class, so it keeps its value.
  * The card's width, min(360px, 92vw), and the turtle picture are this screen's own layout and art.
  */
 export function Login({ onLogin, defaultLogin }: LoginProps) {
@@ -60,15 +60,13 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
   return (
     <div className="relative isolate flex min-h-screen items-center justify-center bg-app bg-[url(/turtle-bg.jpg)] bg-cover bg-center bg-no-repeat font-sans before:absolute before:inset-0 before:-z-10 before:bg-radial-[130%_100%_at_50%_38%] before:from-gray-3/28 before:via-gray-3/72 before:via-62% before:to-gray-3/94 before:to-100%">
       <div
-        className="w-[min(360px,92vw)] rounded-xl border border-white/10 bg-gray-7/55 px-6.5 py-7.5 shadow-[0_28px_64px_-22px_rgba(0,0,0,0.75)] backdrop-blur-lg backdrop-saturate-115"
+        className="w-[min(360px,92vw)] rounded-xl border border-white/10 bg-gray-7/55 px-6.5 py-7.5 shadow-panel backdrop-blur-lg backdrop-saturate-115"
         onKeyDown={(ev) => {
           if (ev.key === 'Enter') submit();
         }}
       >
         <div className="mb-6 flex items-center justify-center">
-          <span className="text-doc font-bold tracking-heading text-primary [text-shadow:0_1px_10px_var(--black-a55)]">
-            Makron
-          </span>
+          <span className="text-display text-primary [text-shadow:0_1px_10px_var(--black-a55)]">Makron</span>
         </div>
         <FormRow label={TT.t('Email')}>
           <Input autoFocus={true} value={email} onChange={(e) => setEmail(e.target.value)} spellCheck={false} />
@@ -84,10 +82,7 @@ export function Login({ onLogin, defaultLogin }: LoginProps) {
             install, not an instruction. The credential is mono, because it is a string to be typed
             exactly. */}
         {defaultLogin && (
-          <div
-            className="mt-3.5 border-t border-strong pt-3 text-caption leading-relaxed text-muted"
-            data-tt="login-default-credentials"
-          >
+          <div className="mt-3.5 border-t border-strong pt-3 text-note text-muted" data-tt="login-default-credentials">
             {TT.t('This install still has its starting password. Sign in as')}{' '}
             <code className="font-mono text-secondary">{defaultLogin.email}</code> /{' '}
             <code className="font-mono text-secondary">{defaultLogin.password}</code>{' '}

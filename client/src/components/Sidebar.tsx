@@ -37,7 +37,7 @@ export function Sidebar({
     <aside className="flex w-(--sidebar-w) shrink-0 flex-col border-r border-subtle bg-sidebar px-2.5 pt-3.5 pb-3">
       <div className="mb-4 flex items-center gap-2.25 px-2.5">
         <span className="size-5 shrink-0 rounded-chip bg-[url(/turtle-64.png)] bg-cover bg-center bg-no-repeat"></span>
-        <span className="text-prose font-bold tracking-heading text-primary">Makron</span>
+        <span className="text-heading text-primary">Makron</span>
       </div>
       <nav className="flex flex-col gap-px">
         <NavRow
@@ -83,11 +83,7 @@ export function Sidebar({
           />
         )}
       </nav>
-      {/* SectionLabel takes no className (Bob 1.1), so its margin sits on a wrapper. The sidebar is
-          a flex column, where margins do not collapse, so the wrapper places it as its own margin did. */}
-      <div className="mx-2.5 mt-4.5 mb-2">
-        <SectionLabel>{TT.t('Projects')}</SectionLabel>
-      </div>
+      <SectionLabel className="mx-2.5 mt-4.5 mb-2">{TT.t('Projects')}</SectionLabel>
       <nav className="flex min-h-0 flex-col gap-px overflow-y-auto">
         {state.projects.map((project) => (
           <NavRow
