@@ -2,7 +2,8 @@
 import React from 'react';
 import TT from '../../i18n';
 import { isAdmin } from '../../roles';
-import vs from '../views/views.module.css';
+import { clsx } from 'clsx';
+import { pageBox, pageTitle } from '../views/page';
 import { ClientsSection } from './ClientsSection';
 import { ProjectsSection } from './ProjectsSection';
 import { ArchiveSection } from './ArchiveSection';
@@ -21,8 +22,10 @@ interface SettingsProps {
 export function SettingsView({ state, ui }: SettingsProps) {
   const admin = isAdmin(state);
   return (
-    <div className={[vs.page, vs.settingsPage].join(' ')}>
-      <h1 className={[vs.h1, vs.mb24].join(' ')}>{TT.t('Settings')}</h1>
+    <div className={clsx(pageBox, 'max-w-190')}>
+      {/* No margin under the title: the CSS Module's 24px (.mb24) always lost to .h1's margin: 0,
+          and the sections start with their own label. */}
+      <h1 className={pageTitle}>{TT.t('Settings')}</h1>
       {admin && <ClientsSection state={state} ui={ui} />}
       {admin && <ProjectsSection state={state} ui={ui} />}
       {admin && <ArchiveSection state={state} ui={ui} />}

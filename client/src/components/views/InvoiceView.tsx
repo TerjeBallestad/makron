@@ -2,12 +2,28 @@ import React from 'react';
 import TT from '../../i18n';
 import { Chip, Button } from '@terjeballestad/bob';
 import { OptionSelect } from '../OptionSelect';
-import vs from './views.module.css';
-import iv from './InvoiceView.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 import { clsx } from 'clsx';
 import { projectText } from '../../projectColor';
+import {
+  bodyRow,
+  cell,
+  code as codeClass,
+  empty,
+  headerRow,
+  headRow,
+  num,
+  page,
+  pageTitle,
+  table,
+  th,
+  totalRow,
+} from './page';
+
+const COLS = 'grid-cols-[110px_170px_1fr_70px_110px]';
+// The selects are smaller than Bob's: 5px by 10px around the text, at a fixed width.
+const SELECT = 'px-2.5 py-1.25';
 
 interface ViewProps {
   state: AppState;
@@ -70,21 +86,21 @@ export function InvoiceView({ state, ui }: ViewProps) {
     navigator.clipboard.writeText(lines.join('\n')).then(() => ui.toast(TT.t('Invoice copied as markdown')));
   };
   return (
-    <div className={vs.page}>
-      <div className={vs.headerRow}>
-        <h1 className={vs.h1}>{TT.t('Invoice')}</h1>
-        <span className={vs.controlsCenter}>
+    <div className={page}>
+      <div className={clsx(headerRow, 'items-center')}>
+        <h1 className={pageTitle}>{TT.t('Invoice')}</h1>
+        <span className="ml-auto flex items-center gap-2">
           <OptionSelect
             value={clientId}
             onChange={(value) => setClientId(value)}
             options={state.clients.map((clientOption) => ({ value: clientOption.id, label: clientOption.name }))}
-            className={iv.sel170}
+            className={clsx(SELECT, 'w-42.5')}
           />
           <OptionSelect
             value={month}
             onChange={(value) => setMonth(value)}
             options={months.map((monthKey) => ({ value: monthKey, label: TT.fmtMonth(monthKey) }))}
-            className={iv.sel130}
+            className={clsx(SELECT, 'w-32.5')}
           />
           <Button variant="secondary" size="sm" onClick={copyMd} disabled={!entries.length}>
             {TT.t('copy as markdown')}
@@ -92,7 +108,7 @@ export function InvoiceView({ state, ui }: ViewProps) {
         </span>
       </div>
       {client && (
-        <div className={vs.chipRow}>
+        <div className="mb-5 flex gap-2">
           <Chip mono={true}>
             {TT.t('round: ') + (client.rounding === 'exact' ? TT.t('exact') : client.rounding + ' min ↑')}
           </Chip>
@@ -102,46 +118,48 @@ export function InvoiceView({ state, ui }: ViewProps) {
           </Chip>
         </div>
       )}
-      <div className={vs.table}>
-        <div className={[vs.headRow, iv.cols].join(' ')}>
+      <div className={table}>
+        <div className={clsx(headRow, COLS)}>
           {['date', 'task', 'note'].map((header) => (
-            <span key={header} className={vs.th}>
+            <span key={header} className={th}>
               {TT.t(header)}
             </span>
           ))}
-          <span className={[vs.th, vs.right].join(' ')}>{TT.t('hours')}</span>
-          <span className={[vs.th, vs.right].join(' ')}>{TT.t('amount')}</span>
+          <span className={clsx(th, 'text-right')}>{TT.t('hours')}</span>
+          <span className={clsx(th, 'text-right')}>{TT.t('amount')}</span>
         </div>
         {entries.length === 0 && (
-          <div className={vs.empty}>
+          <div className={empty}>
             {TT.t('No billable hours for ') + (client ? client.name : '?') + TT.t(' in ') + TT.fmtMonth(month) + '.'}
           </div>
         )}
         {entries.map((entry) => {
           const code = TT.entryProjectCode(state, entry);
           return (
-            <div key={entry.id} className={[vs.bodyRow, iv.cols].join(' ')}>
-              <span className={[vs.td, vs.mono, vs.cSecondary].join(' ')}>{entry.date.slice(5)}</span>
-              <span className={iv.taskCell}>
-                <span className={clsx(vs.code, projectText(state, code))}>{code}</span>
-                <span className={[vs.fs12, 'truncate'].join(' ')}>{entry.label || ''}</span>
+            <div key={entry.id} className={clsx(bodyRow, COLS)}>
+              <span className={clsx(cell, 'font-mono text-caption text-secondary')}>{entry.date.slice(5)}</span>
+              <span className={clsx(cell, 'flex min-w-0 items-baseline gap-1.75 text-body text-primary')}>
+                <span className={clsx(codeClass, projectText(state, code))}>{code}</span>
+                <span className="truncate">{entry.label || ''}</span>
               </span>
-              <span className={[vs.td, vs.cSecondary, 'truncate'].join(' ')}>{entry.note || ''}</span>
-              <span className={[vs.td, vs.mono, vs.right].join(' ')}>
+              <span className={clsx(cell, 'truncate text-body text-secondary')}>{entry.note || ''}</span>
+              <span className={clsx(cell, num, 'text-primary')}>
                 {TT.fmtHours(TT.effectiveBillMinutes(state, entry))}
               </span>
-              <span className={[vs.td, vs.mono, vs.right].join(' ')}>
+              <span className={clsx(cell, num, 'text-primary')}>
                 {TT.fmtMoney(TT.effectiveAmount(state, entry), currency)}
               </span>
             </div>
           );
         })}
-        <div className={[vs.totalRow, iv.cols].join(' ')}>
-          <span className={[vs.td, vs.bold, iv.totalLabel].join(' ')}>
+        {/* BOB GAP: the totals were mono 11.5px at weight 600, and Bob has no 11.5px style with a
+            weight. They keep the size (text-caption) and lose the weight; the label keeps 600. */}
+        <div className={clsx(totalRow, COLS)}>
+          <span className={clsx(cell, 'col-start-1 col-end-4 text-subhead text-primary')}>
             {TT.t('total') + ' — ' + (client ? client.name : '') + ' · ' + TT.fmtMonth(month)}
           </span>
-          <span className={[vs.td, vs.mono, vs.right, vs.bold].join(' ')}>{TT.fmtHours(totBill)}</span>
-          <span className={[vs.td, vs.mono, vs.right, vs.bold].join(' ')}>{TT.fmtMoney(totAmt, currency)}</span>
+          <span className={clsx(cell, num, 'text-primary')}>{TT.fmtHours(totBill)}</span>
+          <span className={clsx(cell, num, 'text-primary')}>{TT.fmtMoney(totAmt, currency)}</span>
         </div>
       </div>
     </div>
