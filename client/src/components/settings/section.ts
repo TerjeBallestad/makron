@@ -21,10 +21,8 @@ export const smallBox = 'px-2.25 py-1.25';
 export const small = `${smallBox} text-body`;
 /** A small input for a number. */
 export const smallMono = `${smallBox} font-mono text-caption`;
-/** A code or id: a project code, a client id.
- *  BOB GAP: these were mono 11px at weight 600. 11px is a tie between 10.5 and 11.5, and Bob has
- *  no 11.5px style with a weight, so they take text-id (10.5px, 600), the style of every other
- *  code in Makron. */
+/** A code or id: a project code, a client id. Bob's text-id (10.5px, 600), the style of every
+ *  other code in Makron; it was mono 11px at weight 600 before Bob. */
 export const code = 'font-mono text-id';
 /** The archive and delete glyphs (⤓, ×) at the end of a row: Bob's text button, faint.
  *  The glyph was 14px; text-prose is the nearest step (13.5px). */

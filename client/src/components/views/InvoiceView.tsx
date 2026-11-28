@@ -11,6 +11,7 @@ import {
   cell,
   code as codeClass,
   empty,
+  figure,
   headerRow,
   headRow,
   num,
@@ -152,14 +153,12 @@ export function InvoiceView({ state, ui }: ViewProps) {
             </div>
           );
         })}
-        {/* BOB GAP: the totals were mono 11.5px at weight 600, and Bob has no 11.5px style with a
-            weight. They keep the size (text-caption) and lose the weight; the label keeps 600. */}
         <div className={clsx(totalRow, COLS)}>
           <span className={clsx(cell, 'col-start-1 col-end-4 text-subhead text-primary')}>
             {TT.t('total') + ' — ' + (client ? client.name : '') + ' · ' + TT.fmtMonth(month)}
           </span>
-          <span className={clsx(cell, num, 'text-primary')}>{TT.fmtHours(totBill)}</span>
-          <span className={clsx(cell, num, 'text-primary')}>{TT.fmtMoney(totAmt, currency)}</span>
+          <span className={clsx(cell, figure, 'text-primary')}>{TT.fmtHours(totBill)}</span>
+          <span className={clsx(cell, figure, 'text-primary')}>{TT.fmtMoney(totAmt, currency)}</span>
         </div>
       </div>
     </div>

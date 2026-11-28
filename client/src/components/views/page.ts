@@ -27,6 +27,8 @@ export const th = 'px-3 py-2 text-label text-muted uppercase';
 export const cell = 'px-3 py-2';
 /** A number in a cell: mono, at the caption size, right-aligned. */
 export const num = 'text-right font-mono text-caption';
+/** A total in a table's total row: mono, at the caption size, weight 600 (Bob's text-figure). */
+export const figure = 'text-right font-mono text-figure';
 /** The text of an empty table. */
 export const empty = 'px-3 py-3.5 text-body text-muted';
 /** A project code before a name. */
