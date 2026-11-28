@@ -1,6 +1,5 @@
 // Small entry helpers shared by the views (and Settings). These are data selectors,
-// not styles — the style constants that used to live alongside them in viewStyles.ts
-// have moved into views.module.css and the per-view modules.
+// not styles: the shared page and table classes are in page.ts.
 import TT from '../../i18n';
 import type { Catalog, Entry } from '../../../../shared/types';
 

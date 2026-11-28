@@ -5,7 +5,8 @@ import { TimeGrid } from '../grid/TimeGrid';
 import { GridFooter } from '../grid/GridFooter';
 import { SyntaxHint } from '../grid/SyntaxHint';
 import { entriesOn, sumMin, committedKeys, approvedKeys } from './viewUtils';
-import vs from './views.module.css';
+import { clsx } from 'clsx';
+import { headerRow, page, pageTitle, subtle } from './page';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 
@@ -40,13 +41,13 @@ export function WeekView({ state, ui }: ViewProps) {
   // longer reopen it, so its reopen verb is gone and the chip reads 'locked'.
   const approved = approvedKeys(state);
   return (
-    <div className={vs.page}>
-      <div className={[vs.headerRow, vs.baseline].join(' ')}>
-        <h1 className={vs.h1}>{TT.t('Week') + ' ' + weekInfo.week}</h1>
-        <span className={vs.subtle}>
+    <div className={page}>
+      <div className={clsx(headerRow, 'items-baseline')}>
+        <h1 className={pageTitle}>{TT.t('Week') + ' ' + weekInfo.week}</h1>
+        <span className={subtle}>
           {TT.fmtDayShort(days[0]) + ' → ' + TT.fmtDayShort(days[6]) + ' · ' + weekInfo.year}
         </span>
-        <span className={vs.weekNav}>
+        <span className="ml-auto flex gap-1.5">
           <Button variant="ghost" size="sm" onClick={() => setOffset(offset - 1)}>
             ‹
           </Button>
@@ -63,24 +64,34 @@ export function WeekView({ state, ui }: ViewProps) {
       {/* Unconditional: TT.weekSegments walks the week's 7 dates and always returns at least one
           segment, so there is no empty-row case to guard. It was guarded while a shape could turn
           committing off entirely (SB-181 removed that). */}
-      <div className={vs.segChipRow} data-tt="week-seg-row">
+      <div className="-mt-1.5 mb-4.5 flex flex-wrap gap-2.5" data-tt="week-seg-row">
         {segments.map((segment) => {
           const isCommitted = committed.has(segment.key);
           const isLocked = approved.has(segment.key);
           return (
-            <div key={segment.key} className={vs.segChip} data-committed={isCommitted} data-locked={isLocked}>
+            <div
+              key={segment.key}
+              className={clsx(
+                'flex items-center gap-2 rounded-chip border bg-card py-0.75 pr-1.25 pl-2.5',
+                // The border is see-through green or indigo over the chip (DD-038). A locked
+                // segment is also committed, and its indigo wins.
+                isLocked ? 'border-indigo-9/45' : isCommitted ? 'border-green-9/40' : 'border-subtle',
+              )}
+              data-committed={isCommitted}
+              data-locked={isLocked}
+            >
               <StatusDot
                 state={isCommitted ? 'solid' : 'outline'}
                 color={isLocked ? 'var(--bg-accent)' : isCommitted ? 'var(--bg-green)' : 'var(--gray-22)'}
                 size={7}
               />
-              <span className={vs.segRange}>{segRange(segment.dates)}</span>
+              <span className="font-mono text-caption text-secondary">{segRange(segment.dates)}</span>
               <Chip tone={isLocked ? 'accent' : isCommitted ? 'green' : 'neutral'} mono={true}>
                 {isLocked ? TT.t('locked') : isCommitted ? TT.t('committed') : TT.t('open')}
               </Chip>
               {isLocked ? (
                 // Approved by an admin: no reopen verb — the segment is theirs to release now.
-                <span className={vs.segLockedNote}>{TT.t('approved by admin')}</span>
+                <span className="pr-1.25 text-tiny text-muted">{TT.t('approved by admin')}</span>
               ) : (
                 <Button
                   variant="ghost"
@@ -98,17 +109,14 @@ export function WeekView({ state, ui }: ViewProps) {
         const entries = entriesOn(state, day);
         if (!entries.length && day !== today && TT.parseDate(day) > new Date()) return null;
         return (
-          <div key={day} className={vs.day}>
-            <div className={vs.dayHead}>
+          <div key={day} className="mb-5.5">
+            <div className="mb-1 flex items-baseline gap-2">
               <SectionLabel
                 dot={day === today ? <StatusDot state="outline" color="var(--bg-accent)" size={7} /> : null}
               >
                 {TT.fmtDayShort(day) + (day === today ? ' · ' + TT.t('today') : '')}
               </SectionLabel>
-              <span
-                className={vs.dayHours}
-                style={{ color: entries.length ? 'var(--text-secondary)' : 'var(--text-faint)' }}
-              >
+              <span className={clsx('ml-auto font-mono text-tiny', entries.length ? 'text-secondary' : 'text-faint')}>
                 {entries.length ? TT.fmtHours(sumMin(entries)) + TT.t('h') : '—'}
               </span>
             </div>

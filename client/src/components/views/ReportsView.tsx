@@ -3,11 +3,25 @@ import TT from '../../i18n';
 import { SegToggle, ProgressBar } from '@terjeballestad/bob';
 import { api } from '../../api';
 import { isAdmin } from '../../roles';
-import vs from './views.module.css';
 import type { AppState, Entry, TeamReportRow } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 import { clsx } from 'clsx';
 import { projectText } from '../../projectColor';
+import {
+  bodyRow,
+  cell,
+  code as codeClass,
+  empty,
+  errLine,
+  headerRow,
+  headRow,
+  num,
+  page,
+  pageTitle,
+  table,
+  th,
+  totalRow,
+} from './page';
 
 function periodFilter(state: AppState, period: string): (entry: Entry) => boolean {
   const today = TT.todayStr();
@@ -139,7 +153,9 @@ export function ReportsView({ state, ui }: ViewProps) {
   }, [teamScope, period]);
 
   // employees see hours only — billed/amount columns need rates the server never sends them
-  const cols = admin ? 'minmax(180px,1fr) 120px 70px 70px 110px' : 'minmax(180px,1fr) 120px 70px';
+  const cols = admin
+    ? 'grid-cols-[minmax(180px,1fr)_120px_70px_70px_110px]'
+    : 'grid-cols-[minmax(180px,1fr)_120px_70px]';
   const loading = teamScope && team === null && !teamError;
   const rows = groupBy(state, teamScope ? (team ?? []) : ownRows(state, period), by);
   const maxMin = Math.max(1, ...rows.map((row) => row.min));
@@ -152,10 +168,10 @@ export function ReportsView({ state, ui }: ViewProps) {
   ];
   if (admin) byOptions.push({ value: 'person', label: TT.t('by person') });
   return (
-    <div className={vs.page}>
-      <div className={vs.headerRow}>
-        <h1 className={vs.h1}>{TT.t('Reports')}</h1>
-        <span className={vs.controls}>
+    <div className={page}>
+      <div className={clsx(headerRow, 'items-center')}>
+        <h1 className={pageTitle}>{TT.t('Reports')}</h1>
+        <span className="ml-auto flex flex-wrap justify-end gap-2">
           {admin && (
             <SegToggle
               options={[
@@ -178,28 +194,28 @@ export function ReportsView({ state, ui }: ViewProps) {
           />
         </span>
       </div>
-      {teamError && <div className={vs.errLine}>{teamError}</div>}
-      <div className={vs.table}>
-        <div className={vs.headRow} style={{ gridTemplateColumns: cols }}>
-          <span className={vs.th}>{TT.t(by)}</span>
-          <span className={vs.th}></span>
-          <span className={[vs.th, vs.right].join(' ')}>{TT.t('hours')}</span>
-          {admin && <span className={[vs.th, vs.right].join(' ')}>{TT.t('billed')}</span>}
-          {admin && <span className={[vs.th, vs.right].join(' ')}>{TT.t('amount')}</span>}
+      {teamError && <div className={errLine}>{teamError}</div>}
+      <div className={table}>
+        <div className={clsx(headRow, cols)}>
+          <span className={th}>{TT.t(by)}</span>
+          <span className={th}></span>
+          <span className={clsx(th, 'text-right')}>{TT.t('hours')}</span>
+          {admin && <span className={clsx(th, 'text-right')}>{TT.t('billed')}</span>}
+          {admin && <span className={clsx(th, 'text-right')}>{TT.t('amount')}</span>}
         </div>
-        {loading && <div className={vs.empty}>{TT.t('Loading…')}</div>}
-        {!loading && rows.length === 0 && <div className={vs.empty}>{TT.t('Nothing tracked in this period.')}</div>}
+        {loading && <div className={empty}>{TT.t('Loading…')}</div>}
+        {!loading && rows.length === 0 && <div className={empty}>{TT.t('Nothing tracked in this period.')}</div>}
         {!loading &&
           rows.map((row) => (
-            <div key={row.key} className={vs.bodyRow} style={{ gridTemplateColumns: cols }}>
-              <span className={vs.tdFlex}>
+            <div key={row.key} className={clsx(bodyRow, cols)}>
+              <span className={clsx(cell, 'flex min-w-0 items-baseline gap-2 text-body text-primary')}>
                 {by === 'project' && row.key !== '—' && (
-                  <span className={clsx(vs.code, projectText(state, row.key))}>{row.key}</span>
+                  <span className={clsx(codeClass, projectText(state, row.key))}>{row.key}</span>
                 )}
                 <span className="truncate">{row.label}</span>
-                {row.sub && <span className={vs.sub}>{row.sub}</span>}
+                {row.sub && <span className="shrink-0 text-tiny text-muted">{row.sub}</span>}
               </span>
-              <span className={vs.barCell}>
+              <span className="px-3">
                 <ProgressBar
                   value={row.min}
                   max={maxMin}
@@ -207,38 +223,34 @@ export function ReportsView({ state, ui }: ViewProps) {
                   color={by === 'project' && row.key !== '—' ? TT.projColor(state, row.key) : 'var(--bg-accent)'}
                 />
               </span>
-              <span className={[vs.td, vs.mono, vs.right, vs.cBody].join(' ')}>{TT.fmtHours(row.min)}</span>
+              <span className={clsx(cell, num, 'text-primary')}>{TT.fmtHours(row.min)}</span>
+              {admin && <span className={clsx(cell, num, 'text-secondary')}>{TT.fmtHours(row.bill)}</span>}
               {admin && (
-                <span className={[vs.td, vs.mono, vs.right, vs.cSecondary].join(' ')}>{TT.fmtHours(row.bill)}</span>
-              )}
-              {admin && (
-                <span className={[vs.td, vs.mono, vs.right, vs.cBody].join(' ')}>
-                  {TT.fmtMoney(row.amt, state.settings.currency)}
-                </span>
+                <span className={clsx(cell, num, 'text-primary')}>{TT.fmtMoney(row.amt, state.settings.currency)}</span>
               )}
             </div>
           ))}
-        <div className={vs.totalRow} style={{ gridTemplateColumns: cols }}>
-          <span className={[vs.td, vs.bold].join(' ')}>{TT.t('total')}</span>
+        {/* BOB GAP: the totals were mono 11.5px at weight 600, and Bob has no 11.5px style with a
+            weight. They keep the size (text-caption) and lose the weight; the label keeps 600. */}
+        <div className={clsx(totalRow, cols)}>
+          <span className={clsx(cell, 'text-subhead text-primary')}>{TT.t('total')}</span>
           <span></span>
-          <span className={[vs.td, vs.mono, vs.right, vs.bold].join(' ')}>{TT.fmtHours(totMin)}</span>
-          {admin && <span className={[vs.td, vs.mono, vs.right, vs.cSecondary].join(' ')}>{TT.fmtHours(totBill)}</span>}
+          <span className={clsx(cell, num, 'text-primary')}>{TT.fmtHours(totMin)}</span>
+          {admin && <span className={clsx(cell, num, 'text-secondary')}>{TT.fmtHours(totBill)}</span>}
           {admin && (
-            <span className={[vs.td, vs.mono, vs.right, vs.bold].join(' ')}>
-              {TT.fmtMoney(totAmt, state.settings.currency)}
-            </span>
+            <span className={clsx(cell, num, 'text-primary')}>{TT.fmtMoney(totAmt, state.settings.currency)}</span>
           )}
         </div>
       </div>
       {admin && (
-        <div className={vs.note}>
+        <div className="mt-2.5 text-caption text-muted">
           {TT.t(
             'billed = hours rounded up per entry to the client’s rounding · non-billable entries excluded from billed and amount.',
           )}
         </div>
       )}
       {teamScope && (
-        <div className={vs.noteTight}>
+        <div className="mt-1 text-caption text-muted">
           {TT.t('team totals are aggregated on the server — individual entries stay private to each user.')}
         </div>
       )}

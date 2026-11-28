@@ -1,11 +1,12 @@
 import React from 'react';
 import TT from '../../i18n';
 import { Chip } from '@terjeballestad/bob';
+import { clsx } from 'clsx';
 import { TimeGrid } from '../grid/TimeGrid';
 import { GridFooter } from '../grid/GridFooter';
 import { SyntaxHint } from '../grid/SyntaxHint';
 import { entriesOn } from './viewUtils';
-import vs from './views.module.css';
+import { headerRow, page, pageTitle, subtle } from './page';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 
@@ -19,11 +20,11 @@ export function TodayView({ state, ui }: ViewProps) {
   const entries = entriesOn(state, date);
   const weekInfo = TT.isoWeek(date);
   return (
-    <div className={vs.page}>
-      <div className={[vs.headerRow, vs.baseline].join(' ')}>
-        <h1 className={vs.h1}>{TT.t('Today')}</h1>
-        <span className={vs.subtle}>{TT.fmtDayLong(date)}</span>
-        <Chip mono={true} className={vs.chipRight}>
+    <div className={page}>
+      <div className={clsx(headerRow, 'items-baseline')}>
+        <h1 className={pageTitle}>{TT.t('Today')}</h1>
+        <span className={subtle}>{TT.fmtDayLong(date)}</span>
+        <Chip mono={true} className="ml-auto">
           {TT.t('week') + ' ' + weekInfo.week}
         </Chip>
       </div>

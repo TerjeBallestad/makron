@@ -8,12 +8,20 @@ import TT from '../../i18n';
 import { StatusDot, Chip, Button } from '@terjeballestad/bob';
 import { api } from '../../api';
 import type { UserTimesheet, ApiError } from '../../api';
-import vs from './views.module.css';
-import rv from './ReviewView.module.css';
 import type { AppState, User, Entry, Catalog } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 import { clsx } from 'clsx';
 import { projectText } from '../../projectColor';
+import { code as codeClass, empty, errLine, headerRow, page, pageTitle, subtle } from './page';
+
+// SDD-002 rulings 5 & 6 (SB-025): dense, 1px borders, mono metadata, the app's grammar.
+const RAIL_EMPTY = 'px-1.5 py-2 text-body text-faint';
+// The week panel's edit table: one grid for the head and the rows.
+const EDIT_ROW = 'grid grid-cols-[56px_96px_minmax(140px,1fr)_minmax(140px,1fr)_90px] items-center gap-2 border-b';
+// An edit cell: a bare input that shows a border on hover and an indigo one with focus.
+const EDIT_CELL =
+  'min-w-0 rounded-sm border border-transparent bg-transparent px-1.25 py-0.75 font-sans text-body text-primary ' +
+  'outline-none hover:border-subtle focus:border-indigo-9 focus:bg-accent/5';
 
 interface ViewProps {
   state: AppState;
@@ -148,25 +156,28 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
     segKey && catalog ? TT.monthSegments(catalog, openDates[0]?.slice(0, 7) || '').find((s) => s.key === segKey) : null;
 
   return (
-    <div className={vs.page}>
-      <div className={vs.headerRow}>
-        <h1 className={vs.h1}>{TT.t('Review')}</h1>
-        <span className={vs.subtle}>{TT.t('correct and approve any user’s committed weeks')}</span>
+    <div className={page}>
+      <div className={clsx(headerRow, 'items-center')}>
+        <h1 className={pageTitle}>{TT.t('Review')}</h1>
+        <span className={subtle}>{TT.t('correct and approve any user’s committed weeks')}</span>
       </div>
-      {err && <div className={vs.errLine}>{err}</div>}
-      <div className={rv.layout}>
+      {err && <div className={errLine}>{err}</div>}
+      <div className="flex items-start gap-4.5">
         {/* user rail */}
-        <nav className={rv.rail}>
-          {users == null && <div className={rv.railEmpty}>{TT.t('Loading…')}</div>}
-          {users?.length === 0 && <div className={rv.railEmpty}>{TT.t('No other users yet.')}</div>}
+        <nav className="flex w-50 flex-none flex-col gap-0.5 border-r border-subtle pr-3">
+          {users == null && <div className={RAIL_EMPTY}>{TT.t('Loading…')}</div>}
+          {users?.length === 0 && <div className={RAIL_EMPTY}>{TT.t('No other users yet.')}</div>}
           {users?.map((u) => (
             <button
               key={u.id}
-              className={[rv.railRow, u.id === selId && rv.railActive].filter(Boolean).join(' ')}
+              className={clsx(
+                'flex w-full cursor-pointer items-center gap-2 rounded-chip border px-2 py-1.5 text-left hover:bg-accent/6',
+                u.id === selId ? 'border-indigo-9/45 bg-accent/8' : 'border-transparent bg-transparent',
+              )}
               onClick={() => setSelId(u.id)}
             >
               <StatusDot state={u.id === selId ? 'solid' : 'outline'} color="var(--bg-accent)" size={7} />
-              <span className={['truncate', rv.railName].join(' ')}>{u.name}</span>
+              <span className="flex-1 truncate text-body text-secondary">{u.name}</span>
               <Chip mono={true} tone={u.role === 'admin' ? 'green' : 'neutral'}>
                 {TT.t(u.role)}
               </Chip>
@@ -175,28 +186,30 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
         </nav>
 
         {/* panel */}
-        <section className={rv.panel}>
-          {!selUser && <div className={vs.empty}>{TT.t('Pick a user to review their weeks.')}</div>}
-          {selUser && !sheet && <div className={vs.empty}>{TT.t('Loading…')}</div>}
+        <section className="min-w-0 flex-1">
+          {!selUser && <div className={empty}>{TT.t('Pick a user to review their weeks.')}</div>}
+          {selUser && !sheet && <div className={empty}>{TT.t('Loading…')}</div>}
           {selUser && sheet && catalog && (
             <>
-              <div className={rv.panelHead}>
-                <span className={rv.panelName}>{selUser.name}</span>
-                <span className={vs.subtle}>{selUser.email}</span>
+              <div className="mb-3.5 flex items-baseline gap-2.5">
+                <span className="text-title text-primary">{selUser.name}</span>
+                <span className={subtle}>{selUser.email}</span>
               </div>
-              {months.length === 0 && <div className={vs.empty}>{TT.t('No entries logged.')}</div>}
+              {months.length === 0 && <div className={empty}>{TT.t('No entries logged.')}</div>}
               {months.map((month) => {
                 const segs = TT.monthSegments(catalog, month);
                 const good = segs.every((s) => s.committed);
                 return (
-                  <div key={month} className={rv.monthBlock}>
-                    <div className={rv.monthHead}>
-                      <span className={rv.monthLabel}>{TT.fmtMonth(month)}</span>
+                  <div key={month} className="mb-4">
+                    <div className="mb-1.75 flex items-center gap-2">
+                      {/* BOB GAP: the month was 12px with letter spacing .04em, which no Bob style
+                          has. It keeps its size as text-body; the spacing goes. */}
+                      <span className="text-body text-muted uppercase">{TT.fmtMonth(month)}</span>
                       <Chip mono={true} tone={good ? 'green' : 'neutral'}>
                         {good ? TT.t('month good') : TT.t('incomplete')}
                       </Chip>
                     </div>
-                    <div className={rv.pillRow}>
+                    <div className="flex flex-wrap gap-2">
                       {segs.map((seg) => {
                         const dates = segDates(seg.key);
                         const tone = seg.approved ? 'accent' : seg.committed ? 'green' : 'neutral';
@@ -204,7 +217,17 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
                         return (
                           <button
                             key={seg.key}
-                            className={[rv.pill, seg.key === segKey && rv.pillActive].filter(Boolean).join(' ')}
+                            className={clsx(
+                              'flex cursor-pointer items-center gap-2 rounded-chip border bg-transparent py-1 pr-2 pl-2.25',
+                              // See-through green or indigo over the page (DD-038); a locked segment
+                              // is also committed, and its indigo wins. Only an open pill shows hover.
+                              seg.approved
+                                ? 'border-indigo-9/45'
+                                : seg.committed
+                                  ? 'border-green-9/40'
+                                  : 'border-subtle hover:border-indigo-9/30',
+                              seg.key === segKey && 'outline-2 outline-offset-1 outline-indigo-9/55',
+                            )}
                             data-committed={seg.committed}
                             data-locked={seg.approved}
                             onClick={() => setSegKey(seg.key === segKey ? null : seg.key)}
@@ -216,7 +239,7 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
                               }
                               size={7}
                             />
-                            <span className={rv.pillRange}>{segLabel(dates)}</span>
+                            <span className="font-mono text-caption text-secondary">{segLabel(dates)}</span>
                             <Chip mono={true} tone={tone}>
                               {label}
                             </Chip>
@@ -230,10 +253,10 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
 
               {/* week panel */}
               {segKey && openSeg && (
-                <div className={rv.weekPanel}>
-                  <div className={rv.weekHead}>
-                    <span className={rv.weekTitle}>{segLabel(openDates)}</span>
-                    <span className={rv.weekActions}>
+                <div className="mt-4.5 rounded-md border border-subtle bg-card px-3.5 pt-3 pb-3.5">
+                  <div className="mb-2.5 flex items-center justify-between gap-2.5">
+                    <span className="font-mono text-subhead text-primary">{segLabel(openDates)}</span>
+                    <span className="flex gap-1.5">
                       <Button variant="secondary" size="sm" onClick={save} disabled={busy || !dirty}>
                         {TT.t('Save corrections')}
                       </Button>
@@ -249,51 +272,61 @@ export function ReviewView({ state, ui, onReviewChanged }: ViewProps) {
                       )}
                     </span>
                   </div>
-                  <div className={rv.editTable}>
-                    <div className={[rv.editRow, rv.editHead].join(' ')}>
+                  <div className="flex flex-col">
+                    {/* BOB GAP: the column heads were 10.5px with letter spacing .04em, which no Bob
+                        style has. They keep size and weight as text-tiny; the spacing goes. */}
+                    <div
+                      className={clsx(
+                        EDIT_ROW,
+                        'border-subtle pt-0.75 pb-1.25 text-tiny text-faint uppercase *:px-0.5',
+                      )}
+                    >
                       <span>{TT.t('date')}</span>
                       <span>{TT.t('time')}</span>
                       <span>{TT.t('task')}</span>
                       <span>{TT.t('note')}</span>
-                      <span className={vs.right}>{TT.t('amount')}</span>
+                      <span className="text-right">{TT.t('amount')}</span>
                     </div>
-                    {openEntries.length === 0 && <div className={vs.empty}>{TT.t('No entries in this week.')}</div>}
+                    {openEntries.length === 0 && <div className={empty}>{TT.t('No entries in this week.')}</div>}
                     {openEntries.map((entry) => {
                       const code = TT.entryProjectCode(catalog, entry);
                       return (
-                        <div key={entry.id + ':' + nonce} className={rv.editRow}>
-                          <span className={[vs.mono, vs.cSecondary].join(' ')}>{entry.date.slice(5)}</span>
+                        <div key={entry.id + ':' + nonce} className={clsx(EDIT_ROW, 'border-strong py-0.75')}>
+                          <span className="font-mono text-caption text-secondary">{entry.date.slice(5)}</span>
                           <input
-                            className={rv.cell}
+                            className={EDIT_CELL}
                             defaultValue={TT.fmtTimeCell(entry)}
                             onBlur={(e) => applyTime(entry.id, e.target.value)}
                           />
-                          <span className={rv.taskCell}>
-                            <span className={clsx(vs.code, projectText(catalog, code))}>{code || '—'}</span>
+                          <span className="flex min-w-0 items-center gap-1.5">
+                            <span className={clsx(codeClass, projectText(catalog, code))}>{code || '—'}</span>
                             <input
-                              className={[rv.cell, rv.cellGrow].join(' ')}
+                              className={clsx(EDIT_CELL, 'w-full')}
                               defaultValue={entry.label || ''}
                               onBlur={(e) => editEntry(entry.id, { label: e.target.value })}
                             />
                             {entry.editedByAdmin && (
-                              <span className={rv.editedMark} title={TT.t('edited by admin')}>
+                              <span
+                                className="flex-none font-mono text-tiny text-accent"
+                                title={TT.t('edited by admin')}
+                              >
                                 ✎ {TT.t('edited')}
                               </span>
                             )}
                           </span>
                           <input
-                            className={[rv.cell, rv.cellGrow].join(' ')}
+                            className={clsx(EDIT_CELL, 'w-full')}
                             defaultValue={entry.note || ''}
                             onBlur={(e) => editEntry(entry.id, { note: e.target.value })}
                           />
-                          <span className={[vs.mono, vs.right, vs.cBody].join(' ')}>
+                          <span className="text-right font-mono text-caption text-primary">
                             {TT.fmtMoney(TT.effectiveAmount(catalog, entry), catalog.settings.currency)}
                           </span>
                         </div>
                       );
                     })}
                   </div>
-                  <div className={rv.weekNote}>
+                  <div className="mt-2.5 text-note text-faint">
                     {TT.t(
                       'Corrections are marked “edited by admin”. Approving locks the week — the employee can no longer reopen it until you release it.',
                     )}
