@@ -12,6 +12,13 @@
 //   each with its file: an empty views/x.module.css; ReviewView's panel name as
 //   `text-title font-semibold`; its week title as `font-mono text-body text-subhead`;
 //   ProjectPage's code as `font-mono text-[12px]`.
+// ## Verified red-green: 2026-11-28 (PR 4 follow-ups) — ReviewView's EDIT_CELL with `font-sans`
+//   put back before `text-body` fails the family test with that file and string. The rule did not
+//   exist before: OFF_STYLE lists weights, not families, so `font-sans` next to a style passed.
+//   cells.ts textCell with `font-sans` put back still passes here (the style comes from another
+//   string, through clsx); tests-browser/bob-text-styles.test.js catches that one in the DOM.
+//   STYLE gains text-figure (Bob 1.4): page.ts `figure` as `font-mono text-figure text-caption`
+//   fails the two-styles test.
 import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, resolve, dirname, relative } from 'node:path';
@@ -35,13 +42,18 @@ const OFF_STYLE =
 const ARBITRARY_TYPE = /(?<![\w-])(?:text-\[(?:\d|length:)[^\]]*\]|text-\(length:[^)]*\)|font-[[(][^\])]*[\])])/g;
 // Bob's text styles. A colour (text-primary) or an alignment (text-right) is not one.
 const STYLE =
-  /(?<![\w-])text-(?:micro|tiny|id|label|caption|note|body|subhead|item|base|prose|heading|title|headline|display)(?![\w-])/g;
+  /(?<![\w-])text-(?:micro|tiny|id|label|caption|note|figure|body|subhead|item|base|prose|heading|title|headline|display)(?![\w-])/g;
+// A font-* class other than font-mono: a family (font-sans, font-serif) or a weight. A container
+// may set font-sans; an element with a text style sets no family but mono.
+const FONT_NOT_MONO = /(?<![\w-])font-(?!mono(?![\w-]))[a-z][\w-]*/g;
 
 /** The file without its comments, so a comment may name a class. */
 const code = (text) => text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
 
 const sources = files(SRC, /\.(ts|tsx)$/);
 const read = (path) => code(readFileSync(path, 'utf8'));
+/** Every string literal in the file: the classes of one element, or a part of them. */
+const literals = (path) => [...read(path).matchAll(/'[^'\n]*'|"[^"\n]*"|`[^`]*`/g)].map((m) => m[0]);
 const matches = (pattern) =>
   sources.flatMap((path) => [...read(path).matchAll(pattern)].map((m) => `${relative(ROOT, path)}: ${m[0]}`));
 
@@ -65,12 +77,22 @@ describe('Bob 1.2 text styles', () => {
   });
 
   it('no class string holds two text styles', () => {
-    // One string literal at a time: the classes of one element, or a part of them. Constants
-    // that clsx joins are separate strings, so this does not see a style in each of two.
+    // One string literal at a time. Constants that clsx joins are separate strings, so this does
+    // not see a style in each of two; the DOM scan in tests-browser/bob-text-styles.test.js does.
     const found = sources.flatMap((path) =>
-      [...read(path).matchAll(/'[^'\n]*'|"[^"\n]*"|`[^`]*`/g)]
-        .map((m) => m[0])
+      literals(path)
         .filter((literal) => (literal.match(STYLE) ?? []).length > 1)
+        .map((literal) => `${relative(ROOT, path)}: ${literal}`),
+    );
+    expect(found).toEqual([]);
+  });
+
+  it('no class string sets a font-* class other than font-mono next to a text style', () => {
+    // Bob's base sets `font-family: inherit` on inputs, so an input with a style needs no
+    // font-sans. Same limit as above: one string literal at a time.
+    const found = sources.flatMap((path) =>
+      literals(path)
+        .filter((literal) => literal.match(STYLE) && literal.match(FONT_NOT_MONO))
         .map((literal) => `${relative(ROOT, path)}: ${literal}`),
     );
     expect(found).toEqual([]);
