@@ -2,7 +2,7 @@
 import React from 'react';
 import TT from '../../i18n';
 import { SectionLabel, Button, Input } from '@terjeballestad/bob';
-import st from './settings.module.css';
+import { errLine, section, sectionLabel, small } from './section';
 import type { UiActions } from '../../types';
 
 interface PasswordSectionProps {
@@ -34,10 +34,10 @@ export function PasswordSection({ ui }: PasswordSectionProps) {
       });
   };
   return (
-    <div className={st.section}>
-      <SectionLabel style={{ marginBottom: 10 }}>{TT.t('Password')}</SectionLabel>
+    <div className={section}>
+      <SectionLabel className={sectionLabel}>{TT.t('Password')}</SectionLabel>
       <div
-        className={st.pwGrid}
+        className="grid grid-cols-[1fr_1fr_1fr_auto] items-center gap-2"
         onKeyDown={(ev) => {
           if (ev.key === 'Enter') submit();
         }}
@@ -48,7 +48,7 @@ export function PasswordSection({ ui }: PasswordSectionProps) {
           placeholder={TT.t('Current password')}
           value={current}
           onChange={(e) => setCurrent(e.target.value)}
-          className={st.small}
+          className={small}
         />
         <Input
           type="password"
@@ -56,23 +56,24 @@ export function PasswordSection({ ui }: PasswordSectionProps) {
           placeholder={TT.t('New password')}
           value={next}
           onChange={(e) => setNext(e.target.value)}
-          className={st.small}
+          className={small}
         />
-        {/* the DS Input styles `border` as a shorthand — match it rather than setting borderColor, which React warns about on rerender */}
+        {/* aria-invalid gives Bob's Input its invalid border (border-invalid), and tells a screen
+            reader the two passwords do not match. */}
         <Input
           type="password"
           autoComplete="new-password"
           placeholder={TT.t('Repeat new password')}
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
-          className={st.small}
-          style={mismatch ? { border: '1px solid var(--border-invalid)' } : undefined}
+          className={small}
+          aria-invalid={mismatch || undefined}
         />
         <Button variant="primary" size="sm" disabled={!ready} onClick={submit}>
           {TT.t('Change password')}
         </Button>
       </div>
-      {(err || mismatch) && <div className={st.errLine}>{mismatch ? TT.t('The new passwords do not match') : err}</div>}
+      {(err || mismatch) && <div className={errLine}>{mismatch ? TT.t('The new passwords do not match') : err}</div>}
     </div>
   );
 }

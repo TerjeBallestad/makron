@@ -1,11 +1,13 @@
 import React from 'react';
 import TT from '../../i18n';
 import { SectionLabel, Button } from '@terjeballestad/bob';
-import st from './settings.module.css';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 import { clsx } from 'clsx';
 import { projectText } from '../../projectColor';
+import { code, hint, label, row, section, sectionLabel, th } from './section';
+
+const COLS = 'grid-cols-[130px_1fr_70px_auto]';
 
 interface SettingsProps {
   state: AppState;
@@ -22,29 +24,29 @@ export function ArchiveSection({ state, ui }: SettingsProps) {
   const archivedProjects = state.projects.filter((project) => project.archived);
   if (archivedClients.length === 0 && archivedProjects.length === 0) return null;
   return (
-    <div className={st.section}>
-      <SectionLabel style={{ marginBottom: 10 }}>{TT.t('Archive')}</SectionLabel>
+    <div className={section}>
+      <SectionLabel className={sectionLabel}>{TT.t('Archive')}</SectionLabel>
       {archivedProjects.map((project) => (
-        <div key={'p:' + project.code} className={[st.row, st.colsArchive].join(' ')}>
-          <span className={clsx(st.codeInput, projectText(state, project.code))}>{project.code}</span>
-          <span className={st.label}>{project.name}</span>
-          <span className={st.th}>{TT.t('project')}</span>
+        <div key={'p:' + project.code} className={clsx(row, COLS)}>
+          <span className={clsx(code, projectText(state, project.code))}>{project.code}</span>
+          <span className={label}>{project.name}</span>
+          <span className={th}>{TT.t('project')}</span>
           <Button variant="ghost" size="sm" onClick={() => ui.restoreProject(project.code)}>
             {TT.t('Restore')}
           </Button>
         </div>
       ))}
       {archivedClients.map((client) => (
-        <div key={'c:' + client.id} className={[st.row, st.colsArchive].join(' ')}>
-          <span className={st.codeInput}>{client.id}</span>
-          <span className={st.label}>{client.name}</span>
-          <span className={st.th}>{TT.t('client')}</span>
+        <div key={'c:' + client.id} className={clsx(row, COLS)}>
+          <span className={code}>{client.id}</span>
+          <span className={label}>{client.name}</span>
+          <span className={th}>{TT.t('client')}</span>
           <Button variant="ghost" size="sm" onClick={() => ui.restoreClient(client.id)}>
             {TT.t('Restore')}
           </Button>
         </div>
       ))}
-      <div className={st.hint}>
+      <div className={hint}>
         {TT.t('archived items keep resolving for old reports & invoices; they are only hidden from new work.')}
       </div>
     </div>

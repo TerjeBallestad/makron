@@ -2,7 +2,23 @@ import React from 'react';
 import TT from '../../i18n';
 import { SectionLabel, Button, Input, SegToggle } from '@terjeballestad/bob';
 import { OptionSelect } from '../OptionSelect';
-import st from './settings.module.css';
+import { clsx } from 'clsx';
+import { projectText } from '../../projectColor';
+import {
+  code as codeClass,
+  glyphButton,
+  headRow,
+  hint,
+  row,
+  section,
+  sectionLabel,
+  small,
+  smallBox,
+  smallMono,
+  th,
+} from './section';
+
+const COLS = 'grid-cols-[110px_1fr_150px_100px_84px_26px]';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 
@@ -19,11 +35,12 @@ interface SettingsProps {
 // updateProject); only the code takes the server path.
 function ProjectCodeInput({
   code,
-  color,
+  colorClass,
   onCommit,
 }: {
   code: string;
-  color: string;
+  /** The project's text colour class (projectText). */
+  colorClass: string;
   onCommit: (next: string) => void;
 }) {
   const [value, setValue] = React.useState(code);
@@ -51,8 +68,7 @@ function ProjectCodeInput({
           e.currentTarget.blur();
         }
       }}
-      className={[st.small, st.codeInput].join(' ')}
-      style={{ color }}
+      className={clsx(smallBox, codeClass, colorClass)}
     />
   );
 }
@@ -63,9 +79,9 @@ export function ProjectsSection({ state, ui }: SettingsProps) {
   const activeProjects = state.projects.filter((project) => !project.archived);
   const activeClients = state.clients.filter((client) => !client.archived);
   return (
-    <div className={st.section}>
+    <div className={section}>
       <SectionLabel
-        style={{ marginBottom: 10 }}
+        className={sectionLabel}
         action={
           <Button variant="ghost" size="sm" onClick={() => ui.addProject()}>
             {TT.t('+ project')}
@@ -74,25 +90,25 @@ export function ProjectsSection({ state, ui }: SettingsProps) {
       >
         {TT.t('Projects')}
       </SectionLabel>
-      <div className={[st.row, st.rowHead, st.colsProjects].join(' ')}>
+      <div className={clsx(headRow, COLS)}>
         {['code', 'name', 'client', 'rate', 'bill'].map((header) => (
-          <span key={header} className={st.th}>
+          <span key={header} className={th}>
             {TT.t(header)}
           </span>
         ))}
         <span></span>
       </div>
       {activeProjects.map((project) => (
-        <div key={project.code} className={[st.row, st.colsProjects].join(' ')}>
+        <div key={project.code} className={clsx(row, COLS)}>
           <ProjectCodeInput
             code={project.code}
-            color={TT.projColor(state, project.code)}
+            colorClass={projectText(state, project.code)}
             onCommit={(next) => ui.renameProject(project.code, next)}
           />
           <Input
             value={project.name}
             onChange={(e) => ui.updateProject(project.code, { name: e.target.value })}
-            className={st.small}
+            className={small}
           />
           <OptionSelect
             value={project.clientId || ''}
@@ -100,7 +116,7 @@ export function ProjectsSection({ state, ui }: SettingsProps) {
             options={[{ value: '', label: '— ' + TT.t('no client') }].concat(
               activeClients.map((client) => ({ value: client.id, label: client.name })),
             )}
-            className={st.small}
+            className={small}
           />
           <Input
             value={project.rate != null ? project.rate : ''}
@@ -108,7 +124,7 @@ export function ProjectsSection({ state, ui }: SettingsProps) {
             onChange={(e) =>
               ui.updateProject(project.code, { rate: e.target.value === '' ? null : +e.target.value || 0 })
             }
-            className={st.smallMono}
+            className={smallMono}
           />
           <SegToggle
             options={[
@@ -118,12 +134,17 @@ export function ProjectsSection({ state, ui }: SettingsProps) {
             value={project.billable === false ? 'nb' : 'bill'}
             onChange={(v) => ui.updateProject(project.code, { billable: v === 'bill' })}
           />
-          <button onClick={() => ui.archiveProject(project.code)} className={st.delBtn} title={TT.t('Archive')}>
+          <Button
+            variant="text"
+            onClick={() => ui.archiveProject(project.code)}
+            className={glyphButton}
+            title={TT.t('Archive')}
+          >
             ⤓
-          </button>
+          </Button>
         </div>
       ))}
-      <div className={st.hint}>
+      <div className={hint}>
         {TT.t('rate — overrides the client default. bill — the billable default new hours on this project inherit.')}
       </div>
     </div>

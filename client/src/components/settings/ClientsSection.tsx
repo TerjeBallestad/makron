@@ -3,7 +3,24 @@ import TT from '../../i18n';
 import { SectionLabel, Button, Input } from '@terjeballestad/bob';
 import { OptionSelect } from '../OptionSelect';
 import { makeClientId } from '../../clientIds';
-import st from './settings.module.css';
+import { clsx } from 'clsx';
+import {
+  code,
+  empty,
+  glyphButton,
+  headRow,
+  hint,
+  row,
+  section,
+  sectionLabel,
+  small,
+  smallBox,
+  smallMono,
+  th,
+} from './section';
+
+// SB-087: the id leads the row, the way the project code does: the same 110px track.
+const COLS = 'grid-cols-[110px_1fr_130px_110px_26px]';
 import type { AppState } from '../../../../shared/types';
 import type { UiActions } from '../../types';
 
@@ -54,7 +71,7 @@ function ClientIdInput({ id, onCommit }: { id: string; onCommit: (next: string) 
           e.currentTarget.blur();
         }
       }}
-      className={[st.small, st.codeInput].join(' ')}
+      className={clsx(smallBox, code)}
     />
   );
 }
@@ -63,9 +80,9 @@ export function ClientsSection({ state, ui }: SettingsProps) {
   // SDD-002 ruling 7: archived clients leave the active list for the Archive surface.
   const activeClients = state.clients.filter((client) => !client.archived);
   return (
-    <div className={st.section}>
+    <div className={section}>
       <SectionLabel
-        style={{ marginBottom: 10 }}
+        className={sectionLabel}
         action={
           <Button variant="ghost" size="sm" onClick={() => ui.addClient()}>
             {TT.t('+ client')}
@@ -74,16 +91,16 @@ export function ClientsSection({ state, ui }: SettingsProps) {
       >
         {TT.t('Clients')}
       </SectionLabel>
-      <div className={[st.row, st.rowHead, st.colsClients].join(' ')}>
+      <div className={clsx(headRow, COLS)}>
         {['id', 'name', 'rounding', 'default rate'].map((header) => (
-          <span key={header} className={st.th}>
+          <span key={header} className={th}>
             {TT.t(header)}
           </span>
         ))}
         <span></span>
       </div>
       {activeClients.map((client) => (
-        <div key={client.id} className={[st.row, st.colsClients].join(' ')}>
+        <div key={client.id} className={clsx(row, COLS)}>
           <ClientIdInput id={client.id} onCommit={(next) => ui.renameClient(client.id, next)} />
           <Input
             value={client.name}
@@ -93,7 +110,7 @@ export function ClientsSection({ state, ui }: SettingsProps) {
             onKeyDown={(e) => {
               if (e.key === 'Enter') e.currentTarget.blur();
             }}
-            className={st.small}
+            className={small}
           />
           <OptionSelect
             value={String(client.rounding || 'exact')}
@@ -103,21 +120,26 @@ export function ClientsSection({ state, ui }: SettingsProps) {
               { value: '15', label: '15 min ↑' },
               { value: '30', label: '30 min ↑' },
             ]}
-            className={st.small}
+            className={small}
           />
           <Input
             value={client.rate != null ? client.rate : ''}
             placeholder="—"
             onChange={(e) => ui.updateClient(client.id, { rate: e.target.value === '' ? null : +e.target.value || 0 })}
-            className={st.smallMono}
+            className={smallMono}
           />
-          <button onClick={() => ui.archiveClient(client.id)} className={st.delBtn} title={TT.t('Archive')}>
+          <Button
+            variant="text"
+            onClick={() => ui.archiveClient(client.id)}
+            className={glyphButton}
+            title={TT.t('Archive')}
+          >
             ⤓
-          </button>
+          </Button>
         </div>
       ))}
-      {activeClients.length === 0 && <div className={st.empty}>{TT.t('No clients yet.')}</div>}
-      <div className={st.hint}>{TT.t('rounding — billed time per entry is rounded up to this increment.')}</div>
+      {activeClients.length === 0 && <div className={empty}>{TT.t('No clients yet.')}</div>}
+      <div className={hint}>{TT.t('rounding — billed time per entry is rounded up to this increment.')}</div>
     </div>
   );
 }
