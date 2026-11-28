@@ -44,7 +44,7 @@ export function EntryRow({ entry, state, ui, reg, nav, admin, locked }: EntryRow
         <span className={clsx(LOCKED_CELL, 'font-mono text-caption text-muted')}>{TT.fmtTimeCell(entry) || '—'}</span>
         <span className={clsx(LOCKED_CELL, 'flex items-baseline gap-1.5 text-body text-muted')}>
           {proj && <span className={clsx('flex-none font-mono text-tiny', projectText(state, code))}>{proj.code}</span>}
-          <span className="truncate text-secondary">{entry.label || ''}</span>
+          <span className="truncate text-item text-secondary">{entry.label || ''}</span>
           {/* SDD-002 ruling 6 (SB-025): the 'edited by admin' marker on a corrected line. */}
           {entry.editedByAdmin && (
             <span className="flex-none font-mono text-tiny text-accent" title={TT.t('edited by admin')}>

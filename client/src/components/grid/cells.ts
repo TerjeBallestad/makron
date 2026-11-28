@@ -14,5 +14,6 @@ export const gridRow = 'grid grid-cols-(--mk-cols) items-center border-b border-
 export const timeCell = (invalid: boolean, ...rest: ClassValue[]) =>
   clsx(CELL, 'mx-px font-mono text-caption', invalid ? 'border-danger' : 'border-transparent', rest);
 
-/** The task and note cells: sans at body size, with the cell's own text colour. */
-export const textCell = (...rest: ClassValue[]) => clsx(CELL, 'border-transparent font-sans text-body', rest);
+/** The task and note cells: sans, with the cell's own text style and colour (the task input is
+ *  text-item, the note text-body). */
+export const textCell = (...rest: ClassValue[]) => clsx(CELL, 'border-transparent font-sans', rest);
